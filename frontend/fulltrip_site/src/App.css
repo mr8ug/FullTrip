@@ -12,21 +12,36 @@ html{
   text-align: center;
   background-color: #212a30;
 }
+header{
 
-.footer{
-  position: fixed;
-  left: 0;
-  bottom: 0;
+  -webkit-sticky: sticky;
+  position:sticky;
+  
+  top: 0;
+  width: 100%;
+  
+  z-index: 1;
+
+}
+footer{
+  
+  position:relative;
+  bottom: 0px;
+
   width: 100%;
   background-color: #303030;
   color: white;
-  text-align: center;
 
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 10px;
+ 
+  gap: 30px;
+  
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+
+  border-bottom: 1px solid #f06023;
+
   
   
   

@@ -8,6 +8,7 @@ import Inicio from "./components/Inicio";
 import Hoteles from "./components/Hoteles";
 import Autos from "./components/Autos";
 import Aerolineas from "./components/Aerolineas";
+
 import Navbar from "./components/Navbar";
 
 import RegistroUsuario from "./components/RegistroUsuario"; 
@@ -99,7 +100,10 @@ export default class App extends Component {
   render(){
     return (
       <div className="App">
-        <Navbar pagina={this.state.pagina} user_logged={this.state.user_logged}/>
+        <header>
+          <Navbar pagina={this.state.pagina} user_logged={this.state.user_logged}/>
+        </header>
+        
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Inicio />} />
@@ -121,13 +125,14 @@ export default class App extends Component {
             <Route path="/*" element={<Page404 />} />
           </Routes>
         </BrowserRouter>
-        <div className="footer">
+        <footer>
           <span>Grupo 7</span>
-          <span>Analisis y Diseño de Sistemas 1</span>
           <span>Full Trip &copy; 2022</span>
+          <span>AYD1</span>
           
           
-        </div>
+          
+        </footer>
       </div>
     );
   }

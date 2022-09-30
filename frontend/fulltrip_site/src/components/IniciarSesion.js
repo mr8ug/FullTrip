@@ -18,7 +18,7 @@ export default class IniciarSesion extends Component {
         setTimeout(() => {
             window.location.href = "/Registrarse";
         }
-            , 1000);
+            , 500);
 
     }
 

@@ -4,13 +4,27 @@ import React, { Component } from "react";
 import styles from './styles/RegistroUsuario.module.css';
 
 export default class RegistroUsuario extends Component {
+
+    goIniciarSesion = () => {
+        setTimeout(() => {
+            window.location.href = "/IniciarSesion";
+        }
+            , 500);
+    }
+
+    onTrigger = (event) =>{
+        event.preventDefault();
+        //realizar registro
+
+    }
+
     render() {
         return (
             <div className={styles.card}>
                 <h2>Registrarme</h2>
                 {/* divider */}
                 <div className={styles.divider}></div>
-                <form>
+                <form onSubmit={this.onTrigger}>
 
                     <div className={styles.form_elements}>
 
@@ -47,7 +61,7 @@ export default class RegistroUsuario extends Component {
                     </div>
 
                     <div className={styles.buttons}>
-                        <button className={styles.btn_iniciar}>Iniciar Sesion</button>
+                        <button onClick={this.goIniciarSesion} className={styles.btn_iniciar}>Iniciar Sesion</button>
                         <button className={styles.btn_crear}>Crear Cuenta</button>
                     </div>
 
