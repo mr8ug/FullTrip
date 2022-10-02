@@ -6,7 +6,9 @@ const bodyParser = require('body-parser');
 
 var app = express();
 
-require('dotenv').config();
+if(typeof process.env.NODE_ENV === 'undefined' || process.env.NODE_ENV == 'development'){
+    require('dotenv').config();
+}
 
 app.use(express.urlencoded({ extended: true }))
 //app.use(express.urlencoded({ extended: false }))
