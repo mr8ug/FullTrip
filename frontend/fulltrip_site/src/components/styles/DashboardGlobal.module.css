@@ -47,6 +47,22 @@
     --bs-nav-link-color: #303030 !important;
 }
 
+.btn_primary{
+    /*primary button*/
+    background-color: #fff;
+    color: #439ab3;
+    height: 50px;
+    padding: 10px 10px;
+    border-radius: 5px;
+    border: 1px solid #439ab3;
+    font-size: 1em;
+    
+    transition: 0.2s ease-in-out;
+
+    width: 40%;
+    text-decoration: underline;
+}
+
 /* animation */
 @keyframes wave {
     0% {

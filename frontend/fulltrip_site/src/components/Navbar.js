@@ -24,8 +24,8 @@ class NavbarBootrap extends Component {
 
     }
 
-    componentDidMount() {
-        //console.log(this.props.pagina);
+    componentDidUpdate() {
+        // console.log("TipoPagina",this.props.pagina);
         if(this.props.pagina) {
 
             try{

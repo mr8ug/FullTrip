@@ -1,17 +1,53 @@
 import React, { Component } from "react";
 import Swal from "sweetalert2";
-
 //import styles
 import styles from "./styles/IniciarSesion.module.css";
+import CryptoJS from "crypto-js";
 
 export default class IniciarSesion extends Component {
+
+    //inicio de sesion por email
 
     constructor(props) {
         super(props);
         this.state = {
             user: "",
+            email:"",
+            password: "",
             tipo: "",
         }
+
+
+    }
+
+    componentDidMount() {
+        var usuario = ""
+        console.log("componente montado", usuario)
+        window.sessionStorage.getItem('nombre') !== null ? usuario = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : usuario = "";
+        var tipo =""
+        window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
+
+        if (usuario !== "") {
+            Swal.fire({
+                title: 'Ya estas logueado',
+                text: "Ya estas logueado como " + usuario,
+                icon: 'info',
+                confirmButtonText: 'Ok'
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (tipo === "administrador") {
+                        window.location.href = "/DashboardAdmin";
+                    }
+                    else {
+                        window.location.href = "/Perfil";
+                    }
+
+                }
+            })
+        }
+
+
     }
     goRegistro = () => {
         //go to /Registrarse with window
@@ -22,98 +58,77 @@ export default class IniciarSesion extends Component {
 
     }
 
-    obtenerTipoUsuario = (usuario_ingresado) => {
-        fetch("http://localhost:4000/api/userType",{
-            method: 'POST',
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-            body: JSON.stringify({
-                user: usuario_ingresado
-            })
-            
-
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.data[0]);
-            if(data.data[0].type_user === "user"){
-                console.log("Usuario es cliente")
-                return "user";
-            }else if(data.data[0].type_user === "admin"){
-                console.log("Usuario es admin")
-                return "admin";
-            }else{
-                console.log("Usuario es agente")
-                return "agente";
-            }
-        })
-    }
-
-
-
-
     onTrigger = (event) => { //se ejecuta al momendo de mandar el formulario
         event.preventDefault();
-        //realizar validaciones de formato 
-        //si todo esta bien, mandar a llamar a la funcion del padre
-        //check if the user is registered
-        //if the user is registered, then go to the home page
-        //if the user is not registered, then show an error message
+        var user_ingresado = this.state.user;
+        var pass_ingresado = this.state.password;
+        
 
-        var usuario_ingresado = event.target.nombre_usuario.value
-        // var password_ingresado = event.target.password.value
-        fetch("http://localhost:4000/api/userExist",{
+
+
+
+        
+        let formData = new FormData()
+        formData.append('email', user_ingresado)
+        formData.append('password', pass_ingresado)
+
+        fetch('http://localhost:4000/api/login', {
             method: 'POST',
-            headers: { 'Content-type': 'application/json; charset=UTF-8' },
-            body: JSON.stringify({
-                user: usuario_ingresado
-            })
-
+            body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.data[0]);
-            if(data.data[0].usuario_existe === 1){
-                
-
-                // this.state.user = usuario_ingresado;
-                this.setState({
-                    user: usuario_ingresado
-                });
-
-                console.log("Usuario Existe: ",usuario_ingresado,this.state.user);
-
-                // this.state.tipo = this.obtenerTipoUsuario(usuario_ingresado);
-                this.setState({
-                    tipo: this.obtenerTipoUsuario(usuario_ingresado)
-                })
-
-                Swal.fire({
-                    title: 'Bienvenido '+this.state.user,
-                    text: 'Iniciando sesion',
-                    icon: 'success',
-                    timer: 2000,
-                    showConfirmButton: false
-                }).then(
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            
-                            console.log("Enviando parent callback")
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if(data.userid !== undefined){
+                    //el usuario existe procede el login
+                    
+                    window.sessionStorage.setItem("email", CryptoJS.AES.encrypt(data.email, 'fulltrip').toString());
+                    window.sessionStorage.setItem("nombre", CryptoJS.AES.encrypt(data.fullname, 'fulltrip').toString());
+                    window.sessionStorage.setItem("tipo", CryptoJS.AES.encrypt(data.type_user, 'fulltrip').toString());
+                    Swal.fire({
+                        title: 'Bienvenido',
+                        text: "Bienvenido " + data.fullname,
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            if(data.type_user === "administrador"){
+                                window.location.href = "/DashboardAdmin";
+                            }
+                            else{
+                                window.location.href = "/Perfil";
+                            }
                             
                             
+                                
                         }
-                    }
-                )
+                    })
                 }else{
-                console.log("Usuario no existe")
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        }
-        );
+                    Swal.fire({
+                        title: 'Error',
+                        text: "El email o la contraseña son incorrectos",
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                }
 
-        this.props.parentCallback(this.state.user, this.state.tipo);
+            })
     }
+
+   
+
+    handleChangeUser = (event) => {
+        this.setState({
+            user: event.target.value
+        });
+    }
+
+    handleChangePassword = (event) => {
+        this.setState({
+            password: event.target.value
+        });
+    }
+
 
     render() {
         return (
@@ -124,15 +139,16 @@ export default class IniciarSesion extends Component {
                 <form onSubmit={this.onTrigger}>
                     <div className={styles.form_elements}>
                         <div className={styles.form_group}>
-                            <label htmlFor="nombre_usuario">Usuario</label>
-                            <input name="nombre_usuario" type="text" className="form-control" id="nombre_usuario" placeholder="Nombre de Usuario" />
-
+                            <label htmlFor="nombre_usuario">Correo Electronico</label>
+                            <input name="nombre_usuario" type="email" className="form-control" id="nombre_usuario" placeholder="Email" onChange={this.handleChangeUser} />
+                        </div>
+                        <div className={styles.form_group}>
                             <label htmlFor="contrasena">Contraseña</label>
-                            <input type="password" className="form-control" id="contrasena" placeholder="Contraseña" minLength={8}/>
+                            <input type="password" className="form-control" id="contrasena" placeholder="Contraseña"  onChange={this.handleChangePassword} />
                         </div>
                     </div>
                     <div className={styles.buttons}>
-                        <button className={styles.btn_iniciar}>Iniciar Sesion</button>
+                        <button type="submit" className={styles.btn_iniciar}>Iniciar Sesion</button>
                         <button onClick={this.goRegistro} className={styles.btn_crear}>Registrarme</button>
                     </div>
                 </form>
