@@ -15,17 +15,19 @@ export default class Hoteles extends Component {
             habitaciones: [
 
                 {
+                    id: 1,
                     title: "Hotel X",
                     description: "Hotel X con vista al mar.",
                     country: "United States",
                     city: "Florida",
-                    persons: "4",
+                    amount_people: "4",
                     price: "500",
                     date_start: "31/07/2022",
                     date_end: "31/08/2022",
                     image: "https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"
                 },
                 {
+                    id: 2,
                     title: "Hotel Y",
                     description: "Hotel Y con acceso a todos los volcanes, en excursion privada.",
                     country: "Guatemala",
@@ -37,6 +39,7 @@ export default class Hoteles extends Component {
                     image: "https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"
                 },
                 {
+                    id: 3,
                     title: "Hotel Z",
                     description: "Hotel Z con acceso a todos los volcanes, en excursion privada.",
                     country: "Guatemala",
@@ -56,10 +59,17 @@ export default class Hoteles extends Component {
             habitacionesFiltradasPorPersonas: [],
             habitacionesFiltradasPorPrecio: [],
             habitacionesFiltradasPorFechaInicio: [],
+            actual_filter: "none",
 
 
         }
     }
+
+    // componentDidMount() {
+    //     this.setState({
+    //         habitacionesFiltradas: this.state.habitaciones
+    //     })
+    // }
 
 
 
@@ -71,7 +81,7 @@ export default class Hoteles extends Component {
                 habitacionesFiltradas: this.state.habitaciones
             })
         } else {
-            const habitacionesFiltradasPorPais = this.state.habitaciones.sort((a, b) => a.country - b.country);
+            const habitacionesFiltradasPorPais = this.state.habitaciones.filter(habitacion => habitacion.country === pais);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorPais
             })
@@ -85,7 +95,7 @@ export default class Hoteles extends Component {
                 habitacionesFiltradas: this.state.habitaciones
             })
         } else {
-            const habitacionesFiltradasPorCiudad = this.state.habitaciones.sort((a, b) => a.city - b.city);
+            const habitacionesFiltradasPorCiudad = this.state.habitaciones.filter(habitacion => habitacion.city === city);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorCiudad
             })
@@ -94,12 +104,13 @@ export default class Hoteles extends Component {
 
     handlePersons = (e) => {
         const persons = e.target.value;
+        
         if (persons === "todos") {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
             })
         } else {
-            const habitacionesFiltradasPorPersonas = this.state.habitaciones.filter((habitacion) => habitacion.persons === persons);
+            const habitacionesFiltradasPorPersonas = this.state.habitaciones.sort((a, b) => a.amount_people - b.amount_people).filter(habitacion => habitacion.amount_people <= persons);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorPersonas
             })
@@ -112,12 +123,12 @@ export default class Hoteles extends Component {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
             })
-        } if(precio ==="asc") {
+        } if (precio === "asc") {
             const habitacionesFiltradasPorPrecio = this.state.habitaciones.sort((a, b) => a.price - b.price);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorPrecio
             })
-        }  if(precio ==="desc"){
+        } if (precio === "desc") {
             const habitacionesFiltradasPorPrecio = this.state.habitaciones.sort((a, b) => b.price - a.price);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorPrecio
@@ -131,26 +142,56 @@ export default class Hoteles extends Component {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
             })
-        } else {
-            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => a.date_start - b.date_start);
+        } if(fechaInicio === "asc") {
+            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => a.start_date - b.ending_date);
+            this.setState({
+                habitacionesFiltradas: habitacionesFiltradasPorFechaInicio
+            })
+        } if(fechaInicio === "desc") {
+            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => b.start_date - a.ending_date);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorFechaInicio
             })
         }
     }
 
+    handleNombre = (e) => {
+        const nombre = e.target.value;
+        
+            const habitacionesFiltradasPorNombre = this.state.habitaciones.filter(habitacion => habitacion.hotel_name.toLowerCase().includes(nombre.toLowerCase())); 
+            this.setState({
+                habitacionesFiltradas: habitacionesFiltradasPorNombre
+            })
+        }
+
     handleFilter = (e) => {
-        e.preventDefault();
-        const habitacionesFiltradas = this.state.habitaciones.filter((habitacion) => {
-            return habitacion.country === this.state.country && habitacion.city === this.state.city && habitacion.persons === this.state.persons && habitacion.price === this.state.price && habitacion.date_start === this.state.date_start
-        })
+        
         this.setState({
-            habitacionesFiltradas: habitacionesFiltradas
+            habitacionesFiltradas: this.state.habitaciones
         })
     }
-    
 
-    
+    componentDidMount() {
+        //fetch
+        fetch("http://localhost:4000/api/getHabitaciones",
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                this.setState({
+                    habitaciones: data.rooms,
+                    habitacionesFiltradas: data.rooms
+                    
+                })
+            })
+    }
+
+
 
 
 
@@ -170,9 +211,10 @@ export default class Hoteles extends Component {
                                 this.state.habitaciones
                                     .map((habitacion) => habitacion.country)
                                     .filter((value, index, self) => self.indexOf(value) === index)
+                                    .sort((a, b) => a - b)
                                     .map((habitacion) => {
                                         return (
-                                            <option value={habitacion}>{habitacion}</option>
+                                            <option key={habitacion} value={habitacion}>{habitacion}</option>
                                         )
                                     })
                             }
@@ -188,9 +230,10 @@ export default class Hoteles extends Component {
                                 this.state.habitaciones
                                     .map((habitacion) => habitacion.city)
                                     .filter((value, index, self) => self.indexOf(value) === index)
+                                    .sort((a, b) => a - b)
                                     .map((habitacion) => {
                                         return (
-                                            <option value={habitacion}>{habitacion}</option>
+                                            <option key={habitacion} value={habitacion}>{habitacion}</option>
                                         )
                                     })
                             }
@@ -205,13 +248,15 @@ export default class Hoteles extends Component {
                             {
                                 //filter by unique values 
                                 this.state.habitaciones
-                                    .map((habitacion) => habitacion.persons)
+                                    .map((habitacion) => habitacion.amount_people)
                                     .filter((value, index, self) => self.indexOf(value) === index)
+                                    .sort((a, b) => a - b)
                                     .map((habitacion) => {
                                         return (
-                                            <option value={habitacion}>{habitacion}</option>
+                                            <option key={habitacion} value={habitacion}>{habitacion}</option>
                                         )
                                     })
+
                             }
                         </select>
 
@@ -236,29 +281,41 @@ export default class Hoteles extends Component {
                         </select>
                     </div>
 
+                    <div className="form-group">
+                        <label htmlFor="nombre" className={styles.label}>Nombre</label>
+                        <input type="text" name="nombre" id="nombre" className="form-control" onChange={this.handleNombre} />
+                    </div>
 
 
-                    <Button variant="success" onClick={this.handleFilter}> Filtrar </Button>
+
+                    <Button variant="warning" onClick={this.handleFilter}> Limpiar </Button>
                 </div>
 
                 <div className={styles.container}>
                     {
-                        this.state.habitacionesFiltradas
-                            .map((habitacion) => {
-                                return (
-                                    <HabitacionCard
-                                        title={habitacion.title}
-                                        description={habitacion.description}
-                                        country={habitacion.country}
-                                        city={habitacion.city}
-                                        persons={habitacion.persons}
-                                        price={habitacion.price}
-                                        date_start={habitacion.date_start}
-                                        date_end={habitacion.date_end}
-                                        image={habitacion.image}
-                                    />
-                                )
-                            })}
+
+                        this.state.habitacionesFiltradas === [] ? <h1>No hay habitaciones disponibles</h1> :
+                            this.state.habitacionesFiltradas
+                                .map((habitacion) => {
+                                    return (
+                                        <HabitacionCard
+                                            key={habitacion.room_id}
+                                            id={habitacion.room_id}
+                                            title={habitacion.room_name}
+                                            description={habitacion.hotel_name}
+                                            country={habitacion.country}
+                                            city={habitacion.city}
+                                            persons={habitacion.amount_people}
+                                            price={habitacion.price}
+                                            date_start={habitacion.start_date}
+                                            date_end={habitacion.ending_date}
+                                            // image={habitacion.image}
+                                            image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
+                                        />
+                                    )
+                                })
+
+                    }
                 </div>
 
             </div>

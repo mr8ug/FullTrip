@@ -29,7 +29,7 @@ export default class Page404 extends Component {
                     tiempo: "Bon voyage !"
                 });
                 setTimeout(() => {
-                    window.location.href = "/";
+                    window.location.href = "/"+window.sessionStorage.getItem('pagina').slice(0,1).toUpperCase()+window.sessionStorage.getItem('pagina').slice(1);
                     
                 }, 1000);
             }, 1000);

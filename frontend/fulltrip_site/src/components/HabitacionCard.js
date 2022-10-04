@@ -5,11 +5,12 @@ import styles from "./styles/SearchCard.module.css";
 
 // import Table from 'react-bootstrap/Table'
 import Card from 'react-bootstrap/Card'
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 export default class HabitacionCard extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: this.props.id,
             hotel: this.props.title,
             description: this.props.description,
             country: this.props.country,
@@ -21,6 +22,28 @@ export default class HabitacionCard extends Component {
             image: this.props.image,
 
         }
+    }
+
+    reservaHabitacion = () => {
+        //go to /Registrarse with window
+        //set parameters for url
+        var url = "/Habitacion?id=" +this.state.id;
+        setTimeout(() => {
+            window.location.href = url;
+        }
+            , 500); 
+
+    }
+
+    componentDidMount() {
+        //parse date
+        var date_start = new Date(this.state.date_start);
+        var date_end = new Date(this.state.date_end);
+        //set date
+        this.setState({
+            date_start: date_start.getDate() + "/" + (date_start.getMonth() + 1) + "/" + date_start.getFullYear(),
+            date_end: date_end.getDate() + "/" + (date_end.getMonth() + 1) + "/" + date_end.getFullYear()
+        });
     }
     render() {
         return (
@@ -42,7 +65,12 @@ export default class HabitacionCard extends Component {
                         <ListGroup.Item variant="success" className={styles.item}>Fecha de inicio: {this.state.date_start}</ListGroup.Item>
                         <ListGroup.Item variant="danger" className={styles.item}>Fecha de fin: {this.state.date_end}</ListGroup.Item>
                     </ListGroup>
+                    
                 </Card.Body>
+                <Card.Footer className="text-muted">
+                    <Button onClick={this.reservaHabitacion} variant="primary">Reservar</Button>
+                </Card.Footer>
+
             </Card>
         );
     }
