@@ -86,7 +86,7 @@ export default class DashboardUser extends Component {
             window.location.href = "/DashboardHotel";
         }else if(this.state.tipo === "arrendador"){
             window.location.href = "/DashboardArrendador";
-        }else if(this.state.tipo === "transporte"){
+        }else if(this.state.tipo === "aerolinea"){
             window.location.href = "/DashboardAerolinea";
         }
         
@@ -154,7 +154,7 @@ export default class DashboardUser extends Component {
                     </Tab>
 
                     {
-                        this.state.tipo === ("hotel" || "aerolinea" || "arrendador") ?
+                        this.state.tipo === ("hotel") || this.state.tipo===("aerolinea")  ||this.state.tipo===("arrendador") ?
                             <Tab className={styles.tabs} eventKey="favoritos" title="Mi Empresa">
                                 <div className={styles.tab_content}>
                                     <p>Parece que tienes una cuenta de empresa con nosotros</p>
