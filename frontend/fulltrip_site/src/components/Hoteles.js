@@ -5,7 +5,7 @@ import HabitacionCard from "./HabitacionCard";
 //import styles
 import styles from "./styles/SearchView.module.css";
 
-
+import Accordion from 'react-bootstrap/Accordion'
 
 
 export default class Hoteles extends Component {
@@ -75,6 +75,20 @@ export default class Hoteles extends Component {
 
 
     handlePais = (e) => {
+
+        var getCitySelect = document.getElementById("city");
+        var getPersonsSelect = document.getElementById("persons");
+        var getPriceSelect = document.getElementById("price");
+        var getStartDateSelect = document.getElementById("date_start");
+
+        var getNombreInput = document.getElementById("nombre");
+
+
+        getCitySelect.value = "todos";
+        getPersonsSelect.value = "todos";
+        getPriceSelect.value = "todos";
+        getStartDateSelect.value = "todos";
+        getNombreInput.value = "";
         const pais = e.target.value;
         if (pais === "todos") {
             this.setState({
@@ -90,6 +104,20 @@ export default class Hoteles extends Component {
 
     handleCity = (e) => {
         const city = e.target.value;
+        var getCountrySelect = document.getElementById("country");
+
+        var getPersonsSelect = document.getElementById("persons");
+        var getPriceSelect = document.getElementById("price");
+        var getStartDateSelect = document.getElementById("date_start");
+
+        var getNombreInput = document.getElementById("nombre");
+
+        getCountrySelect.value = "todos";
+
+        getPersonsSelect.value = "todos";
+        getPriceSelect.value = "todos";
+        getStartDateSelect.value = "todos";
+        getNombreInput.value = "";
         if (city === "todos") {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
@@ -104,7 +132,21 @@ export default class Hoteles extends Component {
 
     handlePersons = (e) => {
         const persons = e.target.value;
-        
+        var getCountrySelect = document.getElementById("country");
+        var getCitySelect = document.getElementById("city");
+
+        var getPriceSelect = document.getElementById("price");
+        var getStartDateSelect = document.getElementById("date_start");
+
+        var getNombreInput = document.getElementById("nombre");
+
+        getCountrySelect.value = "todos";
+        getCitySelect.value = "todos";
+
+        getPriceSelect.value = "todos";
+        getStartDateSelect.value = "todos";
+        getNombreInput.value = "";
+
         if (persons === "todos") {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
@@ -119,6 +161,20 @@ export default class Hoteles extends Component {
 
     handlePrice = (e) => {
         const precio = e.target.value;
+        var getCountrySelect = document.getElementById("country");
+        var getCitySelect = document.getElementById("city");
+        var getPersonsSelect = document.getElementById("persons");
+
+        var getStartDateSelect = document.getElementById("date_start");
+
+        var getNombreInput = document.getElementById("nombre");
+
+        getCountrySelect.value = "todos";
+        getCitySelect.value = "todos";
+        getPersonsSelect.value = "todos";
+
+        getStartDateSelect.value = "todos";
+        getNombreInput.value = "";
         if (precio === "todos") {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
@@ -138,17 +194,29 @@ export default class Hoteles extends Component {
 
     handleFechaInicio = (e) => {
         const fechaInicio = e.target.value;
+        var getCountrySelect = document.getElementById("country");
+        var getCitySelect = document.getElementById("city");
+        var getPersonsSelect = document.getElementById("persons");
+        var getPriceSelect = document.getElementById("price");
+        var getNombreInput = document.getElementById("nombre");
+
+        getCountrySelect.value = "todos";
+        getCitySelect.value = "todos";
+        getPersonsSelect.value = "todos";
+        getPriceSelect.value = "todos";
+        getNombreInput.value = "";
+
         if (fechaInicio === "todos") {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
             })
-        } if(fechaInicio === "asc") {
-            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => a.start_date - b.ending_date);
+        } if (fechaInicio === "asc") {
+            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => { return new Date(a.start_date) - new Date(b.start_date) });
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorFechaInicio
             })
-        } if(fechaInicio === "desc") {
-            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => b.start_date - a.ending_date);
+        } if (fechaInicio === "desc") {
+            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => { return new Date(b.start_date) - new Date(a.start_date) });
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorFechaInicio
             })
@@ -156,19 +224,54 @@ export default class Hoteles extends Component {
     }
 
     handleNombre = (e) => {
+        var getCountrySelect = document.getElementById("country");
+        var getCitySelect = document.getElementById("city");
+        var getPersonsSelect = document.getElementById("persons");
+        var getPriceSelect = document.getElementById("price");
+        var getStartDateSelect = document.getElementById("date_start");
+
+
+
+        getCountrySelect.value = "todos";
+        getCitySelect.value = "todos";
+        getPersonsSelect.value = "todos";
+        getPriceSelect.value = "todos";
+        getStartDateSelect.value = "todos";
+
         const nombre = e.target.value;
-        
-            const habitacionesFiltradasPorNombre = this.state.habitaciones.filter(habitacion => habitacion.hotel_name.toLowerCase().includes(nombre.toLowerCase())); 
-            this.setState({
-                habitacionesFiltradas: habitacionesFiltradasPorNombre
-            })
-        }
+
+        const habitacionesFiltradasPorNombre = this.state.habitaciones.filter(habitacion => (habitacion.hotel_name.toLowerCase().includes(nombre.toLowerCase())) || (habitacion.room_name.toLowerCase().includes(nombre.toLowerCase())));
+        this.setState({
+            habitacionesFiltradas: habitacionesFiltradasPorNombre
+        })
+    }
 
     handleFilter = (e) => {
-        
+
         this.setState({
             habitacionesFiltradas: this.state.habitaciones
         })
+
+        var getCountrySelect = document.getElementById("country");
+        var getCitySelect = document.getElementById("city");
+        var getPersonsSelect = document.getElementById("persons");
+        var getPriceSelect = document.getElementById("price");
+        var getStartDateSelect = document.getElementById("date_start");
+
+        var getNombreInput = document.getElementById("nombre");
+
+        getCountrySelect.value = "todos";
+        getCitySelect.value = "todos";
+        getPersonsSelect.value = "todos";
+        getPriceSelect.value = "todos";
+        getStartDateSelect.value = "todos";
+        getNombreInput.value = "";
+
+
+
+
+
+
     }
 
     componentDidMount() {
@@ -186,7 +289,7 @@ export default class Hoteles extends Component {
                 this.setState({
                     habitaciones: data.rooms,
                     habitacionesFiltradas: data.rooms
-                    
+
                 })
             })
     }
@@ -199,97 +302,108 @@ export default class Hoteles extends Component {
         return (
             <div>
                 {/* <Navbar pagina="hoteles" /> */}
-                <h1 className={styles.h1}>Hoteles</h1>
-
-                <div className={styles.filters}>
-                    <div className="form-group">
-                        <label htmlFor="country" className={styles.label}>País</label>
-                        <select name="country" id="country" className="form-control" onChange={this.handlePais}>
-                            <option value={"todos"}>Todos</option>
-                            {
-                                //filter by unique values 
-                                this.state.habitaciones
-                                    .map((habitacion) => habitacion.country)
-                                    .filter((value, index, self) => self.indexOf(value) === index)
-                                    .sort((a, b) => a - b)
-                                    .map((habitacion) => {
-                                        return (
-                                            <option key={habitacion} value={habitacion}>{habitacion}</option>
-                                        )
-                                    })
-                            }
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="city" className={styles.label}>Ciudad</label>
-                        <select name="city" id="city" className="form-control" onChange={this.handleCity}>
-                            <option value={"todos"}>Todos</option>
-                            {
-                                //filter by unique values 
-                                this.state.habitaciones
-                                    .map((habitacion) => habitacion.city)
-                                    .filter((value, index, self) => self.indexOf(value) === index)
-                                    .sort((a, b) => a - b)
-                                    .map((habitacion) => {
-                                        return (
-                                            <option key={habitacion} value={habitacion}>{habitacion}</option>
-                                        )
-                                    })
-                            }
-                        </select>
-
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="persons" className={styles.label}>Personas</label>
-                        <select name="persons" id="persons" className="form-control" onChange={this.handlePersons}>
-                            <option value={"todos"}>Todos</option>
-                            {
-                                //filter by unique values 
-                                this.state.habitaciones
-                                    .map((habitacion) => habitacion.amount_people)
-                                    .filter((value, index, self) => self.indexOf(value) === index)
-                                    .sort((a, b) => a - b)
-                                    .map((habitacion) => {
-                                        return (
-                                            <option key={habitacion} value={habitacion}>{habitacion}</option>
-                                        )
-                                    })
-
-                            }
-                        </select>
-
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="date_start" className={styles.label}>Fecha de inicio</label>
-                        <select name="date_start" id="date_start" className="form-control" onChange={this.handleDate}>
-                            <option value={"todos"}>Todos</option>
-                            <option value={"asc"}>Ascendente</option>
-                            <option value={"desc"}>Descendente</option>
-                        </select>
-
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="price" className={styles.label}>Precio</label>
-                        <select name="price" id="price" className="form-control" onChange={this.handlePrice}>
-                            <option value={"todos"}>Todos</option>
-                            <option value={"asc"}>Ascendente</option>
-                            <option value={"desc"}>Descendente</option>
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label htmlFor="nombre" className={styles.label}>Nombre</label>
-                        <input type="text" name="nombre" id="nombre" className="form-control" onChange={this.handleNombre} />
-                    </div>
-
-
-
-                    <Button variant="warning" onClick={this.handleFilter}> Limpiar </Button>
+                <div className={styles.jumbotron}>
+                    <h1 className={styles.h1}>🏨 Hoteles 🏨</h1>
                 </div>
+                
+                <Accordion bg='dark' className={styles.acordion}>
+                    <Accordion.Item eventKey='0'>
+                        <Accordion.Header>Filtros</Accordion.Header>
+                        <Accordion.Body>
+
+                            <div className={styles.filters}>
+                                <div className="form-group">
+                                    <label htmlFor="country" className={styles.label}>País</label>
+                                    <select name="country" id="country" className="form-control" onChange={this.handlePais}>
+                                        <option value={"todos"}>Todos</option>
+                                        {
+                                            //filter by unique values
+                                            this.state.habitaciones
+                                                .map((habitacion) => habitacion.country)
+                                                .filter((value, index, self) => self.indexOf(value) === index)
+                                                .sort((a, b) => a - b)
+                                                .map((habitacion) => {
+                                                    return (
+                                                        <option key={habitacion} value={habitacion}>{habitacion}</option>
+                                                    )
+                                                })
+                                        }
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="city" className={styles.label}>Ciudad</label>
+                                    <select name="city" id="city" className="form-control" onChange={this.handleCity}>
+                                        <option value={"todos"}>Todos</option>
+                                        {
+                                            //filter by unique values
+                                            this.state.habitaciones
+                                                .map((habitacion) => habitacion.city)
+                                                .filter((value, index, self) => self.indexOf(value) === index)
+                                                .sort((a, b) => a - b)
+                                                .map((habitacion) => {
+                                                    return (
+                                                        <option key={habitacion} value={habitacion}>{habitacion}</option>
+                                                    )
+                                                })
+                                        }
+                                    </select>
+
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="persons" className={styles.label}>Personas</label>
+                                    <select name="persons" id="persons" className="form-control" onChange={this.handlePersons}>
+                                        <option value={"todos"}>Todos</option>
+                                        {
+                                            //filter by unique values
+                                            this.state.habitaciones
+                                                .map((habitacion) => habitacion.amount_people)
+                                                .filter((value, index, self) => self.indexOf(value) === index)
+                                                .sort((a, b) => a - b)
+                                                .map((habitacion) => {
+                                                    return (
+                                                        <option key={habitacion} value={habitacion}>{habitacion}</option>
+                                                    )
+                                                })
+
+                                        }
+                                    </select>
+
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="date_start" className={styles.label}>Fecha de inicio</label>
+                                    <select name="date_start" id="date_start" className="form-control" onChange={this.handleFechaInicio}>
+                                        <option value={"todos"}>Todos</option>
+                                        <option value={"asc"}>Ascendente</option>
+                                        <option value={"desc"}>Descendente</option>
+                                    </select>
+
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="price" className={styles.label}>Precio</label>
+                                    <select name="price" id="price" className="form-control" onChange={this.handlePrice}>
+                                        <option value={"todos"}>Todos</option>
+                                        <option value={"asc"}>Ascendente</option>
+                                        <option value={"desc"}>Descendente</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="nombre" className={styles.label}>Nombre</label>
+                                    <input type="text" name="nombre" id="nombre" className="form-control" placeholder="Hotel/Cuarto" onChange={this.handleNombre} />
+                                </div>
+
+
+
+                                <Button variant="warning" onClick={this.handleFilter}> Limpiar </Button>
+                            </div>
+
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
 
                 <div className={styles.container}>
                     {
