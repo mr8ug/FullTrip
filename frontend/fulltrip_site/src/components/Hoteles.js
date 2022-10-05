@@ -276,7 +276,7 @@ export default class Hoteles extends Component {
 
     componentDidMount() {
         //fetch
-        fetch("http://localhost:4000/api/getHabitaciones",
+        fetch("http://localhost:4000/api/all_rooms",
             {
                 method: "GET",
                 headers: {
@@ -309,13 +309,13 @@ export default class Hoteles extends Component {
                 <Accordion bg='dark' className={styles.acordion}>
                     <Accordion.Item eventKey='0'>
                         <Accordion.Header>Filtros</Accordion.Header>
-                        <Accordion.Body>
+                        <Accordion.Body key={0}>
 
                             <div className={styles.filters}>
                                 <div className="form-group">
                                     <label htmlFor="country" className={styles.label}>País</label>
                                     <select name="country" id="country" className="form-control" onChange={this.handlePais}>
-                                        <option value={"todos"}>Todos</option>
+                                        <option key={'todos'} value={"todos"}>Todos</option>
                                         {
                                             //filter by unique values
                                             this.state.habitaciones
@@ -334,7 +334,7 @@ export default class Hoteles extends Component {
                                 <div className="form-group">
                                     <label htmlFor="city" className={styles.label}>Ciudad</label>
                                     <select name="city" id="city" className="form-control" onChange={this.handleCity}>
-                                        <option value={"todos"}>Todos</option>
+                                        <option key={'todos'} value={"todos"}>Todos</option>
                                         {
                                             //filter by unique values
                                             this.state.habitaciones
@@ -354,7 +354,7 @@ export default class Hoteles extends Component {
                                 <div className="form-group">
                                     <label htmlFor="persons" className={styles.label}>Personas</label>
                                     <select name="persons" id="persons" className="form-control" onChange={this.handlePersons}>
-                                        <option value={"todos"}>Todos</option>
+                                        <option key={'todos'} value={"todos"}>Todos</option>
                                         {
                                             //filter by unique values
                                             this.state.habitaciones
@@ -423,8 +423,8 @@ export default class Hoteles extends Component {
                                             price={habitacion.price}
                                             date_start={habitacion.start_date}
                                             date_end={habitacion.ending_date}
-                                            // image={habitacion.image}
-                                            image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
+                                            image={habitacion.img}
+                                            // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
                                         />
                                     )
                                 })

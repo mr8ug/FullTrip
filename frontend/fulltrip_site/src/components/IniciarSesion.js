@@ -81,10 +81,11 @@ export default class IniciarSesion extends Component {
                 console.log(data);
                 if(data.userid !== undefined){
                     //el usuario existe procede el login
-                    
+                    console.log("userid", data.userid)
                     window.sessionStorage.setItem("email", CryptoJS.AES.encrypt(data.email, 'fulltrip').toString());
                     window.sessionStorage.setItem("nombre", CryptoJS.AES.encrypt(data.fullname, 'fulltrip').toString());
                     window.sessionStorage.setItem("tipo", CryptoJS.AES.encrypt(data.type_user, 'fulltrip').toString());
+                    window.sessionStorage.setItem("id", data.userid);
                     Swal.fire({
                         title: 'Bienvenido',
                         text: "Bienvenido " + data.fullname,

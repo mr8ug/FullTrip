@@ -14,11 +14,12 @@ export default class Inicio extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            empresa: "Aerolinea",
-            
+            empresa: "",
+            userType: ''
+
         };
 
-        
+
     }
 
     componentDidMount() {
@@ -35,17 +36,34 @@ export default class Inicio extends Component {
     }
 
     handleEmpresa = (e) => {
-        
+
         e.preventDefault();
+        var empresa = e.target.value;
+        if (empresa === "5") {
+            this.setState({
+                userType: "Hotel"
+            })
+        } else if (empresa === "6") {
+            this.setState({
+                userType: "Arrendador"
+            })
+        } else if (empresa === "7") {
+            this.setState({
+                userType: "Aerolinea"
+            })
+        }
+
         this.setState({
-            empresa: e.target.value,
+            empresa: empresa
         })
 
         
+
+
         //scroll into document
-        var form= document.getElementById("promo");
-        form.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
-        
+        var form = document.getElementById("promo");
+        form.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+
     }
 
 
@@ -57,7 +75,7 @@ export default class Inicio extends Component {
             <div className={styles.container}>
                 {/* <Navbar pagina="inicio" /> */}
                 <div id="jumbotron" className={styles.jumbotron}>
-                    <p>Bienvenido a <strong>Full Trip</strong>, somos tu mejor opción para vacaciones y negocios. <br/> Aún en epoca <strong>POST-PANDEMIA</strong>!</p>
+                    <p>Bienvenido a <strong>Full Trip</strong>, somos tu mejor opción para vacaciones y negocios. <br /> Aún en epoca <strong>POST-PANDEMIA</strong>!</p>
                 </div>
 
                 <div className={styles.buttons}>
@@ -85,16 +103,23 @@ export default class Inicio extends Component {
 
                 <div className={styles.promo} id="promo">
                     <h1>Registra tu empresa con nosotros!</h1>
+
+
                     <div className={styles.registro}>
                         <select id="tipo_empresa" className={styles.select} onChange={this.handleEmpresa}>
-                            <option value="Aerolinea">Aerolinea</option>
-                            <option value="Arrendador">Arrendador</option>
-                            <option value="Hotel">Hotel</option>
+                            <option value="0" >Selecciona tu tipo de empresa</option>
+                            <option value="7">Aerolinea</option>
+                            <option value="6">Arrendador</option>
+                            <option value="5">Hotel</option>
                         </select>
-                        <div>
-                            {this.state.empresa !== "" ? <RegistroGlobal userType={this.state.empresa} /> : null}
-                        </div>
+                        {
+                            this.state.empresa === "" ? null :
+                                <div>
+                                    {this.state.empresa !== ("" || "0") ? <RegistroGlobal userType={this.state.userType} /> : null}
+                                </div>
+                        }
                     </div>
+
 
                 </div>
 

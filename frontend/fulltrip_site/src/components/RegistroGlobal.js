@@ -42,6 +42,8 @@ export default class RegistroGlobal extends Component{
 
     }
 
+    
+
     componentDidMount(){
         const requestOptions ={
             method: 'GET',
@@ -57,6 +59,7 @@ export default class RegistroGlobal extends Component{
             console.log(error);
         }
         );
+
 
     }
     render() {
