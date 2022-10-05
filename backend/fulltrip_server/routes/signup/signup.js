@@ -20,8 +20,7 @@ module.exports = (express,app) => {
             }
             
             const sql = `
-                INSERT INTO user (full_name, date_birth, email, nickname, password, type_user_id, country, city) 
-                VALUES ('${full_name}', '${date_birth}', '${email}', '${nickname}', MD5('${password}'), ${type_user}, '${country}', '${city}')
+                CALL crearUsuario('${full_name}', '${date_birth}', '${email}', '${nickname}', '${password}', ${type_user}, '${country}', '${city}')
             `
             conn.query(sql, function (err, result, fields) {
                 if (err){
