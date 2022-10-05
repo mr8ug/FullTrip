@@ -1,19 +1,20 @@
 const mysql = require('mysql')
 var multer = require('multer')
-const { connect } = require('../../server')
 var upload = multer({ dest: 'uploads/' })
 
 module.exports = (express, app) => {
 
     app.get('/api/getHabitaciones', upload.any(), async function (req, res) {
         const conn = await mysql.createConnection(app.config.db.credentials)
+        const AWS_S3_BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME
         await conn.connect(function (err) {
             if (err) {
                 conn.end()
                 return res.status(500).json({ response_text: "Err of connect" })
             }
 
-            const sql = `select r.room_id, r.room_name, r.amount_people, r.price, h.hotel_id, h.hotel_name, h.country, h.city, a.start_date, a.ending_date
+            const sql = `select r.room_id, r.room_name, r.amount_people, r.price, h.hotel_id, h.hotel_name, h.country, 
+            h.city, a.start_date, a.ending_date, r.img
             from room as r, hotel as h, availability as a
             where r.hotel_hotel_id = h.hotel_id and r.room_id = a.room_id`
 
@@ -42,7 +43,8 @@ module.exports = (express, app) => {
                         country: row.country,
                         city: row.city,
                         start_date: row.start_date,
-                        ending_date: row.ending_date
+                        ending_date: row.ending_date,
+                        img: `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/` + row.img,
                     })
                 });
                 res.status(200).json({ rooms: arrTmp })
