@@ -32,7 +32,7 @@ module.exports = (express,app) => {
                     return res.status(500).json({response_text:"err created user"})
                 }
                 if(result.affectedRows >= 1){
-                    res.status(201).json({response_text:"User Created"})
+                    res.status(201).json({status:'ok',response_text:"User Created"})
                 }
             });
         });
