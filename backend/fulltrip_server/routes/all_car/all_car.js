@@ -47,7 +47,7 @@ module.exports = (express, app) => {
                         img: `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/` + row.img,
                     })
                 });
-                res.status(200).json({ rooms: arrTmp })
+                res.status(200).json({ cars: arrTmp })
             });
         });
     });
