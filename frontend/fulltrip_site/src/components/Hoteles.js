@@ -152,7 +152,7 @@ export default class Hoteles extends Component {
                 habitacionesFiltradas: this.state.habitaciones
             })
         } else {
-            const habitacionesFiltradasPorPersonas = this.state.habitaciones.sort((a, b) => a.amount_people - b.amount_people).filter(habitacion => habitacion.amount_people <= persons);
+            const habitacionesFiltradasPorPersonas = this.state.habitaciones.sort((a, b) => a.amount_people - b.amount_people).filter(habitacion => String(habitacion.amount_people) === persons);
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorPersonas
             })

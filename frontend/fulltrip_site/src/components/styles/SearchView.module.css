@@ -73,7 +73,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: middle;
+    justify-content: center;
     background-color: transparent;
     gap: 20px;
 

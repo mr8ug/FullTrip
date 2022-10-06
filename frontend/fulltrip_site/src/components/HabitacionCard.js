@@ -51,7 +51,7 @@ export default class HabitacionCard extends Component {
 
             <Card style={{ width: '18rem' }}>
                 <Card.Header><strong>{this.state.city},</strong> {this.state.country}</Card.Header>
-                <Card.Img variant="top" src={this.state.image} />
+                <Card.Img variant="top" src={this.state.image} height={160} width={100} />
                 <Card.Body>
                     <Card.Title>{this.state.hotel}</Card.Title>
                     <Card.Text >
@@ -68,7 +68,7 @@ export default class HabitacionCard extends Component {
                     
                 </Card.Body>
                 <Card.Footer className="text-muted">
-                    <Button onClick={this.reservaHabitacion} variant="primary">Reservar</Button>
+                    <Button variant="primary" href={"/Habitacion?id="+this.state.id}>Reservar</Button>
                 </Card.Footer>
 
             </Card>

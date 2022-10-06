@@ -27,6 +27,8 @@ import DashboardAdmin from "./components/DashboardAdmin";
 import DashboardThirdService from "./components/DashboardThirdService"
 
 import Habitacion from "./components/Habitacion";
+import Auto from "./components/Auto";
+import Vuelo from "./components/Vuelo";
 
 
 export default class App extends Component {
@@ -144,7 +146,9 @@ export default class App extends Component {
             <Route path="/DashboardHotel" element={<DashboardThirdService />} />
 
             
-            <Route path="/Habitacion:id" component={<Habitacion/>} />
+            <Route path="/Habitacion?:id" component={<Habitacion/>} />
+            <Route path="/Auto?:id" component={<Auto/>} />
+            <Route path="/Vuelo?:id" component={<Vuelo/>} />
             
             
             <Route path="/*" element={<Page404 />} />
