@@ -284,7 +284,10 @@ export default class Autos extends Component {
 
         const nombre = e.target.value;
 
-        const autosFiltradosPorNombre = this.state.autos.filter(auto => (auto.line.toLowerCase().includes(nombre.toLowerCase()) || auto.model.toLowerCase().includes(nombre.toLowerCase()) || auto.brand.toLowerCase().includes(nombre.toLowerCase()) || auto.year.toString().includes(nombre.toLowerCase()) || auto.car_rental.toString().includes(nombre.toLowerCase()) || auto.country.toLowerCase().includes(nombre.toLowerCase()) || auto.city.toLowerCase().includes(nombre.toLowerCase())));
+        const autosFiltradosPorNombre = this.state.autos.filter(auto => (auto.line.toLowerCase().includes(nombre.toLowerCase())) || (auto.brand.toLowerCase().includes(nombre.toLowerCase())) ||  (auto.car_rental.toString().includes(nombre.toLowerCase()) ));
+        this.setState({
+            autosFiltrados: autosFiltradosPorNombre
+        })
     }
 
 
@@ -378,6 +381,11 @@ export default class Autos extends Component {
 
                                         }
                                     </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="nombre" className={styles.label}>Nombre</label>
+                                    <input type="text" name="nombre" id="nombre" className="form-control" onChange={this.handleNombre} />
                                 </div>
 
                                 <Button variant="warning" onClick={this.handleFilter}> Limpiar </Button>
