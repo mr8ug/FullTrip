@@ -16,7 +16,7 @@ module.exports = (express, app) => {
             const sql = `select r.room_id, r.room_name, r.amount_people, r.price, h.hotel_id, h.hotel_name, h.country, 
             h.city, a.start_date, a.ending_date, r.img
             from room as r, hotel as h, availability as a
-            where r.hotel_hotel_id = h.hotel_id and r.room_id = a.room_id`
+            where r.hotel_id = h.hotel_id and r.room_id = a.room_id`
 
             conn.query(sql, function (err, result, fields) {
                 if (err) {
