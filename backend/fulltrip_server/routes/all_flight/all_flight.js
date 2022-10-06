@@ -14,7 +14,7 @@ module.exports = (express, app) => {
             }
 
             const sql = `select f.flight_id id_flight, a.airline_id, a.airline_name, f.price, f.flight_date, 
-                        f.flight_destination, f.origin_flight flight_origin, f.departure_time
+                        f.flight_destination, f.origin_flight flight_origin, f.departure_time, f.available_seat
                         from flight f, airline a
                         where a.airline_id = f.airline_id
                             and f.flight_date >= CURDATE();`
@@ -40,7 +40,8 @@ module.exports = (express, app) => {
                         flight_date: row.flight_date,
                         flight_destination: row.flight_destination,
                         flight_origin: row.flight_origin,
-                        departure_time: row.departure_time
+                        departure_time: row.departure_time,
+                        available_seat: row.available_seat
                     })
                 });
                 res.status(200).json({ flights: arrTmp })

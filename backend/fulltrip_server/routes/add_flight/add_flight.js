@@ -6,11 +6,11 @@ module.exports = (express,app) => {
     
 	app.post('/api/add_flight',upload.any(), async function(req,res){
         const conn = await mysql.createConnection(app.config.db.credentials);
-        const {flight_date, destination_country, destination_city, origin_country, origin_city, price, user_id, departure_time} = req.body
+        const {flight_date, destination_country, destination_city, origin_country, origin_city, price, user_id, departure_time, number_seat} = req.body
         
         
         if (flight_date === undefined || destination_country === undefined || destination_city === undefined || origin_country === undefined || 
-            origin_city === undefined || price === undefined || user_id === undefined || departure_time === undefined) {
+            origin_city === undefined || price === undefined || user_id === undefined || departure_time === undefined || number_seat === undefined) {
             return res.status(406).json({response_text:"Is not present value"})
         }
 
@@ -21,7 +21,7 @@ module.exports = (express,app) => {
             }
             
             const sql = `
-            call addFlight('${flight_date}', '${destination_country} - ${destination_city}', '${origin_country} - ${origin_city}', ${price}, ${user_id}, '${departure_time}');
+            call addFlight('${flight_date}', '${destination_country} - ${destination_city}', '${origin_country} - ${origin_city}', ${price}, ${user_id}, '${departure_time}', ${number_seat});
             `
             conn.query(sql, function (err, result, fields) {
                 if (err){
