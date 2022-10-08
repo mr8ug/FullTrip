@@ -40,15 +40,17 @@ module.exports = (express, app) => {
                 Object.keys(result).forEach(function (key) {
                     var row = result[key]
                     arrTmp.push({
+
                         id_flight: row.id_flight,
                         airline_id: row.airline_id,
+                        date_reservation: row.date_reservation,
+                        return_date: row.return_date,
                         airline_name: row.airline_name,
                         price: row.price,
                         flight_date: row.flight_date,
                         flight_destination: row.flight_destination,
                         flight_origin: row.flight_origin,
-                        departure_time: row.departure_time,
-                        available_seat: row.available_seat
+                        departure_time: row.departure_time
                     })
                 });
                 res.status(200).json({ flights: arrTmp })
