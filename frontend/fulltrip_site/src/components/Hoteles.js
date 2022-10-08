@@ -6,53 +6,14 @@ import HabitacionCard from "./HabitacionCard";
 import styles from "./styles/SearchView.module.css";
 
 import Accordion from 'react-bootstrap/Accordion'
+import Swal from "sweetalert2";
 
 
 export default class Hoteles extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            habitaciones: [
-
-                {
-                    id: 1,
-                    title: "Hotel X",
-                    description: "Hotel X con vista al mar.",
-                    country: "United States",
-                    city: "Florida",
-                    amount_people: "4",
-                    price: "500",
-                    date_start: "31/07/2022",
-                    date_end: "31/08/2022",
-                    image: "https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"
-                },
-                {
-                    id: 2,
-                    title: "Hotel Y",
-                    description: "Hotel Y con acceso a todos los volcanes, en excursion privada.",
-                    country: "Guatemala",
-                    city: "Antigua",
-                    persons: "2",
-                    price: "150",
-                    date_start: "31/01/2022",
-                    date_end: "31/01/2023",
-                    image: "https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"
-                },
-                {
-                    id: 3,
-                    title: "Hotel Z",
-                    description: "Hotel Z con acceso a todos los volcanes, en excursion privada.",
-                    country: "Guatemala",
-                    city: "Antigua",
-                    persons: "46",
-                    price: "250",
-                    date_start: "31/01/2022",
-                    date_end: "31/01/2023",
-                    image: "https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"
-                }
-
-            ],
-
+            habitaciones: [],
             habitacionesFiltradas: [],
             habitacionesFiltradasPorPais: [],
             habitacionesFiltradasPorCiudad: [],
@@ -64,15 +25,6 @@ export default class Hoteles extends Component {
 
         }
     }
-
-    // componentDidMount() {
-    //     this.setState({
-    //         habitacionesFiltradas: this.state.habitaciones
-    //     })
-    // }
-
-
-
 
     handlePais = (e) => {
 
@@ -152,7 +104,7 @@ export default class Hoteles extends Component {
                 habitacionesFiltradas: this.state.habitaciones
             })
         } else {
-            const habitacionesFiltradasPorPersonas = this.state.habitaciones.sort((a, b) => a.amount_people - b.amount_people).filter(habitacion => String(habitacion.amount_people) === persons);
+            const habitacionesFiltradasPorPersonas = this.state.habitaciones.filter(habitacion => String(habitacion.amount_people) === String(persons));
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorPersonas
             })
@@ -160,6 +112,7 @@ export default class Hoteles extends Component {
     }
 
     handlePrice = (e) => {
+        e.preventDefault()
         const precio = e.target.value;
         var getCountrySelect = document.getElementById("country");
         var getCitySelect = document.getElementById("city");
@@ -224,6 +177,7 @@ export default class Hoteles extends Component {
     }
 
     handleNombre = (e) => {
+        e.preventDefault();
         var getCountrySelect = document.getElementById("country");
         var getCitySelect = document.getElementById("city");
         var getPersonsSelect = document.getElementById("persons");
@@ -285,13 +239,31 @@ export default class Hoteles extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
+                console.log(data);
                 this.setState({
                     habitaciones: data.rooms,
                     habitacionesFiltradas: data.rooms
 
                 })
             })
+            .catch(
+                error => {
+                    Swal.fire({
+                        title:'Parece que no estas conectado a internet',
+                        text:'Por favor revisa tu conexion a internet',
+                        icon:'error',
+                        confirmButtonText:'Ok',
+                        
+                    })
+                    .then(
+                        function (isConfirm){
+                            if(isConfirm){
+                                window.location.href = "/Inicio";
+                            }
+                        })
+                }
+                
+            )
     }
 
 
@@ -322,9 +294,9 @@ export default class Hoteles extends Component {
                                                 .map((habitacion) => habitacion.country)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
                                                 .sort((a, b) => a - b)
-                                                .map((habitacion) => {
+                                                .map((habitacion, i) => {
                                                     return (
-                                                        <option key={habitacion} value={habitacion}>{habitacion}</option>
+                                                        <option key={i} value={habitacion}>{habitacion}</option>
                                                     )
                                                 })
                                         }
@@ -341,9 +313,9 @@ export default class Hoteles extends Component {
                                                 .map((habitacion) => habitacion.city)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
                                                 .sort((a, b) => a - b)
-                                                .map((habitacion) => {
+                                                .map((habitacion, i) => {
                                                     return (
-                                                        <option key={habitacion} value={habitacion}>{habitacion}</option>
+                                                        <option key={i} value={habitacion}>{habitacion}</option>
                                                     )
                                                 })
                                         }
@@ -361,9 +333,9 @@ export default class Hoteles extends Component {
                                                 .map((habitacion) => habitacion.amount_people)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
                                                 .sort((a, b) => a - b)
-                                                .map((habitacion) => {
+                                                .map((habitacion, i) => {
                                                     return (
-                                                        <option key={habitacion} value={habitacion}>{habitacion}</option>
+                                                        <option key={i} value={habitacion}>{habitacion}</option>
                                                     )
                                                 })
 
@@ -410,20 +382,20 @@ export default class Hoteles extends Component {
 
                         this.state.habitacionesFiltradas === [] ? <h1>No hay habitaciones disponibles</h1> :
                             this.state.habitacionesFiltradas
-                                .map((habitacion) => {
+                                .map((habitacion, i) => {
                                     return (
                                         <HabitacionCard
-                                            key={habitacion.room_id}
-                                            id={habitacion.room_id}
-                                            title={habitacion.room_name}
-                                            description={habitacion.hotel_name}
-                                            country={habitacion.country}
-                                            city={habitacion.city}
-                                            persons={habitacion.amount_people}
-                                            price={habitacion.price}
-                                            date_start={habitacion.start_date}
-                                            date_end={habitacion.ending_date}
-                                            image={habitacion.img}
+                                        key={i}
+                                        room_id={habitacion.room_id}
+                                        room_name={habitacion.room_name}
+                                        hotel_name={habitacion.hotel_name}
+                                        country={habitacion.country}
+                                        city={habitacion.city}
+                                        amount_people={habitacion.amount_people}
+                                        price={habitacion.price}
+                                        start_date={habitacion.start_date}
+                                        ending_date={habitacion.ending_date}
+                                        img={habitacion.img}
                                             // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
                                         />
                                     )

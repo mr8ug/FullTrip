@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import AutoCard from "./AutoCard";
 import styles from "./styles/SearchView.module.css";
+import Swal from "sweetalert2";
 
 import Accordion from 'react-bootstrap/Accordion'
 
@@ -29,13 +30,31 @@ export default class Autos extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
+                console.log(data);
                 this.setState({
                     autos: data.cars,
                     autosFiltrados: data.cars
 
                 })
             })
+            .catch(
+                error => {
+                    Swal.fire({
+                        title:'Parece que no estas conectado a internet',
+                        text:'Por favor revisa tu conexion a internet',
+                        icon:'error',
+                        confirmButtonText:'Ok',
+                        
+                    })
+                    .then(
+                        function (isConfirm){
+                            if(isConfirm){
+                                window.location.href = "/Inicio";
+                            }
+                        })
+                }
+                
+            )
     }
 
     handleMarcaFilter = (e) => {
@@ -62,9 +81,10 @@ export default class Autos extends Component {
                 autosFiltrados: this.state.autos
             })
         } else {
-            const autosFiltradosPorMarca = this.state.autos.filter(auto => auto.brand === marca);
+            const autosFiltradosPorMarca = this.state.autos.filter(auto => String(auto.brand).includes(marca));
             this.setState({
-                autosFiltrados: autosFiltradosPorMarca
+                autosFiltrados: autosFiltradosPorMarca,
+                actual_filter: "marca"
             })
         }
     }
@@ -93,10 +113,12 @@ export default class Autos extends Component {
                 autosFiltrados: this.state.autos
             })
         } else {
-            const autosFiltradosPorLinea = this.state.autos.filter(auto => auto.line === linea);
+            const autosFiltradosPorLinea = this.state.autos.filter(auto =>  linea === auto.line );
             this.setState({
-                autosFiltrados: autosFiltradosPorLinea
+                autosFiltrados: autosFiltradosPorLinea,
+                actual_filter: "linea"
             })
+            console.log("autos filtrados",this.state.autosFiltrados)
         }
     }
 
@@ -119,7 +141,7 @@ export default class Autos extends Component {
         var getCiudadSelected = document.getElementById("ciudad");
         getCiudadSelected.value = "todos";
 
-        let modelo = e.target.value;
+        var modelo = e.target.value;
         console.log("modelo:" + modelo);
 
         if (modelo === "todos") {
@@ -127,9 +149,10 @@ export default class Autos extends Component {
                 autosFiltrados: this.state.autos
             })
         } else {
-            const autosFiltradosPorModelo = this.state.autos.filter(auto => String(auto.model) === (modelo));
+            const autosFiltradosPorModelo = this.state.autos.filter((auto) => (auto.model) === parseInt(modelo));
             this.setState({
-                autosFiltrados: autosFiltradosPorModelo
+                autosFiltrados: autosFiltradosPorModelo,
+                actual_filter: "modelo"
             })
         }
     }
@@ -153,20 +176,24 @@ export default class Autos extends Component {
 
         var getCiudadSelected = document.getElementById("ciudad");
         getCiudadSelected.value = "todos";
-
+        console.log(precio)
         if (precio === "todos") {
             this.setState({
                 autosFiltrados: this.state.autos
             })
-        } if (precio === "asc") {
+        } else if (precio === "asc") {
+            console.log("filter asc")
             const autosFiltradosPorPrecio = this.state.autos.sort((a, b) => a.price - b.price);
             this.setState({
-                autosFiltrados: autosFiltradosPorPrecio
+                autosFiltrados: autosFiltradosPorPrecio,
+                actual_filter: "precio"
             })
-        } if (precio === "desc") {
+        } else if (precio === "desc") {
+            console.log("filter desc")
             const autosFiltradosPorPrecio = this.state.autos.sort((a, b) => b.price - a.price);
             this.setState({
-                autosFiltrados: autosFiltradosPorPrecio
+                autosFiltrados: autosFiltradosPorPrecio,
+                actual_filter: "precio"
             })
         }
     }
@@ -197,8 +224,12 @@ export default class Autos extends Component {
             })
         } else {
             const autosFiltradosPorPais = this.state.autos.filter(auto => auto.country === pais);
+
+            //update realtime state
+
             this.setState({
-                autosFiltrados: autosFiltradosPorPais
+                autosFiltrados: autosFiltradosPorPais,
+                actual_filter: "pais"
             })
         }
     }
@@ -230,7 +261,8 @@ export default class Autos extends Component {
         } else {
             const autosFiltradosPorCiudad = this.state.autos.filter(auto => auto.city === ciudad);
             this.setState({
-                autosFiltrados: autosFiltradosPorCiudad
+                autosFiltrados: autosFiltradosPorCiudad,
+                actual_filter: "ciudad"
             })
         }
     }
@@ -284,11 +316,16 @@ export default class Autos extends Component {
 
         const nombre = e.target.value;
 
-        const autosFiltradosPorNombre = this.state.autos.filter(auto => (auto.line.toLowerCase().includes(nombre.toLowerCase())) || (auto.brand.toLowerCase().includes(nombre.toLowerCase())) ||  (auto.car_rental.toString().includes(nombre.toLowerCase()) ));
+        const autosFiltradosPorNombre = this.state.autos.filter(auto => (auto.line.toLowerCase().includes(nombre.toLowerCase())) || (auto.brand.toLowerCase().includes(nombre.toLowerCase())) || (auto.car_rental.toString().includes(nombre.toLowerCase())));
         this.setState({
-            autosFiltrados: autosFiltradosPorNombre
+            autosFiltrados: autosFiltradosPorNombre,
+            actual_filter: "nombre"
         })
+
     }
+
+    //listen and update state
+    
 
 
     render() {
@@ -312,7 +349,7 @@ export default class Autos extends Component {
                                             this.state.autos
                                                 .map((auto) => auto.brand)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
-                                                .map((marca) => <option value={marca}>{marca}</option>)
+                                                .map((marca, i) => <option key={i} value={marca}>{marca}</option>)
 
                                         }
                                     </select>
@@ -326,7 +363,7 @@ export default class Autos extends Component {
                                             this.state.autos
                                                 .map((auto) => auto.line)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
-                                                .map((linea) => <option value={linea}>{linea}</option>)
+                                                .map((linea, i) => <option key={i} value={linea}>{linea}</option>)
 
                                         }
                                     </select>
@@ -340,32 +377,18 @@ export default class Autos extends Component {
                                             this.state.autos
                                                 .map((auto) => auto.model)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
-                                                .map((modelo) => <option value={modelo}>{modelo}</option>)
+                                                .map((modelo, i) => <option key={i} value={modelo}>{modelo}</option>)
 
                                         }
                                     </select>
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="precio" className={styles.label}>Precio</label>
+                                    <label htmlFor="precio" className={styles.label}>Precio por dia</label>
                                     <select name="precio" id="precio" className="form-control" onChange={this.handlePrecioFilter}>
                                         <option value="todos">Todos</option>
                                         <option value="asc">Ascendente</option>
                                         <option value="desc">Descendente</option>
-                                    </select>
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="ciudad" className={styles.label}>Ciudad</label>
-                                    <select name="ciudad" id="ciudad" className="form-control" onChange={this.handleCiudadFilter}>
-                                        <option value="todos">Todos</option>
-                                        {
-                                            this.state.autos
-                                                .map((auto) => auto.city)
-                                                .filter((value, index, self) => self.indexOf(value) === index)
-                                                .map((ciudad) => <option value={ciudad}>{ciudad}</option>)
-
-                                        }
                                     </select>
                                 </div>
 
@@ -377,11 +400,28 @@ export default class Autos extends Component {
                                             this.state.autos
                                                 .map((auto) => auto.country)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
-                                                .map((pais) => <option value={pais}>{pais}</option>)
+                                                .map((pais, i) => <option key={i} value={pais}>{pais}</option>)
 
                                         }
                                     </select>
                                 </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="ciudad" className={styles.label}>Ciudad</label>
+                                    <select name="ciudad" id="ciudad" className="form-control" onChange={this.handleCiudadFilter}>
+                                        <option value="todos">Todos</option>
+                                        {
+                                            
+                                            this.state.autos
+                                                .map((auto) => auto.city)
+                                                .filter((value, index, self) => self.indexOf(value) === index)
+                                                .map((ciudad, i) => <option key={i} value={ciudad}>{ciudad}</option>)
+
+                                        }
+                                    </select>
+                                </div>
+
+
 
                                 <div className="form-group">
                                     <label htmlFor="nombre" className={styles.label}>Nombre</label>
@@ -389,36 +429,42 @@ export default class Autos extends Component {
                                 </div>
 
                                 <Button variant="warning" onClick={this.handleFilter}> Limpiar </Button>
+                                <p>{this.state.actual_filter}</p>
                             </div>
                         </Accordion.Body>
                     </Accordion.Item>
+                    <div>
+
+
+                    </div>
 
                 </Accordion>
+
+
 
                 <div className={styles.container}>
                     {
 
-                        this.state.autosFiltrados === [] ? <h1>No hay habitaciones disponibles</h1> :
-                            this.state.autosFiltrados
-                                .map((auto) =>
+                        this.state.autosFiltrados
+                            .map((auto, index) => {
+                                return (
                                     <AutoCard
-                                        key={auto.id_car}
-                                        id={auto.id_car}
+                                        key={index}
+                                        id={auto.id}
                                         line={auto.line}
                                         model={auto.model}
                                         brand={auto.brand}
+                                        
+                                        
                                         price={auto.price}
                                         country={auto.country}
                                         city={auto.city}
                                         car_rental={auto.car_rental}
-                                        car_rental_id={auto.car_rental_id}
                                         img={auto.img}
-
-
-                                    // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
+                                        mode={"search"}
                                     />
-
                                 )
+                            })
 
                     }
                 </div>

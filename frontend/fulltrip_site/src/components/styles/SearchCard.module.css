@@ -75,6 +75,17 @@
     text-align: justify;
     
 }
+.background_img{
+    background-image: url("../../images/no_preview_available.jpg");
+    
+    
+    
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: blur(5px);
+    opacity: 0.5;
+}
 
 
 
