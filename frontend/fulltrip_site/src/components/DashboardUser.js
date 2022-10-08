@@ -99,17 +99,15 @@ export default class DashboardUser extends Component {
                 <div className={styles.jumbotron}>
                     <h1 >Hola, {this.state.name}!</h1>
                     <p className={styles.hand}> &#128075;</p>
-                    <p >Es un placer verte de nuevo.</p>
+                    <p className={styles.p}>Es un placer verte de nuevo.</p>
                 </div>
 
-                <Tabs className={styles.tabs}
+                <Tabs 
+                    className={styles.tabs}
                     defaultActiveKey="profile"
                     id="fill-tabs"
-
                     justify
-                    //list all variants
                     variant='tabs'
-
                 // pills
                 // fill
                 // justify

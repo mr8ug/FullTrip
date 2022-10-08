@@ -1,30 +1,445 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
+
 
 import styles from "./styles/DashboardGlobal.module.css"
+import styles_search_view from "./styles/SearchView.module.css"
 
+import Swal from "sweetalert2";
+import CryptoJS from "crypto-js";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import RegistroHabitacion from "./RegistroHabitacion";
+import RegistroAuto from "./RegistroAuto";
+import RegistroVuelo from "./RegistroVuelo";
+import { Accordion, Button, FloatingLabel } from "react-bootstrap";
+
+//cards
+import HabitacionCard from "./HabitacionCard";
+import AutoCard from "./AutoCard";
+import VueloCard from "./VueloCard";
+
+import Form from "react-bootstrap/Form";
 
 
 export default class DashboardThirdService extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            title: this.props.title,
-            description: this.props.description,
-            image: this.props.image,
-            link: this.props.link
+            email: '',
+            name: '',
+            tipo: '',
+            id: '',
+            servicios: [],
+            user_info: {
+                userid: '',
+                date_birth: '',
+                fullname: '',
+                username: '',
+                password: '',
+                email: '',
+                country:'',
+                city:'',
+
+            },
         }
+
+
     }
-    render(){
-        return(
-            <div className={styles.card}>
-                <div className={styles.cardImage}>
-                    <img src={this.state.image} alt="Imagen de servicio" />
+
+    componentDidMount() {
+        var usuario = "";
+        var nombre = ""
+        var tipo = "";
+        var id = "";
+
+        window.sessionStorage.getItem('email') !== null ? usuario = CryptoJS.AES.decrypt(window.sessionStorage.getItem('email'), 'fulltrip').toString(CryptoJS.enc.Utf8) : usuario = "";
+        window.sessionStorage.getItem('nombre') !== null ? nombre = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : nombre = "";
+        window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
+        window.sessionStorage.getItem('id') !== null ? id = window.sessionStorage.getItem('id') : id = "";
+        // console.log(tipo)
+        // console.log(['hotel', 'auto', 'aerolinea'].includes(tipo))
+
+        if (!['hotel', 'arrendador', 'aerolinea'].includes(tipo)) {
+            Swal.fire({
+                title: 'Hmm parece que no tienes una cuenta de empresa',
+                text: 'Por favor crea una cuenta de empresa para poder acceder a esta pagina',
+                icon: 'warning',
+                confirmButtonText: 'Ok',
+
+            }).then(
+                function (isConfirm) {
+                    if (isConfirm) {
+                        window.location.href = "/Perfil";
+                    }
+                }
+            )
+        } else {
+            this.setState({
+                email: usuario,
+                name: nombre,
+                tipo: tipo,
+                id: id
+            })
+
+            if (tipo === 'hotel') {
+                fetch("http://localhost:4000/api/all_rooms", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const filtro = data.rooms.filter((item) => item.hotel_name === this.state.name)
+                        this.setState({
+                            servicios: filtro
+                        })
+                    })
+            }
+            if (tipo === 'arrendador') {
+                fetch("http://localhost:4000/api/all_cars", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const filtro = data.cars.filter(car => car.car_rental === this.state.name)
+                        this.setState({
+                            servicios: filtro
+                        })
+                    })
+            }
+            if (tipo === 'aerolinea') {
+                fetch("http://localhost:4000/api/all_flights", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const filtro = data.flights.filter(flight => flight.airline_name === this.state.name)
+                        this.setState({
+                            servicios: filtro
+                        })
+                    })
+            }
+
+            //fetch de su informacion personal
+            let formData = new FormData();
+            // formData.append('email', usuario);
+            formData.append('id', id);
+            fetch("http://localhost:4000/api/user_info", {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data)
+                    this.setState({
+                        user_info: data
+                    })
+
+                    //fix date
+                    
+
+
+
+                })
+
+        }
+
+    }
+
+    focusCrear = () => {
+        setTimeout(() => {
+            var crear = document.getElementById('crear')
+            crear.scrollIntoView({ behavior: 'smooth' },)
+        }, 500);
+
+    }
+
+    focusVer = () => {
+        setTimeout(() => {
+            var ver = document.getElementById('ver')
+            ver.scrollIntoView({ behavior: 'smooth' },)
+        }, 500);
+    }
+
+    showButton =(e) =>{
+        e.preventDefault();
+        document.getElementById('submit_perfil').style.display = 'block'
+
+    }
+
+
+
+    render() {
+        return (
+            <div className={styles.dashboard_thirdservice}>
+
+
+                <div className={styles.jumbotron}>
+                    <h1>Hola, {this.state.name}!</h1>
+                    <p className={styles.hand}> &#128075;</p>
+                    <p className={styles.p}>Esta es tu cuenta de {
+                    this.state.tipo === 'hotel' ? 'Hotel' : this.state.tipo === 'arrendador' ? 'Arrendador de autos' : 'Aerolinea'
+                    }</p>
                 </div>
-                <div className={styles.cardContent}>
-                    <h3>{this.state.title}</h3>
-                    <p>{this.state.description}</p>
-                    <a href={this.state.link} target="_blank" rel="noreferrer">Ir al servicio</a>
-                </div>
+
+                <Tabs
+                    className={styles.tabs}
+                    defaultActiveKey="profile"
+                    id="fill-tabs"
+                    justify
+                    variant='tabs'
+
+                >
+                    <Tab className={styles.tab} eventKey="profile" title="Perfil">
+                        <h1>Vista general</h1>
+                        <div className={styles.perfil}>
+                        <form>
+                            <div className={styles.perfil_info} >
+                            
+
+                            
+                                <FloatingLabel controlId="nombre_perfil" label="Nombre">
+                                    <Form.Control type="text" placeholder="Nombre" value={this.state.user_info.fullname} onChange={this.showButton}/>
+                                </FloatingLabel>
+
+                                <FloatingLabel controlId="email_perfil" label="Email">
+                                    <Form.Control type="text" placeholder="Email" value={this.state.user_info.email} disabled />
+                                </FloatingLabel>
+
+                                <FloatingLabel controlId="telefono_perfil" label="Pais">
+                                    <Form.Control type="text" placeholder="Pais" value={this.state.user_info.country} onChange={this.showButton}/>
+                                </FloatingLabel>
+
+                                <FloatingLabel controlId="city_perfil" label="Ciudad">
+                                    <Form.Control type="text" placeholder="Ciudad" value={this.state.user_info.city} onChange={this.showButton}/>
+                                </FloatingLabel>
+
+                                <FloatingLabel controlId="tipo_perfil" label="Tipo de Cuenta" >
+                                    <Form.Control type="text" placeholder="Tipo de cuenta" value={
+                                        this.state.tipo === 'hotel' ? 'Hotel' : this.state.tipo === 'arrendador' ? 'Arrendador' : 'Aerolinea'
+                                    } disabled />
+                                </FloatingLabel>
+
+                                <FloatingLabel controlId="date_perfil" label="Fecha de Nacimiento">
+                                    <Form.Control type="date" placeholder="Fecha de Nacimiento" value={
+                                        this.state.user_info.date_birth !== undefined ? this.state.user_info.date_birth.slice(0, 10) : ""
+                                    } onChange={this.showButton}/>
+                                </FloatingLabel>
+
+                                
+
+                                <FloatingLabel controlId="contrasena_perfil" label="Nueva Contraseña">
+                                    <Form.Control type="password" placeholder="Contraseña" onChange={this.showButton}/>
+                                </FloatingLabel>
+
+                                
+
+
+
+                                <FloatingLabel controlId="contrasena2_perfil" label="Confirmar Contraseña">
+                                    <Form.Control type="password" placeholder="Contraseña" onChange={this.showButton}/>
+                                </FloatingLabel>
+
+                                <Button id="submit_perfil" style={{display:"none"}} variant="warning">
+                                    Guardar Cambios
+                                </Button>
+
+
+                            </div>
+                            </form>
+                        </div>
+
+
+                    </Tab>
+                    {/* SERVICIOS DE HOTEL */}
+                    {
+
+                        this.state.tipo === "hotel" ?
+                            <Tab className={styles.tab} eventKey="habitaciones" title="Habitaciones" onClick={this.focusCrear}>
+                                <Accordion defaultActiveKey={1}>
+                                    <Accordion.Item eventKey="0" onClick={this.focusCrear} >
+                                        <Accordion.Header>Crear una habitacion</Accordion.Header>
+                                        <Accordion.Body id='crear'>
+                                            <RegistroHabitacion />
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="1">
+                                        <Accordion.Header>Ver habitaciones</Accordion.Header>
+                                        <Accordion.Body id='ver' onClick={this.focusVer}>
+
+                                            {/* <div className={styles_search_view.jumbotron}>
+                                                <h1 className={styles_search_view.h1}>🛫 {this.state.name} 🛬</h1>
+                                            </div> */}
+
+                                            <div className={styles_search_view.container}>
+                                                {/* <Hoteles /> */}
+                                                {
+
+                                                    this.state.servicios === [] ? <h1>No hay habitaciones disponibles</h1> :
+                                                        this.state.servicios
+                                                            .filter((habitacion) => habitacion.hotel_name === this.state.name)
+                                                            .map((habitacion, i) => {
+                                                                return (
+                                                                    <HabitacionCard
+                                                                        key={i}
+                                                                        room_id={habitacion.room_id}
+                                                                        room_name={habitacion.room_name}
+                                                                        hotel_name={habitacion.hotel_name}
+                                                                        country={habitacion.country}
+                                                                        city={habitacion.city}
+                                                                        amount_people={habitacion.amount_people}
+                                                                        price={habitacion.price}
+                                                                        start_date={habitacion.start_date}
+                                                                        ending_date={habitacion.ending_date}
+                                                                        img={habitacion.img}
+                                                                    // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
+                                                                    />
+                                                                )
+                                                            })
+
+                                                }
+                                            </div>
+
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            </Tab>
+                            :
+
+                            null
+
+                    }
+                    {/* SERVICIOS DE ARRENDADOR */}
+                    {
+
+                        this.state.tipo === "arrendador" ?
+                            <Tab className={styles.tab} eventKey="arrendador" title="Autos" onClick={this.focusCrear}>
+                                <Accordion defaultActiveKey={1}>
+                                    <Accordion.Item eventKey="0" onClick={this.focusCrear} >
+                                        <Accordion.Header>Crear un Auto</Accordion.Header>
+                                        <Accordion.Body id='crear'>
+                                            <RegistroAuto />
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="1">
+                                        <Accordion.Header>Ver Autos</Accordion.Header>
+                                        <Accordion.Body id='ver' onClick={this.focusVer}>
+                                            {/* <div className={styles_search_view.jumbotron}>
+                                                <h1 className={styles_search_view.h1}>🚙 {this.state.name} 🚙</h1>
+                                            </div> */}
+                                            {/* <Autos /> */}
+
+                                            <div className={styles_search_view.container}>
+                                                {
+
+                                                    this.state.servicios === [] ? <h1>No hay autos disponibles</h1> :
+                                                        this.state.servicios
+                                                            .filter(auto => auto.car_rental === this.state.name)
+                                                            .map((auto, i) =>
+                                                                <AutoCard
+                                                                    key={i}
+                                                                    id={auto.id_car}
+                                                                    line={auto.line}
+                                                                    model={auto.model}
+                                                                    brand={auto.brand}
+                                                                    price={auto.price}
+                                                                    country={auto.country}
+                                                                    city={auto.city}
+                                                                    car_rental={auto.car_rental}
+                                                                    car_rental_id={auto.car_rental_id}
+                                                                    img={auto.img}
+                                                                    mode={"dashboard"}
+
+
+                                                                // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
+                                                                />
+                                                            )
+                                                }
+                                            </div>
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            </Tab>
+                            :
+
+                            null
+
+                    }
+                    {/* SERVICIOS DE AEROLINEA */}
+                    {
+                        this.state.tipo === "aerolinea" ?
+                            <Tab className={styles.tab} eventKey="aerolinea" title="Vuelos" onClick={this.focusCrear}>
+                                <Accordion defaultActiveKey={1}>
+                                    <Accordion.Item eventKey="0" onClick={this.focusCrear} >
+                                        <Accordion.Header>Crear un Vuelo</Accordion.Header>
+                                        <Accordion.Body id='crear'>
+                                            <RegistroVuelo />
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                    <Accordion.Item eventKey="1">
+                                        <Accordion.Header>Ver Vuelos</Accordion.Header>
+                                        <Accordion.Body id='ver' onClick={this.focusVer}>
+                                            {/* <div className={styles_search_view.jumbotron}>
+                                                <h1 className={styles_search_view.h1}>🛫 {this.state.name} 🛬</h1>
+                                            </div> */}
+
+                                            <div className={styles_search_view.container}>
+
+
+                                                {
+                                                    this.state.servicios === [] ? <h1>No hay vuelos disponibles</h1> :
+                                                        this.state.servicios
+                                                            .filter(vuelo => vuelo.airline_name === this.state.name)
+                                                            .map((vuelo, i) =>
+                                                                <VueloCard
+                                                                    key={i}
+                                                                    id_flight={vuelo.id_flight}
+                                                                    airline_id={vuelo.airline_id}
+                                                                    airline_name={vuelo.airline_name}
+                                                                    price={vuelo.price}
+                                                                    flight_date={vuelo.flight_date}
+                                                                    flight_destination={vuelo.flight_destination}
+                                                                    flight_origin={vuelo.flight_origin}
+                                                                    departure_time={vuelo.departure_time}
+                                                                    available_seat={vuelo.available_seat}
+                                                                />
+                                                            )
+
+                                                }
+                                            </div>
+
+                                        </Accordion.Body>
+                                    </Accordion.Item>
+                                </Accordion>
+                            </Tab>
+                            :
+
+                            null
+                    }
+
+
+
+                    <Tab className={styles.tab} eventKey="reservas" title="Reservas">
+                        <h1>Reservas</h1>
+                    </Tab>
+
+                    <Tab className={styles.tab} eventKey="reviews" title="Reseñas">
+                        <h1>Reseñas</h1>
+                    </Tab>
+
+                    <Tab className={styles.tab} eventKey="carga" title="Reseñas">
+                        <h1>Carga Masiva</h1>
+                    </Tab>
+
+
+                </Tabs>
             </div>
         );
     }

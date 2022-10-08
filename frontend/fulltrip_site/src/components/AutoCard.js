@@ -19,14 +19,25 @@ export default class AutoCard extends Component {
             car_rental: this.props.car_rental,
             car_rental_id: this.props.car_rental_id,
             img: this.props.img,
+            mode: this.props.mode,
+            
 
         }
     }
 
 
     componentDidMount() {
-
+        // console.log('type of price' + typeof (this.state.price));
     }
+
+    delete = () => {
+        //fetch para eliminar por id
+    }
+
+    editar = () => {
+        //fetch para editar por id
+    }
+
 
     render() {
         return (
@@ -34,18 +45,38 @@ export default class AutoCard extends Component {
                 <Card.Header><strong>{this.state.city},</strong> {this.state.country}</Card.Header>
                 <Card.Img variant="top" src={this.state.img} height={160} width={100} />
                 <Card.Body>
-                    <Card.Title>{this.state.brand} {this.state.line}</Card.Title>
+                    <Card.Title>{this.state.brand} - {this.state.line}</Card.Title>
                     <Card.Text >
                         {this.state.car_rental}
                     </Card.Text>
                     <ListGroup>
                         <ListGroup.Item variant='primary' className={styles.item}>Modelo:  {this.state.model}</ListGroup.Item>
-                        <ListGroup.Item variant='secondary' className={styles.item}>Precio: ${this.state.price}</ListGroup.Item>
+                        <ListGroup.Item variant='secondary' className={styles.item}>Precio: ${this.state.price} / Dia</ListGroup.Item>
+                        
                     </ListGroup>
                 </Card.Body>
-                <Card.Footer className="text-muted">
-                    <Button variant="primary" href={"/Auto?id=" + this.state.id}>Reservar</Button>
-                </Card.Footer>
+
+                {
+
+                    this.state.mode === "search" ?
+                        <Card.Footer className="text-muted">
+                            <Button variant="primary" href={"/Auto?id=" + this.state.id}>Reservar</Button>
+                        </Card.Footer>
+                        : null
+                }
+                {
+
+                    this.state.mode === "dashboard" ?
+                        <Card.Footer className="text-muted">
+                            <Button onClick={this.delete} variant="danger" >Eliminar</Button>
+                            
+                            <Button onClick={this.editar} variant="warning">Editar</Button>
+                        </Card.Footer>
+                        : null
+                }
+
+
+
             </Card>
 
 

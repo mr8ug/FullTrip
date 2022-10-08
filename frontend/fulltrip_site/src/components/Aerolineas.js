@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 import VueloCard from "./VueloCard";
 import styles from "./styles/SearchView.module.css";
+import Swal from "sweetalert2";
 
 import Accordion from 'react-bootstrap/Accordion'
 
@@ -28,12 +29,30 @@ export default class Aerolineas extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 this.setState({
                     vuelos: data.flights,
                     vuelosFiltrados: data.flights
                 })
             })
+            .catch(
+                error => {
+                    Swal.fire({
+                        title:'Parece que no estas conectado a internet',
+                        text:'Por favor revisa tu conexion a internet',
+                        icon:'error',
+                        confirmButtonText:'Ok',
+                        
+                    })
+                    .then(
+                        function (isConfirm){
+                            if(isConfirm){
+                                window.location.href = "/Inicio";
+                            }
+                        })
+                }
+                
+            )
 
 
     }
@@ -93,7 +112,7 @@ export default class Aerolineas extends Component {
             })
         }
         else {
-            let vuelosFiltradosPorDestino = this.state.vuelos.filter(vuelo => vuelo.flight_destination === destino);
+            let vuelosFiltradosPorDestino = this.state.vuelos.filter(vuelo => String(vuelo.flight_destination) === destino);
             this.setState({
                 vuelosFiltrados: vuelosFiltradosPorDestino
             })
@@ -136,18 +155,18 @@ export default class Aerolineas extends Component {
     }
 
     handlePrecioChange = (event) => {
-        let precio = event.target.value;
+        const precio = event.target.value;
 
-        let origenSelect = document.getElementById("origen")
-        let destinoSelect = document.getElementById("destino")
-        let tipoSelect = document.getElementById("tipo")
+        var origenSelect = document.getElementById("origen")
+        var destinoSelect = document.getElementById("destino")
+        var tipoSelect = document.getElementById("tipo")
 
 
         origenSelect.value = "todos";
         destinoSelect.value = "todos";
         tipoSelect.value = "todos";
 
-        let nombreInput = document.getElementById("nombre")
+        var nombreInput = document.getElementById("nombre")
         nombreInput.value = "";
 
 
@@ -156,14 +175,14 @@ export default class Aerolineas extends Component {
                 vuelosFiltrados: this.state.vuelos
             })
         }
-        else if (precio === "asc") {
-            let vuelosFiltradosPorPrecio = this.state.vuelos.sort((a, b) => a.flight_price - b.flight_price);
+        if (precio === "asc") {
+            let vuelosFiltradosPorPrecio = this.state.vuelos.sort((a, b) => a.price - b.price);
             this.setState({
                 vuelosFiltrados: vuelosFiltradosPorPrecio
             })
         }
-        else if (precio === "desc") {
-            let vuelosFiltradosPorPrecio = this.state.vuelos.sort((a, b) => b.flight_price - a.flight_price);
+        if (precio === "desc") {
+            let vuelosFiltradosPorPrecio = this.state.vuelos.sort((a, b) => b.price - a.price);
             this.setState({
                 vuelosFiltrados: vuelosFiltradosPorPrecio
             })
@@ -234,7 +253,7 @@ export default class Aerolineas extends Component {
                                             this.state.vuelos
                                                 .map((vuelo) => vuelo.flight_origin)
                                                 .filter((value, index, self) => self.indexOf(value) === index)
-                                                .map((origen) => <option value={origen}>{origen}</option>)
+                                                .map((origen, i) => <option key={i}  value={origen}>{origen}</option>)
 
                                         }
                                     </select>
@@ -248,7 +267,7 @@ export default class Aerolineas extends Component {
                                             this.state.vuelos
                                                 .map((vuelo) => vuelo.flight_destination)
                                                 .filter((destino, index, self) => self.indexOf(destino) === index)
-                                                .map((destino) => <option value={destino}>{destino}</option>)
+                                                .map((destino, i) => <option key={i} value={destino}>{destino}</option>)
                                                 
                                                 
                                                 
@@ -292,9 +311,9 @@ export default class Aerolineas extends Component {
                     {
                         this.state.vuelosFiltrados === [] ? <h1>No hay vuelos disponibles</h1> :
                             this.state.vuelosFiltrados
-                                .map((vuelo) =>
+                                .map((vuelo, i) =>
                                     <VueloCard
-                                        key={vuelo.id_flight}
+                                        key={i}
                                         id_flight={vuelo.id_flight}
                                         airline_id={vuelo.airline_id}
                                         airline_name={vuelo.airline_name}
@@ -302,8 +321,8 @@ export default class Aerolineas extends Component {
                                         flight_date={vuelo.flight_date}
                                         flight_destination={vuelo.flight_destination}
                                         flight_origin={vuelo.flight_origin}
-                                        flight_time={vuelo.flight_time}
-                                        flight_date_end={vuelo.flight_date_end}
+                                        departure_time={vuelo.departure_time}
+                                        available_seat={vuelo.available_seat}
                                     />
                                 )
 
