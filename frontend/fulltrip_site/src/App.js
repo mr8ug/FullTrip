@@ -14,9 +14,9 @@ import Navbar from "./components/Navbar";
 import RegistroUsuario from "./components/RegistroUsuario";
 import RegistroGlobal from "./components/RegistroGlobal"; //se le debe pasar la propiedad userType={Hotel, Arrendador, Aerolinea}
 
-import RegistroAuto from "./components/RegistroAuto";
-import RegistroHabitacion from "./components/RegistroHabitacion";
-import RegistroVuelo from "./components/RegistroVuelo";
+// import RegistroAuto from "./components/RegistroAuto";
+// import RegistroHabitacion from "./components/RegistroHabitacion";
+// import RegistroVuelo from "./components/RegistroVuelo";
 
 import Page404 from "./components/Page404";
 
@@ -135,9 +135,9 @@ export default class App extends Component {
             <Route path="/RegistroArrendador" element={<RegistroGlobal userType="Arrendador" />} />
 
 
-            <Route path="/RegistroAuto" element={<RegistroAuto/>} />
+            {/* <Route path="/RegistroAuto" element={<RegistroAuto/>} />
             <Route path="/RegistroHabitacion" element={<RegistroHabitacion/>} />
-            <Route path="/RegistroVuelo" element={<RegistroVuelo/>} />
+            <Route path="/RegistroVuelo" element={<RegistroVuelo/>} /> */}
 
             <Route path="/Perfil" element={<DashboardUser />} />
             <Route path="/DashboardAdmin" element={<DashboardAdmin />} />

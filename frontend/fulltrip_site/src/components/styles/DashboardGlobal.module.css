@@ -10,10 +10,11 @@
     margin: 10px 20px;
     animation: bounce-in-top 1.1s both;
     display: flex;
-    
+
     justify-content: center;
     align-items: center;
-    
+    text-shadow: #303030 0px 0px 10px;
+
 }
 
 .jumbotron h1 {
@@ -23,12 +24,14 @@
 }
 
 .jumbotron p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin: 0;
     color: whitesmoke;
+
+
 }
 
-.jumbotron .hand{
+.jumbotron .hand {
     -webkit-animation: wobble-hor-bottom 0.8s both;
     animation: wobble-hor-bottom 0.8s both;
     animation-delay: 1.3s;
@@ -38,16 +41,36 @@
 .tabs {
     margin: 10px;
     color: white !important;
+
 }
 
-.nav-link {
-    color: #303030 !important;
-    font-weight: 700 !important;
-    font-size: 1.2rem !important;
-    --bs-nav-link-color: #303030 !important;
+.tabs h1 {
+    color: white;
+
+
 }
 
-.btn_primary{
+.tab {
+    margin: 20px 10px;
+    padding: 20px;
+    background-color: whitesmoke;
+    border-radius: 15px;
+
+    color: #303030;
+
+}
+
+.tab h1,
+.tab h2,
+.tab h3 {
+
+    color: #303030;
+
+}
+
+
+
+.btn_primary {
     /*primary button*/
     background-color: #fff;
     color: #439ab3;
@@ -56,11 +79,65 @@
     border-radius: 5px;
     border: 1px solid #439ab3;
     font-size: 1em;
-    
+
     transition: 0.2s ease-in-out;
 
     width: 40%;
     text-decoration: underline;
+}
+
+.dashboard_thirdservice {
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.37);
+
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border-radius: 10px;
+
+    padding: 10px;
+    margin: 0;
+}
+
+.dashboard_user {
+    background: rgba( 155, 155, 155, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 155, 155, 155, 0.37 );
+
+-webkit-backdrop-filter: blur( 4px );
+backdrop-filter: blur( 4px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+    
+
+    padding: 10px;
+    margin: 0;
+    
+}
+
+.dashboard_thirdservice .jumbotron {
+    background-color: #FBAB7E;
+    background: linear-gradient(70deg, #F7CE68 0%, #f06023 100%);
+    background-size: 100% 100%;
+    border: 1px solid #303030;
+    border-radius: 15px;
+    padding: 10px 0 20px;
+    text-align: center;
+    color: #303030;
+    margin: 10px 20px;
+    animation: bounce-in-top 1.1s both;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.perfil_info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
 }
 
 /* animation */
@@ -278,7 +355,12 @@
         flex-direction: column;
 
     }
-    .jumbotron h1{
+
+    .jumbotron h1 {
         font-size: 1.5rem;
+    }
+
+    .perfil_info {
+        grid-template-columns: 1fr;
     }
 }

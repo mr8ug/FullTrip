@@ -48,7 +48,7 @@ class NavbarBootrap extends Component {
     render() {
         return (
             <div>
-                <Navbar key={this.state.expand} bg="light" variant='light' expand={this.state.expand} className="mb-2">
+                <Navbar key={this.state.expand} bg="light" variant='light' expand={this.state.expand}>
                     <Container fluid>
 
                         <Navbar.Brand href="/Inicio">
