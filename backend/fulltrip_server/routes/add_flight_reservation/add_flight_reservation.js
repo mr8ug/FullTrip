@@ -4,7 +4,7 @@ var upload = multer({ dest: 'uploads/' })
 
 module.exports = (express,app) => {
     
-	app.post('/api/add_hotel_reservation',upload.any(), async function(req,res){
+	app.post('/api/add_flight_reservation',upload.any(), async function(req,res){
         const conn = await mysql.createConnection(app.config.db.credentials);
         const {return_date = '', observation = '', flight_id, user_id} = req.body
         

@@ -23,7 +23,7 @@ module.exports = (express, app) => {
                 h.hotel_name, r.amount_people, r.price, h.country, h.city, a.start_date start_date_d,
                 a.ending_date ending_date_d, r.img
             from hotel_reservation hr, hotel h, room r, availability a
-            where hr.user_id = 20
+            where hr.user_id = ${user_id}
                 and hr.room_id = r.room_id 
                 and r.room_id = a.room_id
                 and r.hotel_id = h.hotel_id;
