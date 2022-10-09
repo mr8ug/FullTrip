@@ -37,7 +37,7 @@ module.exports = (express,app) => {
 					INNER JOIN car CAR ON CAR.car_id = CR.car_id
 					INNER JOIN car_rental CRENT on CRENT.car_rental_id = CAR.car_rental_id
 				WHERE
-					CR.user_id = 20;	
+					CR.user_id = ${user_id};	
 			`
 
             conn.query(sql, function (err, result, fields) {
