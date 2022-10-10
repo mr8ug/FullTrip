@@ -9,6 +9,7 @@ const uuid = require('uuid');
 module.exports = (express,app) => {
     
 	app.post('/api/add_car',upload.any(), async function(req,res){
+        
         if(req.files.length == 0){
             return res.status(406).json({response_text:"is not present value"})
         }
@@ -37,8 +38,11 @@ module.exports = (express,app) => {
 
         const str = req.files[0].originalname
         const file_ext = str.substr(str.length - 3);
-        let key = uuid.v1() + "." + file_ext;
-        console.log(key)
+        let key = uuid.v1() + "." + file_ext; 
+        if(process.env.NODE_TEST == 'true'){
+            key = 'test_' + uuid.v1() + "." + file_ext; 
+        }
+        
             await s3
                 .putObject({
                     Body: binario,

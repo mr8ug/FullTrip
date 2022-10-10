@@ -38,7 +38,6 @@ module.exports = (express,app) => {
         const str = req.files[0].originalname
         const file_ext = str.substr(str.length - 3);
         let key = uuid.v1() + "." + file_ext;
-        console.log(key)
             await s3
                 .putObject({
                     Body: binario,

@@ -5,7 +5,7 @@ const request = supertest(app)
 const path = require('path')
 
 
-describe("GET /api/login", () => {
+describe("POST /api/login", () => {
     it('verify login response', async () => {
         const response = await request
             .post('/api/login')
