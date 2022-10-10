@@ -18,10 +18,10 @@ module.exports = (express, app) => {
             }
 
             const sql = `
-            select hr.reservation_date, hr.start_date start_date_r, hr.end_date end_date_r, 
+            select DATE_FORMAT(hr.reservation_date,"%Y-%m-%d"), DATE_FORMAT(hr.start_date,"%Y-%m-%d")  start_date_r, DATE_FORMAT(hr.end_date,"%Y-%m-%d") end_date_r, 
                 hr.reservation_description, r.room_id id_room, r.room_name, h.hotel_id, 
-                h.hotel_name, r.amount_people, r.price, h.country, h.city, a.start_date start_date_d,
-                a.ending_date ending_date_d, r.img
+                h.hotel_name, r.amount_people, r.price, h.country, h.city, DATE_FORMAT(a.start_date,"%Y-%m-%d") start_date_d,
+                DATE_FORMAT(a.ending_date, "%Y-%m-%d") ending_date_d, r.img
             from hotel_reservation hr, hotel h, room r, availability a
             where hr.user_id = ${user_id}
                 and hr.room_id = r.room_id 

@@ -18,8 +18,8 @@ module.exports = (express, app) => {
             }
 
             const sql = `
-            select f.flight_id id_flight, a.airline_id, rf.date_reservation, rf.return_date, a.airline_name,
-            f.price, f.flight_date, f. flight_destination, f.origin_flight flight_origin, f.departure_time
+            select f.flight_id id_flight, a.airline_id, DATE_FORMAT(rf.date_reservation, "%Y-%m-%d") date_reservation, DATE_FORMAT(rf.return_date, "%Y-%m-%d") return_date, a.airline_name,
+            f.price, DATE_FORMAT(f.flight_date, "%Y-%m-%d") flight_date, f. flight_destination, f.origin_flight flight_origin, f.departure_time
             from airline a, flight f, reservation_flight rf
             where rf.user_id = ${user_id}
                 and rf.flight_id = f.flight_id

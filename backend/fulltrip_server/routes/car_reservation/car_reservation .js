@@ -16,9 +16,9 @@ module.exports = (express,app) => {
 			const sql = `
 				SELECT 
 					CR.car_reservation_id,
-					CR.date_reservation,
-					CR.start_date,
-					CR.end_date,
+					DATE_FORMAT(CR.date_reservation, '%Y-%m-%d') AS date_reservation,
+					DATE_FORMAT(CR.start_date, '%Y-%m-%d') AS start_date,
+					DATE_FORMAT(CR.end_date, '%Y-%m-%d') AS end_date,
 					CR.observation,
 					CR.car_id AS id_car,
 					CAR.brand,
@@ -65,7 +65,7 @@ module.exports = (express,app) => {
 						car_rental_id: row.car_rental_id,
 						img: `https://${AWS_S3_BUCKET_NAME}.s3.amazonaws.com/` + row.img,
 						date_reservation: row.date_reservation,
-						star_date: row.start_date,
+						start_date: row.start_date,
 						end_date: row.end_date,
 						observation: row.observation
                     })
