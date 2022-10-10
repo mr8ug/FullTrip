@@ -1,7 +1,4 @@
-var app = require('../server')
-
-
-
+var app = require(process.cwd() + '/server')
 const supertest = require('supertest')
 const request = supertest(app)
 const path = require('path')
@@ -34,15 +31,14 @@ const path = require('path')
 
 
 describe("GET /api/all_rooms", () => {
-    it('verify exist rooms by user valid', async () => {
+    it('verify exist rooms by hotel', async () => {
         const response = await request
             .get('/api/all_rooms')
             .set('Content-Type',  'application/json')
             .send({
-               email:"josejfss98@gmail.com",
-               password:"1234"
+                //email:process.env.TEST_EMAIL,
+                //password:process.env.TEST_PASSWORD
             })
-            //expect(response.body.response_text).toEqual('Err of connect')
             expect(response.status).toEqual(200)  
     }) 
 });

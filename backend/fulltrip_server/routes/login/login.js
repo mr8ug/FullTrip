@@ -5,6 +5,7 @@ var upload = multer({ dest: 'uploads/' })
 module.exports = (express,app) => {
     
 	app.post('/api/login',upload.any(), async function(req,res){
+        //res.setHeader('Content-Type', 'application/json')
         const conn = await mysql.createConnection(app.config.db.credentials);
         const {email,password} = req.body
         await conn.connect(function(err) {
