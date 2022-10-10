@@ -21,6 +21,7 @@ export default class HabitacionCard extends Component {
             start_date: this.props.start_date,
             ending_date: this.props.ending_date,
             img: this.props.img,
+            mode: this.props.mode
 
         }
     }
@@ -50,7 +51,7 @@ export default class HabitacionCard extends Component {
         return (
 
 
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '14rem' }}>
                 <Card.Header><strong>{this.state.city},</strong> {this.state.country}</Card.Header>
                 <Card.Img variant="top" src={this.state.img} height={160} width={100} />
                 <Card.Body>
@@ -68,9 +69,24 @@ export default class HabitacionCard extends Component {
                     </ListGroup>
                     
                 </Card.Body>
-                <Card.Footer className="text-muted">
-                    <Button variant="primary" href={"/Habitacion?id="+this.state.room_id}>Reservar</Button>
-                </Card.Footer>
+                {
+
+this.state.mode === "search" ?
+    <Card.Footer className="text-muted">
+        <Button variant="primary" href={"/Habitacion/id=" + this.state.room_id}>Reservar</Button>
+    </Card.Footer>
+    : null
+}
+{
+
+this.state.mode === "dashboard" ?
+    <Card.Footer className="text-muted">
+        <Button onClick={this.delete} variant="danger" >Eliminar</Button>
+        
+        <Button onClick={this.editar} variant="warning">Editar</Button>
+    </Card.Footer>
+    : null
+}
 
             </Card>
         );

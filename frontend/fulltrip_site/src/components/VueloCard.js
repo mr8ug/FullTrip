@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card'
 
 import { Button, ListGroup } from "react-bootstrap";
 
-import no_preview_img from '../images/no_preview_available.jpg'
+import no_preview_img from '../images/vuelos.png'
 
 
 export default class VueloCard extends Component {
@@ -22,6 +22,7 @@ export default class VueloCard extends Component {
             departure_time: this.props.departure_time,
             available_seat: this.props.available_seat,
             image: '',
+            mode:this.props.mode
         }
     }
 
@@ -81,7 +82,7 @@ export default class VueloCard extends Component {
 
     render() {
         return (
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '14rem' }}>
                 <Card.Header><strong>{this.state.flight_origin}</strong> 🛬 {this.state.flight_destination}</Card.Header>
 
                 <Card.Img variant="top" src={this.state.image !== '' ? this.state.image : no_preview_img} alt={this.state.flight_destination} height={160} />
@@ -96,9 +97,25 @@ export default class VueloCard extends Component {
                     </ListGroup>
 
                 </Card.Body>
-                <Card.Footer className="text-muted">
-                    <Button variant="primary" href={"/Vuelo?id=" + this.state.id_flight}>Reservar</Button>
-                </Card.Footer>
+                {
+
+this.state.mode === "search" ?
+    <Card.Footer className="text-muted">
+        <Button variant="primary" href={"/Vuelo/id=" + this.state.id_flight}>Reservar</Button>
+    </Card.Footer>
+    : null
+}
+{
+
+this.state.mode === "dashboard" ?
+    <Card.Footer className="text-muted">
+        <Button href={'/Vuelo/id='+this.state.id_flight} variant="success">Ver</Button>
+        <Button onClick={this.delete} variant="danger" >Eliminar</Button>
+        
+        
+    </Card.Footer>
+    : null
+}
             </Card>
         )
     }

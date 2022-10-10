@@ -123,7 +123,7 @@ export default class RegistroGlobal extends Component{
 
                     </div>
                     <div className={styles.buttons}>
-                        <button className={styles.btn_regresar}>Volver</button>
+                        {/* <button className={styles.btn_regresar}>Volver</button> */}
                         <button className={styles.btn_crear}>Registrar {this.props.userType}</button>
                     </div>
                 </form>

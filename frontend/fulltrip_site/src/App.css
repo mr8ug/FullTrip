@@ -1,7 +1,8 @@
 html{
   background-color: #212a30;
-  scroll-behavior: smooth;
+  
   -webkit-scroll-behavior: smooth;
+  scroll-behavior: smooth;
   
   -webkit-user-select: none;
   user-select: none;

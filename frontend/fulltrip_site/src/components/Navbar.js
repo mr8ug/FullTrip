@@ -17,7 +17,7 @@ class NavbarBootrap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            expand: 'lg',
+            expand: 'sm',
         }
 
 
@@ -69,7 +69,7 @@ class NavbarBootrap extends Component {
                                 <Nav className='justify-content-start flex-grow-1 pe-3' >
                                     <Nav.Link href="/Inicio" id="inicio">Inicio</Nav.Link>
                                     <Nav.Link href="/Hoteles" id='hoteles'>Hoteles</Nav.Link>
-                                    <Nav.Link href="/Autos" id='autos'>Autos</Nav.Link>
+                                    <Nav.Link href="/Autos" id='autos'>Arrendadores</Nav.Link>
                                     <Nav.Link href="/Aerolineas" id='aerolineas'>Aerolineas</Nav.Link>
                                 
 
@@ -101,7 +101,7 @@ class NavbarBootrap extends Component {
                                         className="me-2"
                                         aria-label="Search"
                                     />
-                                    <Button variant="outline-warning">Buscar</Button>
+                                    <Button variant="outline-success">Buscar</Button>
                                 </Form>
 
                                 

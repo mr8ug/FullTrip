@@ -6,13 +6,15 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 import Inicio from "./components/Inicio";
 import Hoteles from "./components/Hoteles";
-import Autos from "./components/Autos";
+import Autos from "./components/Arrendadores";
 import Aerolineas from "./components/Aerolineas";
 
 import Navbar from "./components/Navbar";
 
 import RegistroUsuario from "./components/RegistroUsuario";
-import RegistroGlobal from "./components/RegistroGlobal"; //se le debe pasar la propiedad userType={Hotel, Arrendador, Aerolinea}
+import RegistroGlobal from "./components/RegistroGlobal";
+
+import RegistroReview from "./components/RegistroReview";//se le debe pasar la propiedad userType={Hotel, Arrendador, Aerolinea}
 
 // import RegistroAuto from "./components/RegistroAuto";
 // import RegistroHabitacion from "./components/RegistroHabitacion";
@@ -29,6 +31,8 @@ import DashboardThirdService from "./components/DashboardThirdService"
 import Habitacion from "./components/Habitacion";
 import Auto from "./components/Auto";
 import Vuelo from "./components/Vuelo";
+
+import CerrarSesion from "./components/CerrarSesion";
 
 
 export default class App extends Component {
@@ -99,7 +103,7 @@ export default class App extends Component {
       window.sessionStorage.setItem('pagina', "perfil");
     } else if (window.location.pathname === "/CerrarSesion") {
       this.setState({
-        pagina: "",
+        // pagina: "",
         user_logged: false,
         userEmail:"",
         userName: "",
@@ -127,6 +131,7 @@ export default class App extends Component {
             <Route path="/Hoteles" element={<Hoteles />} />
             <Route path="/Autos" element={<Autos />} />
             <Route path="/Aerolineas" element={<Aerolineas />} />
+
             <Route path="/Registrarse" element={<RegistroUsuario />} />
             <Route path="/IniciarSesion" element={<IniciarSesion />} />
 
@@ -146,10 +151,15 @@ export default class App extends Component {
             <Route path="/DashboardHotel" element={<DashboardThirdService />} />
 
             
-            <Route path="/Habitacion?:id" component={<Habitacion/>} />
-            <Route path="/Auto?:id" component={<Auto/>} />
-            <Route path="/Vuelo?:id" component={<Vuelo/>} />
+            <Route path="/Habitacion/:id" element={<Habitacion/>} />
+            <Route path="/Auto/:id" element={<Auto/>} />
+            <Route path="/Vuelo/:id" element={<Vuelo/>} />
             
+            <Route path="/CerrarSesion" element={<CerrarSesion/>} />
+            
+            <Route path="/Habitacion/Calificar/:id" element={<RegistroReview tipo_servicio={'hotel'}/>} />
+            <Route path="/Auto/Calificar/:id" element={<RegistroReview tipo_servicio={'auto'}/>} />
+            <Route path="/Vuelo/Calificar/:id" element={<RegistroReview tipo_servicio={'vuelo'}/>} />
             
             <Route path="/*" element={<Page404 />} />
           </Routes>

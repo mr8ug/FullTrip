@@ -52,7 +52,7 @@
 
 .tab {
     margin: 20px 10px;
-    padding: 20px;
+    padding: 10px;
     background-color: whitesmoke;
     border-radius: 15px;
 
@@ -79,11 +79,29 @@
     border-radius: 5px;
     border: 1px solid #439ab3;
     font-size: 1em;
+    font-weight:bold;
 
     transition: 0.2s ease-in-out;
 
-    width: 40%;
+    width: calc(100% - 20px);
     text-decoration: underline;
+}
+
+.mainTab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    
+
+}
+.mainTab img{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .dashboard_thirdservice {
@@ -94,8 +112,8 @@
     backdrop-filter: blur(4px);
     border-radius: 10px;
 
-    padding: 10px;
-    margin: 0;
+    padding: 5px;
+    margin: 5px;
 }
 
 .dashboard_user {
@@ -109,7 +127,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
     
 
     padding: 10px;
-    margin: 0;
+    margin: 10px;
     
 }
 

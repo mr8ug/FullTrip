@@ -19,6 +19,9 @@ import AutoCard from "./AutoCard";
 import VueloCard from "./VueloCard";
 
 import Form from "react-bootstrap/Form";
+import ReservationCard from "./ReservationCard";
+import RentalCard from "./RentalCard";
+import FlightCard from "./FlightCard";
 
 
 export default class DashboardThirdService extends Component {
@@ -37,10 +40,12 @@ export default class DashboardThirdService extends Component {
                 username: '',
                 password: '',
                 email: '',
-                country:'',
-                city:'',
+                country: '',
+                city: '',
 
             },
+            reservaciones: [],
+            reviews: []
         }
 
 
@@ -95,6 +100,30 @@ export default class DashboardThirdService extends Component {
                             servicios: filtro
                         })
                     })
+
+
+                let formData = new FormData();
+                formData.append('hotel_id', parseInt(id));
+                //obtener reservaciones de hotel
+                fetch("http://localhost:4000/api/reservation_hotel", {
+                    method: 'POST',
+                    body: formData
+
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.reservations) {
+                            console.log(data.reservations)
+                            this.setState({
+                                reservaciones: data.reservations
+                            })
+                        } else {
+                            this.setState({
+                                reservaciones: []
+                            })
+                        }
+                    })
+
             }
             if (tipo === 'arrendador') {
                 fetch("http://localhost:4000/api/all_cars", {
@@ -109,6 +138,28 @@ export default class DashboardThirdService extends Component {
                         this.setState({
                             servicios: filtro
                         })
+                    })
+
+                let formData = new FormData();
+                formData.append('car_rental_id', parseInt(id));
+                //obtener reservaciones de hotel
+                fetch("http://localhost:4000/api/reservation_car_rental", {
+                    method: 'POST',
+                    body: formData
+
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.reservations) {
+                            console.log(data.reservations)
+                            this.setState({
+                                reservaciones: data.reservations
+                            })
+                        } else {
+                            this.setState({
+                                reservaciones: []
+                            })
+                        }
                     })
             }
             if (tipo === 'aerolinea') {
@@ -125,6 +176,28 @@ export default class DashboardThirdService extends Component {
                             servicios: filtro
                         })
                     })
+
+                let formData = new FormData();
+                formData.append('airline_id', parseInt(id));
+                //obtener reservaciones de aerolinea
+                fetch("http://localhost:4000/api/reservation_airline", {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.reservations) {
+                            console.log(data.reservations)
+                            this.setState({
+                                reservaciones: data.reservations
+                            })
+                        } else {
+                            this.setState({
+                                reservaciones: []
+                            })
+                        }
+                    })
+
             }
 
             //fetch de su informacion personal
@@ -143,7 +216,7 @@ export default class DashboardThirdService extends Component {
                     })
 
                     //fix date
-                    
+
 
 
 
@@ -168,7 +241,7 @@ export default class DashboardThirdService extends Component {
         }, 500);
     }
 
-    showButton =(e) =>{
+    showButton = (e) => {
         e.preventDefault();
         document.getElementById('submit_perfil').style.display = 'block'
 
@@ -185,7 +258,7 @@ export default class DashboardThirdService extends Component {
                     <h1>Hola, {this.state.name}!</h1>
                     <p className={styles.hand}> &#128075;</p>
                     <p className={styles.p}>Esta es tu cuenta de {
-                    this.state.tipo === 'hotel' ? 'Hotel' : this.state.tipo === 'arrendador' ? 'Arrendador de autos' : 'Aerolinea'
+                        this.state.tipo === 'hotel' ? 'Hotel' : this.state.tipo === 'arrendador' ? 'Arrendador de autos' : 'Aerolinea'
                     }</p>
                 </div>
 
@@ -200,59 +273,59 @@ export default class DashboardThirdService extends Component {
                     <Tab className={styles.tab} eventKey="profile" title="Perfil">
                         <h1>Vista general</h1>
                         <div className={styles.perfil}>
-                        <form>
-                            <div className={styles.perfil_info} >
-                            
-
-                            
-                                <FloatingLabel controlId="nombre_perfil" label="Nombre">
-                                    <Form.Control type="text" placeholder="Nombre" value={this.state.user_info.fullname} onChange={this.showButton}/>
-                                </FloatingLabel>
-
-                                <FloatingLabel controlId="email_perfil" label="Email">
-                                    <Form.Control type="text" placeholder="Email" value={this.state.user_info.email} disabled />
-                                </FloatingLabel>
-
-                                <FloatingLabel controlId="telefono_perfil" label="Pais">
-                                    <Form.Control type="text" placeholder="Pais" value={this.state.user_info.country} onChange={this.showButton}/>
-                                </FloatingLabel>
-
-                                <FloatingLabel controlId="city_perfil" label="Ciudad">
-                                    <Form.Control type="text" placeholder="Ciudad" value={this.state.user_info.city} onChange={this.showButton}/>
-                                </FloatingLabel>
-
-                                <FloatingLabel controlId="tipo_perfil" label="Tipo de Cuenta" >
-                                    <Form.Control type="text" placeholder="Tipo de cuenta" value={
-                                        this.state.tipo === 'hotel' ? 'Hotel' : this.state.tipo === 'arrendador' ? 'Arrendador' : 'Aerolinea'
-                                    } disabled />
-                                </FloatingLabel>
-
-                                <FloatingLabel controlId="date_perfil" label="Fecha de Nacimiento">
-                                    <Form.Control type="date" placeholder="Fecha de Nacimiento" value={
-                                        this.state.user_info.date_birth !== undefined ? this.state.user_info.date_birth.slice(0, 10) : ""
-                                    } onChange={this.showButton}/>
-                                </FloatingLabel>
-
-                                
-
-                                <FloatingLabel controlId="contrasena_perfil" label="Nueva Contraseña">
-                                    <Form.Control type="password" placeholder="Contraseña" onChange={this.showButton}/>
-                                </FloatingLabel>
-
-                                
+                            <form>
+                                <div className={styles.perfil_info} >
 
 
 
-                                <FloatingLabel controlId="contrasena2_perfil" label="Confirmar Contraseña">
-                                    <Form.Control type="password" placeholder="Contraseña" onChange={this.showButton}/>
-                                </FloatingLabel>
+                                    <FloatingLabel controlId="nombre_perfil" label="Nombre">
+                                        <Form.Control type="text" placeholder="Nombre" value={this.state.user_info.fullname} onChange={this.showButton} />
+                                    </FloatingLabel>
 
-                                <Button id="submit_perfil" style={{display:"none"}} variant="warning">
-                                    Guardar Cambios
-                                </Button>
+                                    <FloatingLabel controlId="email_perfil" label="Email">
+                                        <Form.Control type="text" placeholder="Email" value={this.state.user_info.email} disabled />
+                                    </FloatingLabel>
+
+                                    <FloatingLabel controlId="telefono_perfil" label="Pais">
+                                        <Form.Control type="text" placeholder="Pais" value={this.state.user_info.country} onChange={this.showButton} />
+                                    </FloatingLabel>
+
+                                    <FloatingLabel controlId="city_perfil" label="Ciudad">
+                                        <Form.Control type="text" placeholder="Ciudad" value={this.state.user_info.city} onChange={this.showButton} />
+                                    </FloatingLabel>
+
+                                    <FloatingLabel controlId="tipo_perfil" label="Tipo de Cuenta" >
+                                        <Form.Control type="text" placeholder="Tipo de cuenta" value={
+                                            this.state.tipo === 'hotel' ? 'Hotel' : this.state.tipo === 'arrendador' ? 'Arrendador' : 'Aerolinea'
+                                        } disabled />
+                                    </FloatingLabel>
+
+                                    <FloatingLabel controlId="date_perfil" label="Fecha de Nacimiento">
+                                        <Form.Control type="date" placeholder="Fecha de Nacimiento" value={
+                                            this.state.user_info.date_birth !== undefined ? this.state.user_info.date_birth.slice(0, 10) : ""
+                                        } onChange={this.showButton} />
+                                    </FloatingLabel>
 
 
-                            </div>
+
+                                    <FloatingLabel controlId="contrasena_perfil" label="Nueva Contraseña">
+                                        <Form.Control type="password" placeholder="Contraseña" onChange={this.showButton} />
+                                    </FloatingLabel>
+
+
+
+
+
+                                    <FloatingLabel controlId="contrasena2_perfil" label="Confirmar Contraseña">
+                                        <Form.Control type="password" placeholder="Contraseña" onChange={this.showButton} />
+                                    </FloatingLabel>
+
+                                    <Button id="submit_perfil" style={{ display: "none" }} variant="warning">
+                                        Guardar Cambios
+                                    </Button>
+
+
+                                </div>
                             </form>
                         </div>
 
@@ -299,6 +372,7 @@ export default class DashboardThirdService extends Component {
                                                                         start_date={habitacion.start_date}
                                                                         ending_date={habitacion.ending_date}
                                                                         img={habitacion.img}
+                                                                        mode="dashboard"
                                                                     // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
                                                                     />
                                                                 )
@@ -409,6 +483,7 @@ export default class DashboardThirdService extends Component {
                                                                     flight_origin={vuelo.flight_origin}
                                                                     departure_time={vuelo.departure_time}
                                                                     available_seat={vuelo.available_seat}
+                                                                    mode="dashboard"
                                                                 />
                                                             )
 
@@ -426,16 +501,105 @@ export default class DashboardThirdService extends Component {
 
 
 
-                    <Tab className={styles.tab} eventKey="reservas" title="Reservas">
+                    <Tab className={styles.tab} eventKey="reservas" title="Reservaciones">
                         <h1>Reservas</h1>
+                        <div className={styles_search_view.container}>
+
+
+                            {
+                                (this.state.reservaciones !== []) ?
+                                    this.state.tipo === 'hotel' ?
+
+                                        this.state.reservaciones
+                                            .map((reserva, i) => {
+                                                return (
+                                                    <ReservationCard
+                                                        key={i}
+                                                        amount_people={reserva.amount_people}
+                                                        city={reserva.city}
+                                                        country={reserva.country}
+                                                        end_date_r={reserva.end_date_r}
+                                                        ending_date_d={reserva.ending_date_d}
+                                                        hotel_id={reserva.hotel_id}
+                                                        hotel_name={reserva.hotel_name}
+                                                        id_room={reserva.id_room}
+                                                        img={reserva.img}
+                                                        price={reserva.price}
+                                                        reservation_description={reserva.reservation_description}
+                                                        room_name={reserva.room_name}
+                                                        start_date_d={reserva.start_date_d}
+                                                        start_date_r={reserva.start_date_r}
+                                                        user_id={reserva.user_id}
+                                                        email={reserva.email}
+                                                        mode="service"
+
+                                                    />
+                                                )
+                                            })
+
+                                        : this.state.tipo === 'arrendador' ?
+                                            this.state.reservaciones
+                                                .map((reserva, i) => {
+                                                    return (
+                                                        <RentalCard
+                                                            key={i}
+                                                            brand={reserva.brand}
+                                                            car_rental={reserva.car_rental}
+                                                            car_rental_id={reserva.car_rental_id}
+                                                            city={reserva.city}
+                                                            country={reserva.country}
+                                                            date_reservation={reserva.date_reservation}
+                                                            end_date={reserva.end_date}
+                                                            id_car={reserva.id_car}
+                                                            img={reserva.img}
+                                                            line={reserva.line}
+                                                            model={reserva.model}
+                                                            observation={reserva.observation}
+                                                            price={reserva.price}
+                                                            start_date={reserva.start_date}
+                                                            user_id={reserva.user_id}
+                                                            email={reserva.email}
+                                                            mode="service"
+
+                                                        />
+                                                    )
+                                                })
+                                            :
+                                            this.state.tipo === 'aerolinea' ?
+                                                this.state.reservaciones
+                                                .map((reserva, i) => {
+                                                    return(
+                                                        <FlightCard
+                                                        key={i}
+                                                        airline_id={reserva.airline_id}
+                                                        airline_name={reserva.airline_name}
+                                                        date_reservation={reserva.date_reservation}
+                                                        departure_time={reserva.departure_time}
+                                                        flight_date={reserva.flight_date}
+                                                        flight_destination={reserva.flight_destination}
+                                                        flight_origin={reserva.flight_origin}
+                                                        id_flight={reserva.id_flight}
+                                                        price={reserva.price}
+                                                        return_date={reserva.return_date}
+                                                        user_id={reserva.user_id}
+                                                        email={reserva.email}
+                                                        mode="service"
+                                                        />
+                                                    )
+                                                })
+                                                :
+                                                <h1>No hay reservaciones</h1>
+                                    :
+                                    <h1>No hay reservaciones</h1>
+                            }
+                        </div>
+
                     </Tab>
 
-                    <Tab className={styles.tab} eventKey="reviews" title="Reseñas">
-                        <h1>Reseñas</h1>
-                    </Tab>
+
 
                     <Tab className={styles.tab} eventKey="carga" title="Reseñas">
-                        <h1>Carga Masiva</h1>
+                        <h1>Reseñas</h1>
                     </Tab>
 
 

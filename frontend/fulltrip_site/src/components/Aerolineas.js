@@ -30,10 +30,13 @@ export default class Aerolineas extends Component {
             .then(response => response.json())
             .then(data => {
                 // console.log(data)
-                this.setState({
-                    vuelos: data.flights,
-                    vuelosFiltrados: data.flights
-                })
+                if(data.flights){
+                    this.setState({
+                        vuelos: data.flights,
+                        vuelosFiltrados: data.flights
+                    })
+                }
+                
             })
             .catch(
                 error => {
@@ -323,6 +326,7 @@ export default class Aerolineas extends Component {
                                         flight_origin={vuelo.flight_origin}
                                         departure_time={vuelo.departure_time}
                                         available_seat={vuelo.available_seat}
+                                        mode="search"
                                     />
                                 )
 

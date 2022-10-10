@@ -1,11 +1,108 @@
+.container{
+    margin-bottom: 150px;
+}
+
 .jumbotron{
-    background-color: #f5f5f5;
-    padding: 2rem 1rem;
+    background-color: #303030;
+    padding: 1rem 1rem;
     margin-bottom: 0;
     border-radius: .3rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: 0;
 }
 
 .jumbotron h1{
     font-size: 3rem;
-    color: white;
+    color: whitesmoke;
+    text-align: justify;
+    font-weight: bold;
+
+    text-shadow: 10px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+
+
+
+.jumbotron p{
+    font-size: 1.5rem;
+    color: whitesmoke;
+    text-align: justify;
+}
+
+.room_info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    padding: 50px;
+    gap: 50px;
+}
+
+.gallery h3{
+    font-size: 2rem;
+    color: whitesmoke;
+    
+    font-weight: bold;
+    text-shadow: 10px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.gallery p{
+    font-size: 1rem;
+    color: whitesmoke;
+    
+}
+
+.reserva{
+    
+    background-color: whitesmoke;
+    
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    padding: 10px;
+    gap: 20px;
+
+}
+
+.reserva:last-child{
+    grid-area: 1/1/2/2;
+}
+
+
+.form_group{
+    display: flex;
+    flex-direction: column;
+    justify-content: justify;
+    
+    
+}
+
+.form_group label{
+    
+    color: #303030;
+    font-weight: bold;
+    text-align: left;
+    
+}
+
+.rightPanel{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+@media screen and (max-width: 768px){
+    .room_info{
+        grid-template-columns: 1fr;
+    }
+    .reserva{
+        grid-template-columns: 1fr;
+    }
+
+    
 }

@@ -240,11 +240,14 @@ export default class Hoteles extends Component {
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                this.setState({
-                    habitaciones: data.rooms,
-                    habitacionesFiltradas: data.rooms
-
-                })
+                if(data.rooms){
+                    this.setState({
+                        habitaciones: data.rooms,
+                        habitacionesFiltradas: data.rooms
+    
+                    })
+                }
+                
             })
             .catch(
                 error => {
@@ -380,7 +383,7 @@ export default class Hoteles extends Component {
                 <div className={styles.container}>
                     {
 
-                        this.state.habitacionesFiltradas === [] ? <h1>No hay habitaciones disponibles</h1> :
+                        this.state.habitacionesFiltradas.length === 0 ?  <h1 style={{color:'white'}}>No hay habitaciones disponibles</h1> : 
                             this.state.habitacionesFiltradas
                                 .map((habitacion, i) => {
                                     return (
@@ -396,6 +399,7 @@ export default class Hoteles extends Component {
                                         start_date={habitacion.start_date}
                                         ending_date={habitacion.ending_date}
                                         img={habitacion.img}
+                                        mode="search"
                                             // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
                                         />
                                     )

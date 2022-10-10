@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { Button } from "react-bootstrap";
 // import { redirect } from "react-router-dom";
 
 import styles from "../components/styles/Page404.module.css";
@@ -42,7 +43,7 @@ export default class Page404 extends Component {
             <div className={styles.hidescroll}>
                 <h1>{this.state.tiempo}</h1> 
                 <img className={styles.imagen} src={image} alt="404 error"/>
-                
+                <Button variant="info" href="/Inicio">Inicio</Button>
                 
 
             </div>

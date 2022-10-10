@@ -1,49 +1,50 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import styles from "./styles/RegistroGlobal.module.css";
 import CryptoJS from "crypto-js";
+import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 // import countryList from "react-select-country-list";
 
-export default class RegistroVuelo extends Component{
-    constructor(props){
+export default class RegistroVuelo extends Component {
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             usuario: "",
             nombre: "",
             tipo: "",
             id: "",
-            
-            paisOrigenSeleccionado:'',
-            paisDestinoSeleccionado:'',
-            ciudadOrigenSeleccionada:'',
-            ciudadDestinoSeleccionada:'',
+
+            paisOrigenSeleccionado: '',
+            paisDestinoSeleccionado: '',
+            ciudadOrigenSeleccionada: '',
+            ciudadDestinoSeleccionada: '',
             countryOriginList: [],
             cityOriginList: [],
             countryDestinationList: [],
             cityDestinationList: [],
-            
 
-            
+
+
         };
-        
+
     };
 
 
-    componentDidMount(){
-        const requestOptions ={
+    componentDidMount() {
+        const requestOptions = {
             method: 'GET',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
         };
 
         fetch('https://countriesnow.space/api/v0.1/countries/capital', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            this.setState({countryOriginList: data.data})
-        })
-        .catch(error => {
-            console.log(error);
-        }
-        );
+            .then(response => response.json())
+            .then(data => {
+                this.setState({ countryOriginList: data.data })
+            })
+            .catch(error => {
+                console.log(error);
+            }
+            );
 
 
         var usuario = "";
@@ -69,7 +70,7 @@ export default class RegistroVuelo extends Component{
         //         text:'Por favor inicia sesion para poder acceder a esta pagina',
         //         icon:'warning',
         //         confirmButtonText:'Ok',
-                
+
         //     }).then(
         //         function (isConfirm){
         //             if(isConfirm){
@@ -86,7 +87,7 @@ export default class RegistroVuelo extends Component{
         // console.log("selected value",ciudadSeleccionada)
 
         //fetch cities
-        
+
         // console.log("selected value",ciudadSeleccionada)
 
         const requestOptions = {
@@ -100,12 +101,12 @@ export default class RegistroVuelo extends Component{
             .then(data => {
                 this.setState({ cityOriginList: data.data })
             })
-            
+
 
         this.setState({
             paisOrigenSeleccionado: paisSeleccionado,
             countryDestinationList: this.state.countryOriginList,
-            
+
         })
     }
 
@@ -122,7 +123,7 @@ export default class RegistroVuelo extends Component{
     handlerDestinationCountryChange = (e) => {
         e.preventDefault();
         var paisSeleccionado = e.target.value;
-        
+
         // console.log("selected value",ciudadSeleccionada)
         const requestOptions = {
             method: 'POST',
@@ -142,11 +143,103 @@ export default class RegistroVuelo extends Component{
     onTrigger = (e) => {
         e.preventDefault();
         console.log("triggered");
+
+        var password = document.getElementById("contrasena").value;
+        let formData = new FormData();
+
+        formData.append("id", parseInt(this.state.id));
+        formData.append("password", password);
+
+        fetch('http://localhost:4000/api/info_password', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.password_state) {
+                    if (data.password_state === 1) {
+                        console.log('todo bien!')
+                        //recolect form
+                        var flight_date = document.getElementById("fecha").value;
+                        var destination_country = document.getElementById("pais_destino").value;
+                        var destination_city = document.getElementById("ciudad_destino").value;
+                        var origin_country = document.getElementById("pais_origen").value;
+                        var origin_city = document.getElementById("ciudad_origen").value;
+                        var price = document.getElementById("precio").value;
+                        var departure_time = document.getElementById("hora").value;
+                        var number_seat = document.getElementById("asientos").value;
+                        var user_id = this.state.id;
+
+                        let formData = new FormData();
+                        formData.append("flight_date", flight_date);
+                        formData.append("destination_country", destination_country);
+                        formData.append("destination_city", destination_city);
+                        formData.append("origin_country", origin_country);
+                        formData.append("origin_city", origin_city);
+                        formData.append("price", parseFloat(price));
+                        formData.append("departure_time", departure_time);
+                        formData.append("number_seat", parseInt(number_seat));
+                        formData.append("user_id", parseInt(user_id));
+
+                        fetch('http://localhost:4000/api/add_flight', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                if (data.status === 'ok') {
+                                    Swal.fire({
+                                        title: 'Vuelo creado con exito!',
+                                        text: 'El vuelo se ha creado con exito',
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok',
+
+                                    }).then(
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = "/DashboardAerolinea";
+                                            }
+                                        }
+                                    )
+                                }else{
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Ha ocurrido un error al crear el vuelo',
+                                        icon: 'error',
+                                        confirmButtonText: 'Ok',
+
+                                    }).then(
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = "/DashboardAerolinea";
+                                            }
+                                        }
+                                    )
+                                }
+                            })
+
+                    }
+                } else if (!data.password_state || data.password_state === 0) {
+                    Swal.fire({
+                        title: 'Contraseña incorrecta',
+                        text: 'Por favor ingrese la contraseña correcta',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
+                }
+            })
+
+
+
+
+
+
     }
 
-    render(){
-        
-        return(
+    render() {
+
+        return (
             <div className={styles.card}>
                 <h2>Registrar Vuelo</h2>
                 {/* divider */}
@@ -155,19 +248,19 @@ export default class RegistroVuelo extends Component{
                     <div className={styles.form_elements}>
                         <div className={styles.form_group}>
                             <label htmlFor="nombre_empresa">Nombre de Aerolinea</label>
-                            <input type="text" className="form-control" name="nombre_empresa" id="nombre_empresa" placeholder={this.state.nombre} disabled  />
+                            <input type="text" className="form-control" name="nombre_empresa" id="nombre_empresa" placeholder={this.state.nombre} disabled />
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="asientos">Asientos Disponibles </label>
-                            <input type="number" className="form-control" name="asientos" id="asientos" placeholder="Asientos Disponibles" min={1} max={300}/>
+                            <input type="number" className="form-control" name="asientos" id="asientos" placeholder="Asientos Disponibles" min={1} max={300} required />
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="pais_origen">Pais Origen</label>
                             {/* <input type="text" className="form-control" name="origen" id="origen" placeholder="Origen" /> */}
-                            <select className="form-control" id="pais_origen" name="pais_origen" onChange={this.handlerOriginCountryChange}>
-                            {
+                            <select className="form-control" id="pais_origen" name="pais_origen" onChange={this.handlerOriginCountryChange} required>
+                                {
                                     Object.keys(this.state.countryOriginList).map((key, index) => (
                                         <option key={index} value={this.state.countryOriginList[key].name}>{this.state.countryOriginList[key].name}</option>
                                     ))
@@ -178,8 +271,8 @@ export default class RegistroVuelo extends Component{
                         <div className={styles.form_group}>
                             <label htmlFor="ciudad_origen">Ciudad Origen</label>
                             {/* <input type="text" className="form-control" name="origen" id="origen" placeholder="Origen" /> */}
-                            <select className="form-control" id="ciudad_origen" name="ciudad_origen" onChange={this.handlerOriginCityChange}>
-                            {
+                            <select className="form-control" id="ciudad_origen" name="ciudad_origen" onChange={this.handlerOriginCityChange} required>
+                                {
                                     Object.keys(this.state.cityOriginList).map((key, index) => (
                                         <option key={index} value={this.state.cityOriginList[key]}>{this.state.cityOriginList[key]}</option>
                                     ))
@@ -190,10 +283,10 @@ export default class RegistroVuelo extends Component{
                         <div className={styles.form_group}>
                             <label htmlFor="pais_destino">Pais Destino</label>
                             {/* <input type="text" className="form-control" name="destino" id="destino" placeholder="Destino" /> */}
-                            <select className="form-control" id="pais_destino" name="pais_destino" onChange={this.handlerDestinationCountryChange} >
-                            {
+                            <select className="form-control" id="pais_destino" name="pais_destino" onChange={this.handlerDestinationCountryChange} required>
+                                {
                                     Object.keys(this.state.countryDestinationList).map((key, index) => (
-                                        
+
                                         <option key={index} value={this.state.countryDestinationList[key].name}>{this.state.countryDestinationList[key].name}</option>
                                     ))
                                 }
@@ -202,42 +295,42 @@ export default class RegistroVuelo extends Component{
 
                         <div className={styles.form_group}>
                             <label htmlFor="ciudad_destino">Ciudad Destino</label>
-                            <select className="form-control" id="ciudad_destino" name="ciudad_destino" >
-                            {
+                            <select className="form-control" id="ciudad_destino" name="ciudad_destino"  required>
+                                {
                                     Object.keys(this.state.cityDestinationList).map((key, index) => (
                                         <option key={index} value={this.state.cityDestinationList[key]}>{this.state.cityDestinationList[key]}</option>
                                     ))
-                            }
+                                }
                             </select>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="fecha">Fecha</label>
-                            <input type="date" className="form-control" name="fecha" id="fecha" placeholder="Fecha" />
+                            <input type="date" className="form-control" name="fecha" id="fecha" placeholder="Fecha" required/>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="hora">Hora</label>
-                            <input type="time" className="form-control" name="hora" id="hora" placeholder="Hora" />
+                            <input type="time" className="form-control" name="hora" id="hora" placeholder="Hora" required/>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="precio">Precio</label>
-                            <input type="number" className="form-control" name="precio" id="precio" placeholder="Precio" min="0" step="0.01"/>
+                            <input type="number" className="form-control" name="precio" id="precio" placeholder="Precio" min="0" step="0.01" required/>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="contrasena">Confirmar Contraseña</label>
-                            <input type="password" className="form-control" name="contrasena" id="contrasena" placeholder="Confirmar Contraseña" />
+                            <input type="password" className="form-control" name="contrasena" id="contrasena" placeholder="Confirmar Contraseña" required />
 
                         </div>
 
-                        
+
 
 
                     </div>
                     <div className={styles.buttons}>
-                        
+
                         <button className={styles.btn_crear}>Registrar Vuelo</button>
                     </div>
                 </form>

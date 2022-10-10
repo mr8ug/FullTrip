@@ -30,12 +30,16 @@ export default class Autos extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                this.setState({
-                    autos: data.cars,
-                    autosFiltrados: data.cars
+                if(data.cars){
+                    console.log(data);
+                    this.setState({
+                        autos: data.cars,
+                        autosFiltrados: data.cars
+    
+                    })
+                }
 
-                })
+                
             })
             .catch(
                 error => {
@@ -450,12 +454,10 @@ export default class Autos extends Component {
                                 return (
                                     <AutoCard
                                         key={index}
-                                        id={auto.id}
+                                        id={auto.id_car}
                                         line={auto.line}
                                         model={auto.model}
                                         brand={auto.brand}
-                                        
-                                        
                                         price={auto.price}
                                         country={auto.country}
                                         city={auto.city}

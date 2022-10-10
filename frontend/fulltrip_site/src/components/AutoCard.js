@@ -41,7 +41,7 @@ export default class AutoCard extends Component {
 
     render() {
         return (
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '14rem' }}>
                 <Card.Header><strong>{this.state.city},</strong> {this.state.country}</Card.Header>
                 <Card.Img variant="top" src={this.state.img} height={160} width={100} />
                 <Card.Body>
@@ -60,7 +60,7 @@ export default class AutoCard extends Component {
 
                     this.state.mode === "search" ?
                         <Card.Footer className="text-muted">
-                            <Button variant="primary" href={"/Auto?id=" + this.state.id}>Reservar</Button>
+                            <Button variant="primary" href={"/Auto/id=" + this.state.id}>Reservar</Button>
                         </Card.Footer>
                         : null
                 }
@@ -70,7 +70,7 @@ export default class AutoCard extends Component {
                         <Card.Footer className="text-muted">
                             <Button onClick={this.delete} variant="danger" >Eliminar</Button>
                             
-                            <Button onClick={this.editar} variant="warning">Editar</Button>
+                            <Button href={'/Auto/id='+this.state.id} variant="success">Ver</Button>
                         </Card.Footer>
                         : null
                 }
