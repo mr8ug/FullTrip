@@ -3,7 +3,7 @@ var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
 module.exports = (express,app) => {
-	app.post('/api/all_reviews',upload.any(), async function(req,res){
+	app.get('/api/all_reviews',upload.any(), async function(req,res){
 		const conn = await mysql.createConnection(app.config.db.credentials)
         //const {user_id} = req.body
 		//const AWS_S3_BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME
