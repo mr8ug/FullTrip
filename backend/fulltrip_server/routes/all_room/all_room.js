@@ -14,7 +14,7 @@ module.exports = (express, app) => {
             }
 
             const sql = `select r.room_id, r.room_name, r.amount_people, r.price, h.hotel_id, h.hotel_name, h.country, 
-            h.city, a.start_date, a.ending_date, r.img
+            h.city, DATE_FORMAT(a.start_date,"%Y-%m-%d") start_date , DATE_FORMAT(a.ending_date, "%Y-%m-%d") ending_date, r.img
             from room as r, hotel as h, availability as a
             where r.hotel_id = h.hotel_id and r.room_id = a.room_id`
 
