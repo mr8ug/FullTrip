@@ -598,9 +598,9 @@ export default class DashboardThirdService extends Component {
 
 
 
-                    <Tab className={styles.tab} eventKey="carga" title="Reseñas">
+                    {/* <Tab className={styles.tab} eventKey="carga" title="Reseñas">
                         <h1>Reseñas</h1>
-                    </Tab>
+                    </Tab> */}
 
 
                 </Tabs>

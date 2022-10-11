@@ -16,6 +16,7 @@
     
 
     border: 2px solid #ff7b00;
+    margin-bottom: 50px;
 
     
 }
@@ -58,7 +59,7 @@
     
     transition: 0.2s ease-in-out;
 
-    width: 30%;
+    width: 40%;
     text-decoration: underline;
 }
 
@@ -88,7 +89,7 @@
     font-size: 1.2em;
     font-weight: bold;
     transition: 0.2s ease-in-out;
-    width: 70%;
+    width: 60%;
 }
 
 .btn_crear:hover{

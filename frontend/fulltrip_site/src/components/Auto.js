@@ -4,6 +4,9 @@ import { Carousel, ListGroup, Button } from "react-bootstrap";
 
 import CryptoJS from "crypto-js";
 import styles from "../components/styles/ServiceView.module.css";
+import { Accordion, ToastContainer, Toast } from "react-bootstrap";
+import ReviewCard from "./ReviewCard";
+
 
 
 export default class Auto extends Component {
@@ -37,7 +40,9 @@ export default class Auto extends Component {
                 car_id: "",
                 user_id: "",
             },
-            todayDate:"",	
+            todayDate: "",
+
+            reviews: []
         }
     }
 
@@ -54,7 +59,7 @@ export default class Auto extends Component {
             mm = '0' + mm
         }
         today = yyyy + '-' + mm + '-' + dd;
-        this.setState({todayDate:today});
+        this.setState({ todayDate: today });
 
         var url = window.location.href;
         var url_id = url.substring(url.lastIndexOf('=') + 1);
@@ -100,7 +105,43 @@ export default class Auto extends Component {
                     })
                 }
             })
+        //fetch reviews
+        fetch('http://localhost:4000/api/all_reviews', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.reviews) {
+                    var reviews = data.reviews;
 
+                    var reviews_filtered = reviews.filter(review =>
+                        Boolean(String(review.description).startsWith("{\"opinion\"") === true)
+                        &&
+                        JSON.parse(review.description).opinion.service_id === url_id
+                        &&
+                        review.type_service_id === 2
+                    );
+                    // console.log(reviews_filtered);
+                    this.setState({
+                        reviews: reviews_filtered
+                    })
+
+
+
+
+
+                }
+                else {
+                    this.setState({
+                        reviews: []
+                    })
+                }
+            })
+
+        //filter reviews
         //check if user is logged in
         var usuario = "";
         var nombre = ""
@@ -174,95 +215,95 @@ export default class Auto extends Component {
         formData.append("password", contrasena);
         console.log('formdata', this.state.id_usuario, contrasena);
 
-        fetch('http://localhost:4000/api/info_password',{
+        fetch('http://localhost:4000/api/info_password', {
             method: 'POST',
             body: formData
 
         })
 
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            if(data.password_state){
-                console.log('respuesta', data.password_state)
-                if(data.password_state === 1){
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.password_state) {
+                    console.log('respuesta', data.password_state)
+                    if (data.password_state === 1) {
+                        Swal.fire({
+                            title: 'Enviando reservacion...',
+                            text: 'Por favor espere',
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            showConfirmButton: false,
+
+                        })
+
+                        Swal.showLoading();
+
+                        //send reservation to api
+                        let formData = new FormData();
+                        formData.append("start_date", this.state.reservation.start_date);
+                        formData.append("end_date", this.state.reservation.end_date);
+                        formData.append("observation", this.state.reservation.observation);
+                        formData.append("car_id", this.state.data.car_id);
+                        formData.append("user_id", this.state.reservation.user_id);
+
+
+                        fetch('http://localhost:4000/api/add_car_reservation', {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'ok') {
+                                    Swal.fire({
+                                        title: 'Reservacion enviada!',
+                                        text: 'Tu reservacion ha sido enviada, puede verla en el apartado de alquileres',
+                                        icon: 'success',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+
+                                    }).then((result) => {
+                                        if (result.dismiss === Swal.DismissReason.timer) {
+                                            window.location.href = "/Perfil";
+
+                                        }
+
+                                    })
+                                }
+                                else {
+                                    Swal.fire({
+                                        title: 'Hmmm...',
+                                        text: 'Error al enviar reservacion',
+                                        icon: 'error',
+                                        timer: 2000,
+                                        timerProgressBar: true,
+
+                                    }).then((result) => {
+                                        if (result.dismiss === Swal.DismissReason.timer) {
+                                            window.location.href = "/Autos";
+
+                                        }
+
+                                    })
+                                }
+                            })
+                    }
+
+                } else if (!data.password_state || data.password_state === 0) {
                     Swal.fire({
-                        title: 'Enviando reservacion...',
-                        text: 'Por favor espere',
-                        icon: 'info',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        allowEnterKey: false,
-                        showConfirmButton: false,
+                        title: 'Hmmm...',
+                        text: 'Contraseña incorrecta',
+                        icon: 'error',
+                        timer: 2000,
+                        timerProgressBar: true,
 
-                    })
-
-                    Swal.showLoading();
-
-                    //send reservation to api
-                    let formData = new FormData();
-                    formData.append("start_date", this.state.reservation.start_date);
-                    formData.append("end_date", this.state.reservation.end_date);
-                    formData.append("observation", this.state.reservation.observation);
-                    formData.append("car_id", this.state.data.car_id);
-                    formData.append("user_id", this.state.reservation.user_id);
-
-
-                    fetch('http://localhost:4000/api/add_car_reservation',{
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.status === 'ok'){
-                            Swal.fire({
-                                title: 'Reservacion enviada!',
-                                text: 'Tu reservacion ha sido enviada, puede verla en el apartado de alquileres',
-                                icon: 'success',
-                                timer: 2000,
-                                timerProgressBar: true,
-
-                            }).then((result) => {
-                                if (result.dismiss === Swal.DismissReason.timer) {
-                                    window.location.href = "/Perfil";
-
-                                }
-
-                            })
-                        }
-                        else{
-                            Swal.fire({
-                                title: 'Hmmm...',
-                                text: 'Error al enviar reservacion',
-                                icon: 'error',
-                                timer: 2000,
-                                timerProgressBar: true,
-
-                            }).then((result) => {
-                                if (result.dismiss === Swal.DismissReason.timer) {
-                                    window.location.href = "/Autos";
-
-                                }
-
-                            })
-                        }
                     })
                 }
-                
-            }else if(!data.password_state || data.password_state === 0){
-                Swal.fire({
-                    title: 'Hmmm...',
-                    text: 'Contraseña incorrecta',
-                    icon: 'error',
-                    timer: 2000,
-                    timerProgressBar: true,
-
-                })
-            }
-        })
+            })
     }
 
-    
+
 
 
 
@@ -273,7 +314,10 @@ export default class Auto extends Component {
                 <div className={styles.jumbotron}>
                     <h1>{this.state.data.car_rental_name}</h1>
                     <p>{this.state.data.brand} desde ${this.state.data.price} al dia</p>
+                    
                 </div>
+
+                
 
                 <div className={styles.room_info}>
                     <div className={styles.leftPanel}>
@@ -340,7 +384,7 @@ export default class Auto extends Component {
 
                                         <div className={styles.form_group}>
                                             <label htmlFor="vehiculo">Vehiculo</label>
-                                            <input type="text" name="vehiculo" id="vehiculo" className='form-control' value={this.state.data.brand + ' ' + this.state.data.line+ ' ' + this.state.data.model} disabled />
+                                            <input type="text" name="vehiculo" id="vehiculo" className='form-control' value={this.state.data.brand + ' ' + this.state.data.line + ' ' + this.state.data.model} disabled />
                                         </div>
 
                                         <div className={styles.form_group}>
@@ -349,23 +393,23 @@ export default class Auto extends Component {
                                         </div>
 
                                         <div className={styles.form_group}>
-                                            <label htmlFor="end_date">Fecha Retorno</label> 
+                                            <label htmlFor="end_date">Fecha Retorno</label>
                                             <input type="date" name="end_date" id="end_date" min={this.state.reservation.start_date} className='form-control' onChange={this.onFechaFinChange} required />
                                         </div>
 
                                         <div className={styles.form_group}>
                                             <label htmlFor="observations">Observaciones</label>
                                         </div>
-                                        <textarea id="observations" className="form-control" name="observations" rows="4" cols="50" onChange={this.onObservationsChange}  required/>
+                                        <textarea id="observations" className="form-control" name="observations" rows="4" cols="50" onChange={this.onObservationsChange} required />
 
                                         <div className={styles.form_group}>
                                             <label htmlFor="contrasena">Contrasena</label>
                                             <input type="password" name="contrasena" id="contrasena" className='form-control' required />
-                                    
+
                                         </div>
-                                    
+
                                         <button type="submit" className="btn btn-primary">Reservar Auto</button>
-                                        
+
                                     </form>
                                 </div>
 
@@ -380,7 +424,64 @@ export default class Auto extends Component {
                     </div>
 
                 </div>
+
+                <div className={styles.reviews} id='reviews'>
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Reseñas</Accordion.Header>
+                            <Accordion.Body>
+                                <div className={styles.reviews_container}>
+
+                                    {
+                                        //mapeo de comentarios
+                                        this.state.reviews.length > 0 ?
+
+                                            this.state.reviews
+                                                .map((review, index) => {
+                                                    return (
+                                                        <ReviewCard
+                                                            key={index}
+                                                            description={review.description}
+                                                            type_service_id={review.type_service_id}
+                                                            email={this.state.email}
+                                                        />
+                                                    )
+                                                })
+                                            :
+
+                                            <ListGroup>
+                                                <ListGroup.Item>
+                                                    No hay reseñas
+                                                </ListGroup.Item>
+                                            </ListGroup>
+                                    }
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
+                {
+                        this.state.reviews.length > 0 ?
+                            <ToastContainer position='middle-center'>
+                                <Toast bg='success' style={{ margin: '5px' }} autohide delay={3000} show={this.state.showToast} onClose={this.handleCloseToast} >
+                                    <Toast.Header>
+                                        <strong className="me-auto">Reseñas disponibles.</strong>
+                                        <small>Ahora</small>
+
+                                    </Toast.Header>
+                                    <Toast.Body className={'text-white'}>Puedes ver las reseñas disponibles al final de la pagina.</Toast.Body>
+                                </Toast>
+                            </ToastContainer>
+                            : null
+                    }
             </div>
+
         );
+    }
+
+    handleCloseToast = () => {
+        this.setState({
+            showToast: false
+        })
     }
 }

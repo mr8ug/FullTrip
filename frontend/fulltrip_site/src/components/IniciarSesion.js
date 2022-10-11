@@ -12,7 +12,7 @@ export default class IniciarSesion extends Component {
         super(props);
         this.state = {
             user: "",
-            email:"",
+            email: "",
             password: "",
             tipo: "",
         }
@@ -22,9 +22,9 @@ export default class IniciarSesion extends Component {
 
     componentDidMount() {
         var usuario = ""
-        console.log("componente montado", usuario)
+        // console.log("componente montado", usuario)
         window.sessionStorage.getItem('nombre') !== null ? usuario = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : usuario = "";
-        var tipo =""
+        var tipo = ""
         window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
 
         if (usuario !== "") {
@@ -62,12 +62,12 @@ export default class IniciarSesion extends Component {
         event.preventDefault();
         var user_ingresado = this.state.user;
         var pass_ingresado = this.state.password;
-        
 
 
 
 
-        
+
+
         let formData = new FormData()
         formData.append('email', user_ingresado)
         formData.append('password', pass_ingresado)
@@ -78,10 +78,10 @@ export default class IniciarSesion extends Component {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                if(data.userid !== undefined){
+                // console.log(data);
+                if (data.userid !== undefined) {
                     //el usuario existe procede el login
-                    console.log("userid", data.userid)
+                    // console.log("userid", data.userid)
                     window.sessionStorage.setItem("email", CryptoJS.AES.encrypt(data.email, 'fulltrip').toString());
                     window.sessionStorage.setItem("nombre", CryptoJS.AES.encrypt(data.fullname, 'fulltrip').toString());
                     window.sessionStorage.setItem("tipo", CryptoJS.AES.encrypt(data.type_user, 'fulltrip').toString());
@@ -93,18 +93,18 @@ export default class IniciarSesion extends Component {
                         confirmButtonText: 'Ok'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            if(data.type_user === "administrador"){
+                            if (data.type_user === "administrador") {
                                 window.location.href = "/DashboardAdmin";
                             }
-                            else{
+                            else {
                                 window.location.href = "/Perfil";
                             }
-                            
-                            
-                                
+
+
+
                         }
                     })
-                }else{
+                } else {
                     Swal.fire({
                         title: 'Error',
                         text: "El email o la contraseña son incorrectos",
@@ -116,7 +116,7 @@ export default class IniciarSesion extends Component {
             })
     }
 
-   
+
 
     handleChangeUser = (event) => {
         this.setState({
@@ -145,7 +145,7 @@ export default class IniciarSesion extends Component {
                         </div>
                         <div className={styles.form_group}>
                             <label htmlFor="contrasena">Contraseña</label>
-                            <input type="password" className="form-control" id="contrasena" placeholder="Contraseña"  onChange={this.handleChangePassword} />
+                            <input type="password" className="form-control" id="contrasena" placeholder="Contraseña" onChange={this.handleChangePassword} />
                         </div>
                     </div>
                     <div className={styles.buttons}>

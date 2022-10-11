@@ -38,14 +38,14 @@ export default class HabitacionCard extends Component {
     }
 
     componentDidMount() {
-        //parse date
-        var date_start = new Date(this.state.start_date);
-        var date_end = new Date(this.state.ending_date);
-        //set date
-        this.setState({
-            start_date: date_start.getDate() + "/" + (date_start.getMonth() + 1) + "/" + date_start.getFullYear(),
-            ending_date: date_end.getDate() + "/" + (date_end.getMonth() + 1) + "/" + date_end.getFullYear()
-        });
+        // //parse date
+        // var date_start = new Date(this.state.start_date);
+        // var date_end = new Date(this.state.ending_date);
+        // //set date
+        // this.setState({
+        //     start_date: date_start.getDate() + "/" + (date_start.getMonth() + 1) + "/" + date_start.getFullYear(),
+        //     ending_date: date_end.getDate() + "/" + (date_end.getMonth() + 1) + "/" + date_end.getFullYear()
+        // });
     }
     render() {
         return (
@@ -62,10 +62,10 @@ export default class HabitacionCard extends Component {
                     </Card.Text>
 
                     <ListGroup >
-                        <ListGroup.Item variant="primary" className={styles.item}>Personas: {this.state.amount_people}</ListGroup.Item>
-                        <ListGroup.Item variant="secondary" className={styles.item}>Precio: ${this.state.price} / Noche</ListGroup.Item>
-                        <ListGroup.Item variant="success" className={styles.item}>Fecha de inicio: {this.state.start_date}</ListGroup.Item>
-                        <ListGroup.Item variant="danger" className={styles.item}>Fecha de fin: {this.state.ending_date}</ListGroup.Item>
+                        <ListGroup.Item variant="primary" className={styles.item}>🕴️:  {this.state.amount_people} Personas</ListGroup.Item>
+                        <ListGroup.Item variant="secondary" className={styles.item}>💵: ${this.state.price} / Noche</ListGroup.Item>
+                        <ListGroup.Item variant="success" className={styles.item}>📅 Inicio: {this.state.start_date}</ListGroup.Item>
+                        <ListGroup.Item variant="danger" className={styles.item}>📅 Fin: {this.state.ending_date}</ListGroup.Item>
                     </ListGroup>
                     
                 </Card.Body>
@@ -81,9 +81,10 @@ this.state.mode === "search" ?
 
 this.state.mode === "dashboard" ?
     <Card.Footer className="text-muted">
+        <Button href={'/Habitacion/id='+this.state.room_id} variant="success">Ver</Button>
         <Button onClick={this.delete} variant="danger" >Eliminar</Button>
         
-        <Button onClick={this.editar} variant="warning">Editar</Button>
+        
     </Card.Footer>
     : null
 }

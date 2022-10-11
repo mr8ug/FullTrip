@@ -426,7 +426,7 @@ export default class DashboardUser extends Component {
                                     <small>Ahora</small>
 
                                 </Toast.Header>
-                                <Toast.Body>Puedes acceder a ella desde la pestaña 'Mi Empresa'</Toast.Body>
+                                <Toast.Body className={'text-white'}>Puedes acceder a ella desde la pestaña 'Mi Empresa'</Toast.Body>
                             </Toast>
                         </ToastContainer>
                         : null

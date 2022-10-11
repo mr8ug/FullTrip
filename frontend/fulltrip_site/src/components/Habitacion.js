@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Carousel, ListGroup, Button } from "react-bootstrap";
+import { Carousel, ListGroup, Button, Accordion, ToastContainer, Toast } from "react-bootstrap";
 import Swal from "sweetalert2";
 import CryptoJS from "crypto-js";
 
@@ -7,6 +7,7 @@ import CryptoJS from "crypto-js";
 
 
 import styles from "../components/styles/ServiceView.module.css";
+import ReviewCard from "./ReviewCard";
 
 
 
@@ -44,7 +45,11 @@ export default class Habitacion extends Component {
                 reservation_description: '',
                 room_id: '',
                 user_id: '',
-            }
+            },
+
+            reviews: []
+
+
         }
     }
 
@@ -97,6 +102,45 @@ export default class Habitacion extends Component {
                 }
 
             })
+
+
+        //fetch reviews
+        fetch('http://localhost:4000/api/all_reviews', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.reviews) {
+                    var reviews = data.reviews;
+
+                    var reviews_filtered = reviews.filter(review =>
+                        Boolean(String(review.description).startsWith("{\"opinion\"") === true)
+                        &&
+                        JSON.parse(review.description).opinion.service_id === id
+                        &&
+                        review.type_service_id === 1
+                    );
+                    // console.log(reviews_filtered);
+                    this.setState({
+                        reviews: reviews_filtered
+                    })
+
+
+
+                }
+                else {
+                    this.setState({
+                        reviews: []
+                    })
+                }
+            })
+
+        //filter reviews
+
+
 
 
 
@@ -180,7 +224,7 @@ export default class Habitacion extends Component {
         formData.append("id", parseInt(this.state.id_usuario));
         formData.append("password", contrasena);
 
-        console.log('formdata', this.state.id_usuario, contrasena)
+        // console.log('formdata', this.state.id_usuario, contrasena)
         fetch("http://localhost:4000/api/info_password", {
             method: "POST",
             body: formData
@@ -189,7 +233,7 @@ export default class Habitacion extends Component {
             .then(response => response.json())
             .then(data => {
                 if (data.password_state) {
-                    console.log('respuesta de contrasena', data.password_state)
+                    // console.log('respuesta de contrasena', data.password_state)
                     if (data.password_state === 1) {
                         Swal.fire({
                             title: 'Enviando reservacion...',
@@ -219,8 +263,8 @@ export default class Habitacion extends Component {
                         })
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data)
-                                if (data.status ==='ok') {
+                                // console.log(data)
+                                if (data.status === 'ok') {
                                     Swal.fire({
                                         title: 'Reservacion enviada!',
                                         text: 'Su reservacion ha sido enviada, puede encontrar la reservacion en su perfil',
@@ -229,14 +273,14 @@ export default class Habitacion extends Component {
                                         timerProgressBar: true,
 
                                     }).then((result) => {
-                                        if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed)  {
+                                        if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
                                             window.location.href = "/Perfil";
 
                                         }
 
                                     })
-                                } 
-                                
+                                }
+
                                 else {
                                     Swal.fire({
                                         title: 'Hmmm...',
@@ -258,7 +302,7 @@ export default class Habitacion extends Component {
                                 console.log(error)
                             })
 
-                    
+
 
 
 
@@ -279,7 +323,7 @@ export default class Habitacion extends Component {
                 }
             })
 
-        console.log(this.state.reservation, contrasena)
+        // console.log(this.state.reservation, contrasena)
     }
 
 
@@ -290,6 +334,7 @@ export default class Habitacion extends Component {
                 <div className={styles.jumbotron}>
                     <h1>{this.state.data.room_name}</h1>
                     <p>Reserva ya!</p>
+
                 </div>
 
                 <div className={styles.room_info}>
@@ -405,7 +450,7 @@ export default class Habitacion extends Component {
 
                                 </div>
 
-                                : 
+                                :
                                 <div>
                                     <Button variant="success" href="/IniciarSesion">Iniciar Sesion</Button>
 
@@ -414,6 +459,55 @@ export default class Habitacion extends Component {
 
                     </div>
                 </div>
+
+                <div className={styles.reviews} id='reviews'>
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Reseñas</Accordion.Header>
+                            <Accordion.Body>
+                                <div className={styles.reviews_container}>
+
+                                    {
+                                        //mapeo de comentarios
+                                        this.state.reviews.length > 0 ?
+                                            this.state.reviews
+                                                .map((review, index) => {
+                                                    return (
+                                                        <ReviewCard
+                                                            key={index}
+                                                            description={review.description}
+                                                            type_service_id={review.type_service_id}
+                                                            email={this.state.email}
+                                                        />
+                                                    )
+                                                })
+                                            :
+
+                                            <ListGroup>
+                                                <ListGroup.Item>
+                                                    No hay reseñas
+                                                </ListGroup.Item>
+                                            </ListGroup>
+                                    }
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
+                {
+                        this.state.reviews.length > 0 ?
+                            <ToastContainer position='middle-center'>
+                                <Toast bg='success' style={{ margin: '5px' }} autohide delay={3000} show={this.state.showToast} onClose={this.handleCloseToast} >
+                                    <Toast.Header>
+                                        <strong className="me-auto">Reseñas disponibles.</strong>
+                                        <small>Ahora</small>
+
+                                    </Toast.Header>
+                                    <Toast.Body className={'text-white'}>Puedes ver las reseñas disponibles al final de la pagina.</Toast.Body>
+                                </Toast>
+                            </ToastContainer>
+                            : null
+                    }
 
 
 
@@ -424,4 +518,10 @@ export default class Habitacion extends Component {
 
         );
     }
+    handleCloseToast = () => {
+        this.setState({
+            showToast: false
+        })
+    }
+    
 }

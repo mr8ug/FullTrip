@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import Swal from "sweetalert2";
 
 import CryptoJS from "crypto-js";
-import { Button, Carousel, ListGroup } from "react-bootstrap";
+import { Button, Carousel, ListGroup, Accordion, ToastContainer, Toast } from "react-bootstrap";
 import styles from "../components/styles/ServiceView.module.css";
 import no_preview_img from '../images/vuelos.png'
+import ReviewCard from "./ReviewCard";
+
 
 export default class Vuelo extends Component {
     constructor(props) {
@@ -37,7 +39,9 @@ export default class Vuelo extends Component {
                 observation: '',
                 user_id: '',
                 flight_id: '',
-            }
+            },
+            reviews:[],
+            showToast:true
         }
     }
 
@@ -103,7 +107,41 @@ export default class Vuelo extends Component {
                 }
             })
 
+            //fetch reviews
+        fetch('http://localhost:4000/api/all_reviews', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.reviews) {
+                    var reviews = data.reviews;
 
+                    var reviews_filtered = reviews.filter(review =>
+                        Boolean(String(review.description).startsWith("{\"opinion\"") === true)
+                        &&
+                        JSON.parse(review.description).opinion.service_id === id
+                        &&
+                        review.type_service_id === 3
+                    );
+                    // console.log(reviews_filtered);
+                    this.setState({
+                        reviews: reviews_filtered
+                    })
+
+
+
+                }
+                else {
+                    this.setState({
+                        reviews: []
+                    })
+                }
+            })
+
+        //filter reviews
 
 
         //check if user is logged in
@@ -410,7 +448,62 @@ export default class Vuelo extends Component {
                     </div>
 
                 </div>
+
+                <div className={styles.reviews} id='reviews'>
+                    <Accordion>
+                        <Accordion.Item eventKey="0">
+                            <Accordion.Header>Reseñas</Accordion.Header>
+                            <Accordion.Body>
+                                <div className={styles.reviews_container}>
+
+                                    {
+                                        //mapeo de comentarios
+                                        this.state.reviews.length > 0 ?
+                                            this.state.reviews
+                                                .map((review, index) => {
+                                                    return (
+                                                        <ReviewCard
+                                                            key={index}
+                                                            description={review.description}
+                                                            type_service_id={review.type_service_id}
+                                                            email={this.state.email}
+                                                        />
+                                                    )
+                                                })
+                                            :
+                                            
+                                                <ListGroup>
+                                                    <ListGroup.Item>
+                                                        No hay reseñas
+                                                    </ListGroup.Item>
+                                                </ListGroup>
+                                    }
+                                </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
+                {
+                        this.state.reviews.length > 0 ?
+                            <ToastContainer position='middle-center'>
+                                <Toast bg='success' style={{ margin: '5px' }} autohide delay={3000} show={this.state.showToast} onClose={this.handleCloseToast} >
+                                    <Toast.Header>
+                                        <strong className="me-auto">Reseñas disponibles.</strong>
+                                        <small>Ahora</small>
+
+                                    </Toast.Header>
+                                    <Toast.Body className={'text-white'}>Puedes ver las reseñas disponibles al final de la pagina.</Toast.Body>
+                                </Toast>
+                            </ToastContainer>
+                            : null
+                    }
             </div>
         );
+    }
+
+    handleCloseToast = () => {
+        this.setState({
+            showToast: false
+        })
     }
 }

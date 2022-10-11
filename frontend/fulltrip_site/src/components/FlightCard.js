@@ -65,7 +65,7 @@ export default class FlightCard extends Component{
                 {
                     this.state.mode === 'service' ?
                     <Card.Footer>
-                        <Button variant='primary' size='sm' href={'/Vuelo/id='+this.state.id_flight} >Ver</Button>
+                        <Button variant='success' size='sm' href={'/Vuelo/id='+this.state.id_flight} >Ver</Button>
                         <Button variant='danger' size='sm' >Eliminar</Button>
                     </Card.Footer>
                     : 

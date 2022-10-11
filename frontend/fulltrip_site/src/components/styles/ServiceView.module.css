@@ -96,12 +96,43 @@
     border-bottom-right-radius: 5px;
 }
 
+.reviews{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    gap: 20px;
+
+    /* generate a gradient background */
+    
+}
+
+.reviews_container{
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    background-color: white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    
+}
+
 @media screen and (max-width: 768px){
     .room_info{
         grid-template-columns: 1fr;
     }
     .reserva{
         grid-template-columns: 1fr;
+    }
+
+    .reviews_container{
+        flex-direction: column;
     }
 
     

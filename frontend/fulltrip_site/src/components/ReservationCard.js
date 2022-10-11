@@ -67,7 +67,7 @@ export default class ReservationCard extends Component {
                     {
                         this.props.mode === 'service' ?
                             <div>
-                                <Button variant="primary" href={"/Habitacion/id=" + this.state.id_room}>Ver Habitacion</Button>
+                                <Button variant="success" href={"/Habitacion/id=" + this.state.id_room}>Ver</Button>
                                 <Button variant="danger" >Cancelar Reservacion</Button>
                             </div>
 

@@ -28,19 +28,7 @@ export default class Hoteles extends Component {
 
     handlePais = (e) => {
 
-        var getCitySelect = document.getElementById("city");
-        var getPersonsSelect = document.getElementById("persons");
-        var getPriceSelect = document.getElementById("price");
-        var getStartDateSelect = document.getElementById("date_start");
 
-        var getNombreInput = document.getElementById("nombre");
-
-
-        getCitySelect.value = "todos";
-        getPersonsSelect.value = "todos";
-        getPriceSelect.value = "todos";
-        getStartDateSelect.value = "todos";
-        getNombreInput.value = "";
         const pais = e.target.value;
         if (pais === "todos") {
             this.setState({
@@ -52,10 +40,42 @@ export default class Hoteles extends Component {
                 habitacionesFiltradas: habitacionesFiltradasPorPais
             })
         }
+
+        var getCitySelect = document.getElementById("city");
+        var getPersonsSelect = document.getElementById("persons");
+        var getPriceSelect = document.getElementById("price");
+        var getStartDateSelect = document.getElementById("date_start");
+
+        var getNombreInput = document.getElementById("nombre");
+
+
+        getCitySelect.value = "todos";
+        getPersonsSelect.value = "todos";
+        getPriceSelect.value = "todos";
+        getStartDateSelect.value = "todos";
+        getNombreInput.value = "";
     }
 
     handleCity = (e) => {
-        const city = e.target.value;
+        e.preventDefault();
+        var city = e.target.value;
+        console.log(city)
+
+        if (city === "todos") {
+            this.setState({
+                habitacionesFiltradas: this.state.habitaciones
+            })
+        } else {
+            var habitacionesFiltradasPorCiudad = this.state.habitaciones.filter(habitacion => Boolean(habitacion.city.match(city)) === true);
+            console.log(habitacionesFiltradasPorCiudad);
+
+            this.setState({
+                habitacionesFiltradas: habitacionesFiltradasPorCiudad
+            })
+        }
+
+
+
         var getCountrySelect = document.getElementById("country");
 
         var getPersonsSelect = document.getElementById("persons");
@@ -70,20 +90,23 @@ export default class Hoteles extends Component {
         getPriceSelect.value = "todos";
         getStartDateSelect.value = "todos";
         getNombreInput.value = "";
-        if (city === "todos") {
-            this.setState({
-                habitacionesFiltradas: this.state.habitaciones
-            })
-        } else {
-            const habitacionesFiltradasPorCiudad = this.state.habitaciones.filter(habitacion => habitacion.city === city);
-            this.setState({
-                habitacionesFiltradas: habitacionesFiltradasPorCiudad
-            })
-        }
     }
 
     handlePersons = (e) => {
         const persons = e.target.value;
+
+
+        if (persons === "todos") {
+            this.setState({
+                habitacionesFiltradas: this.state.habitaciones
+            })
+        } else {
+            const habitacionesFiltradasPorPersonas = this.state.habitaciones.filter(habitacion => String(habitacion.amount_people) === String(persons)).sort((a, b) => a.price - b.price);
+            this.setState({
+                habitacionesFiltradas: habitacionesFiltradasPorPersonas
+            })
+        }
+
         var getCountrySelect = document.getElementById("country");
         var getCitySelect = document.getElementById("city");
 
@@ -98,21 +121,10 @@ export default class Hoteles extends Component {
         getPriceSelect.value = "todos";
         getStartDateSelect.value = "todos";
         getNombreInput.value = "";
-
-        if (persons === "todos") {
-            this.setState({
-                habitacionesFiltradas: this.state.habitaciones
-            })
-        } else {
-            const habitacionesFiltradasPorPersonas = this.state.habitaciones.filter(habitacion => String(habitacion.amount_people) === String(persons));
-            this.setState({
-                habitacionesFiltradas: habitacionesFiltradasPorPersonas
-            })
-        }
     }
 
     handlePrice = (e) => {
-        e.preventDefault()
+
         const precio = e.target.value;
         var getCountrySelect = document.getElementById("country");
         var getCitySelect = document.getElementById("city");
@@ -163,13 +175,13 @@ export default class Hoteles extends Component {
             this.setState({
                 habitacionesFiltradas: this.state.habitaciones
             })
-        } if (fechaInicio === "asc") {
-            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => { return new Date(a.start_date) - new Date(b.start_date) });
+        } else if (fechaInicio === "asc") {
+            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorFechaInicio
             })
-        } if (fechaInicio === "desc") {
-            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => { return new Date(b.start_date) - new Date(a.start_date) });
+        } else if (fechaInicio === "desc") {
+            const habitacionesFiltradasPorFechaInicio = this.state.habitaciones.sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorFechaInicio
             })
@@ -198,6 +210,8 @@ export default class Hoteles extends Component {
         this.setState({
             habitacionesFiltradas: habitacionesFiltradasPorNombre
         })
+
+
     }
 
     handleFilter = (e) => {
@@ -239,33 +253,33 @@ export default class Hoteles extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                if(data.rooms){
+                // console.log(data);
+                if (data.rooms) {
                     this.setState({
                         habitaciones: data.rooms,
                         habitacionesFiltradas: data.rooms
-    
+
                     })
                 }
-                
+
             })
             .catch(
                 error => {
                     Swal.fire({
-                        title:'Parece que no estas conectado a internet',
-                        text:'Por favor revisa tu conexion a internet',
-                        icon:'error',
-                        confirmButtonText:'Ok',
-                        
+                        title: 'Parece que no estas conectado a internet',
+                        text: 'Por favor revisa tu conexion a internet',
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+
                     })
-                    .then(
-                        function (isConfirm){
-                            if(isConfirm){
-                                window.location.href = "/Inicio";
-                            }
-                        })
+                        .then(
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    window.location.href = "/Inicio";
+                                }
+                            })
                 }
-                
+
             )
     }
 
@@ -274,13 +288,14 @@ export default class Hoteles extends Component {
 
 
     render() {
+
         return (
             <div>
                 {/* <Navbar pagina="hoteles" /> */}
                 <div className={styles.jumbotron}>
                     <h1 className={styles.h1}>🏨 Hoteles 🏨</h1>
                 </div>
-                
+
                 <Accordion bg='dark' className={styles.acordion}>
                     <Accordion.Item eventKey='0'>
                         <Accordion.Header>Filtros</Accordion.Header>
@@ -374,6 +389,7 @@ export default class Hoteles extends Component {
 
 
                                 <Button variant="warning" onClick={this.handleFilter}> Limpiar </Button>
+                                <Button variant='success' onClick={this.applyFilter}> Aplicar </Button>
                             </div>
 
                         </Accordion.Body>
@@ -383,32 +399,39 @@ export default class Hoteles extends Component {
                 <div className={styles.container}>
                     {
 
-                        this.state.habitacionesFiltradas.length === 0 ?  <h1 style={{color:'white'}}>No hay habitaciones disponibles</h1> : 
+                        this.state.habitacionesFiltradas.length === 0 ? <h1 style={{ color: 'white' }}>No hay habitaciones disponibles</h1> :
                             this.state.habitacionesFiltradas
                                 .map((habitacion, i) => {
                                     return (
                                         <HabitacionCard
-                                        key={i}
-                                        room_id={habitacion.room_id}
-                                        room_name={habitacion.room_name}
-                                        hotel_name={habitacion.hotel_name}
-                                        country={habitacion.country}
-                                        city={habitacion.city}
-                                        amount_people={habitacion.amount_people}
-                                        price={habitacion.price}
-                                        start_date={habitacion.start_date}
-                                        ending_date={habitacion.ending_date}
-                                        img={habitacion.img}
-                                        mode="search"
-                                            // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
+                                            key={i}
+                                            room_id={habitacion.room_id}
+                                            room_name={habitacion.room_name}
+                                            hotel_name={habitacion.hotel_name}
+                                            country={habitacion.country}
+                                            city={habitacion.city}
+                                            amount_people={habitacion.amount_people}
+                                            price={habitacion.price}
+                                            start_date={habitacion.start_date}
+                                            ending_date={habitacion.ending_date}
+                                            img={habitacion.img}
+                                            mode="search"
+                                        // image={"https://img.freepik.com/vector-gratis/plantilla-fondo-interior-dormitorio-dibujos-animados-acogedora-habitacion-moderna-luz-manana_33099-171.jpg?w=2000"}
                                         />
                                     )
                                 })
-
+                    
                     }
                 </div>
 
             </div>
         );
+
+
     }
+
+    applyFilter = () => {
+        window.location.reload(false);
+    }
+
 }

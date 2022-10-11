@@ -61,7 +61,7 @@ export default class RentalCard extends Component{
                 {
                     this.state.mode === 'service' ?
                     <Card.Footer>
-                        <Button variant='primary' size='sm' >Editar</Button>
+                        <Button variant='success' size='sm' href={'/Auto/id='+this.state.id_car} >Ver</Button>
                         <Button variant='danger' size='sm' >Eliminar</Button>
                     </Card.Footer>
                     :

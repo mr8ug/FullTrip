@@ -68,9 +68,10 @@ export default class AutoCard extends Component {
 
                     this.state.mode === "dashboard" ?
                         <Card.Footer className="text-muted">
+                            <Button href={'/Auto/id='+this.state.id} variant="success">Ver</Button>
                             <Button onClick={this.delete} variant="danger" >Eliminar</Button>
                             
-                            <Button href={'/Auto/id='+this.state.id} variant="success">Ver</Button>
+                            
                         </Card.Footer>
                         : null
                 }

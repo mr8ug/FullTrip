@@ -10,8 +10,10 @@ export default class RegistroHabitacion extends Component{
             usuario: '',
             nombre: '',
             tipo: '',
-            id: ''
+            id: '',
+            todayDate: new Date().toISOString().slice(0, 10)
         };
+
         
     };
 
@@ -146,12 +148,12 @@ export default class RegistroHabitacion extends Component{
 
                         <div className={styles.form_group}>
                             <label htmlFor="room_name">Nombre de Habitacion</label>
-                            <input type="text" className="form-control" name="room_name" id="room_name" placeholder="Nombre de Habitacion"/>
+                            <input type="text" className="form-control" name="room_name" id="room_name" placeholder="Nombre de Habitacion" required/>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="imagen">Portada</label>
-                            <input type="file" className="form-control" name="imagen" id="imagen" placeholder="Imagen"/>
+                            <input type="file" className="form-control" name="imagen" id="imagen" placeholder="Imagen" required/>
                         </div>
                         {/* <div className={styles.form_group}>
                             <label htmlFor="imagen1">Imagen 1</label>
@@ -160,27 +162,27 @@ export default class RegistroHabitacion extends Component{
 
                         <div className={styles.form_group}>
                             <label htmlFor="habitaciones">Habitaciones Disponibles</label>
-                            <input type="number" className="form-control" name="habitaciones" id="habitaciones" placeholder="Habitaciones Disponibles" />
+                            <input type="number" className="form-control" name="habitaciones" id="habitaciones" placeholder="Habitaciones Disponibles" required/>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="fecha_disponible">Fecha Inicio</label>
-                            <input type="date" className="form-control" name="fecha_disponible" id="fecha_disponible" placeholder="Fecha Disponible" />
+                            <input type="date" className="form-control" name="fecha_disponible" id="fecha_disponible" min={this.state.todayDate} placeholder="Fecha Disponible" required />
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="fecha_fin">Fecha Fin</label>
-                            <input type="date" className="form-control" name="fecha_fin" id="fecha_fin" placeholder="Fecha Fin" />
+                            <input type="date" className="form-control" name="fecha_fin" id="fecha_fin" min={this.state.todayDate} placeholder="Fecha Fin" required />
                         </div>                       
                         
                         <div className={styles.form_group}>
                             <label htmlFor="precio">Precio por Noche</label>
-                            <input type="number" className="form-control" name="precio" id="precio" placeholder="Precio" min="0" step="0.01"/>
+                            <input type="number" className="form-control" name="precio" id="precio" placeholder="Precio" min="0" step="0.01" required/>
                         </div>
 
                         <div className={styles.form_group}>
                             <label htmlFor="contrasena">Contraseña</label>
-                            <input type="password" className="form-control" name="contrasena" id="contrasena" placeholder="Contraseña" />
+                            <input type="password" className="form-control" name="contrasena" id="contrasena" placeholder="Contraseña" required />
                         </div>
                     </div>
                     <div className={styles.buttons}>
