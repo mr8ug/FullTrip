@@ -54,7 +54,7 @@ export default class ReviewCard extends Component{
                         }
                     })
                     
-                    fetch('http://localhost:4000/api/info_room',{
+                    fetch(process.env.REACT_APP_API_URL+'info_room',{
                         method: 'POST',
                         body: formData
                     })
@@ -78,7 +78,7 @@ export default class ReviewCard extends Component{
                         }
                     })
 
-                    fetch('http://localhost:4000/api/info_car',{
+                    fetch(process.env.REACT_APP_API_URL+'info_car',{
                         method: 'POST',
                         body: formData
                     })
@@ -101,7 +101,7 @@ export default class ReviewCard extends Component{
                         }
                     })
 
-                    fetch('http://localhost:4000/api/info_flight',{
+                    fetch(process.env.REACT_APP_API_URL+'info_flight',{
                         method: 'POST',
                         body: formData
                     })

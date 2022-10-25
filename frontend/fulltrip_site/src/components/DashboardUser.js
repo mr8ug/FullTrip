@@ -91,7 +91,7 @@ export default class DashboardUser extends Component {
             formData.append('user_id', parseInt(id_usuario));
 
             //fetch reservas de hotel
-            fetch('http://localhost:4000/api/room_reservation', {
+            fetch(process.env.REACT_APP_API_URL+'room_reservation', {
                 method: 'POST',
                 body: formData,
 
@@ -112,7 +112,7 @@ export default class DashboardUser extends Component {
                 })
 
             //fetch vuelos de usuario
-            fetch('http://localhost:4000/api/flight_reservation', {
+            fetch(process.env.REACT_APP_API_URL+'flight_reservation', {
                 method: 'POST',
                 body: formData,
             })
@@ -132,7 +132,7 @@ export default class DashboardUser extends Component {
                 })
 
             //fetch alquileres de usuario
-            fetch('http://localhost:4000/api/car_reservation', {
+            fetch(process.env.REACT_APP_API_URL+'car_reservation', {
                 method: 'POST',
                 body: formData,
             })
@@ -152,7 +152,7 @@ export default class DashboardUser extends Component {
                 })
 
             //fetch de reviews
-            fetch('http://localhost:4000/api/user_reviews', {
+            fetch(process.env.REACT_APP_API_URL+'user_reviews', {
                 method: 'POST',
                 body: formData,
 

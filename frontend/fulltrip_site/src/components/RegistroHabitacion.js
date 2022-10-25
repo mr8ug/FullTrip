@@ -49,7 +49,7 @@ export default class RegistroHabitacion extends Component{
         console.log('Enviando', password, this.state.usuario);
 
 
-        fetch('http://localhost:4000/api/login', {
+        fetch(process.env.REACT_APP_API_URL+'login', {
             method: 'POST',
             body: formData
         })
@@ -86,7 +86,7 @@ export default class RegistroHabitacion extends Component{
                 formData.append('img', imagen);
                 formData.append('user_id', id_hotel);
                 
-                fetch('http://localhost:4000/api/add_room', {
+                fetch(process.env.REACT_APP_API_URL+'add_room', {
                     method: 'POST',
                     body: formData
                 })

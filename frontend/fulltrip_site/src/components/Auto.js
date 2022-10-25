@@ -77,7 +77,7 @@ export default class Auto extends Component {
         let formData = new FormData();
         formData.append("id", url_id);
 
-        fetch('http://localhost:4000/api/info_car', {
+        fetch(process.env.REACT_APP_API_URL+'info_car', {
             method: 'POST',
             body: formData
         })
@@ -106,7 +106,7 @@ export default class Auto extends Component {
                 }
             })
         //fetch reviews
-        fetch('http://localhost:4000/api/all_reviews', {
+        fetch(process.env.REACT_APP_API_URL+'all_reviews', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -215,7 +215,7 @@ export default class Auto extends Component {
         formData.append("password", contrasena);
         console.log('formdata', this.state.id_usuario, contrasena);
 
-        fetch('http://localhost:4000/api/info_password', {
+        fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: 'POST',
             body: formData
 
@@ -249,7 +249,7 @@ export default class Auto extends Component {
                         formData.append("user_id", this.state.reservation.user_id);
 
 
-                        fetch('http://localhost:4000/api/add_car_reservation', {
+                        fetch(process.env.REACT_APP_API_URL+'add_car_reservation', {
                             method: 'POST',
                             body: formData
                         })

@@ -21,7 +21,7 @@ export default class Autos extends Component {
 
     componentDidMount() {
         //fetch
-        fetch("http://localhost:4000/api/all_cars",
+        fetch(process.env.REACT_APP_API_URL+"all_cars",
             {
                 method: "GET",
                 headers: {

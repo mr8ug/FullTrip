@@ -108,7 +108,7 @@ export default class RegistroUsuario extends Component {
             formData.append("city", ciudad);
 
 
-            fetch("http://localhost:4000/api/signup", {
+            fetch(process.env.REACT_APP_API_URL+'signup', {
                 method: "POST",
                 body: formData
             }).then(response => response.json())

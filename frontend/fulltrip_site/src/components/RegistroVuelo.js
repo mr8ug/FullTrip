@@ -150,7 +150,7 @@ export default class RegistroVuelo extends Component {
         formData.append("id", parseInt(this.state.id));
         formData.append("password", password);
 
-        fetch('http://localhost:4000/api/info_password', {
+        fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: 'POST',
             body: formData
         })
@@ -181,7 +181,7 @@ export default class RegistroVuelo extends Component {
                         formData.append("number_seat", parseInt(number_seat));
                         formData.append("user_id", parseInt(user_id));
 
-                        fetch('http://localhost:4000/api/add_flight', {
+                        fetch(process.env.REACT_APP_API_URL+'add_flight', {
                             method: 'POST',
                             body: formData
                         })

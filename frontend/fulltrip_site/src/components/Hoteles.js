@@ -244,7 +244,7 @@ export default class Hoteles extends Component {
 
     componentDidMount() {
         //fetch
-        fetch("http://localhost:4000/api/all_rooms",
+        fetch(process.env.REACT_APP_API_URL+'all_rooms',
             {
                 method: "GET",
                 headers: {

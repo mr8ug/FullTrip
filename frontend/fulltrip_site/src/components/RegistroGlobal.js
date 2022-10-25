@@ -112,7 +112,7 @@ export default class RegistroGlobal extends Component{
             formdata.append('date_birth','0000-00-00');
             formdata.append('nickname',correo)
 
-            fetch('http://localhost:4000/api/signup',{
+            fetch(process.env.REACT_APP_API_URL+'signup',{
                 method: 'POST',
                 body: formdata
             })

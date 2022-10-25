@@ -77,7 +77,7 @@ export default class Vuelo extends Component {
         //fetch data about flight
         let formData = new FormData();
         formData.append('id', id);
-        fetch('http://localhost:4000/api/info_flight', {
+        fetch(process.env.REACT_APP_API_URL+'info_flight', {
             method: 'POST',
             body: formData
         })
@@ -108,7 +108,7 @@ export default class Vuelo extends Component {
             })
 
             //fetch reviews
-        fetch('http://localhost:4000/api/all_reviews', {
+        fetch(process.env.REACT_APP_API_URL+'all_reviews', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -224,7 +224,7 @@ export default class Vuelo extends Component {
         
         
 
-        fetch("http://localhost:4000/api/info_password", {
+        fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: "POST",
             body: formData
 
@@ -256,7 +256,7 @@ export default class Vuelo extends Component {
 
                         console.log(this.state.data.flight_id, this.state.reservation.user_id)
                         //enviar serevacion
-                        fetch("http://localhost:4000/api/add_flight_reservation", {
+                        fetch(process.env.REACT_APP_API_URL+'add_flight_reservation', {
                             method: "POST",
                             body: formData
                         })

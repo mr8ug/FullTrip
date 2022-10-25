@@ -47,7 +47,7 @@ export default class RegistroAuto extends Component{
         formData.append('email', this.state.usuario);
         console.log('Enviando', formData);
 
-        fetch('http://localhost:4000/api/login',{
+        fetch(process.env.REACT_APP_API_URL+'login',{
             method: 'POST',
             body: formData
         })
@@ -83,7 +83,7 @@ export default class RegistroAuto extends Component{
                 formData.append('img', foto);
                 formData.append('user_id', id_arrendador);
 
-                fetch('http://localhost:4000/api/add_car',{
+                fetch(process.env.REACT_APP_API_URL+'add_car',{
                     method: 'POST',
                     body: formData
                 })

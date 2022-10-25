@@ -20,7 +20,7 @@ export default class Aerolineas extends Component {
 
 
     componentDidMount() {
-        fetch("http://localhost:4000/api/all_flights",
+        fetch(process.env.REACT_APP_API_URL+"all_flights",
             {
                 method: "GET",
                 headers: {

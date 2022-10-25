@@ -87,7 +87,7 @@ export default class DashboardThirdService extends Component {
             })
 
             if (tipo === 'hotel') {
-                fetch("http://localhost:4000/api/all_rooms", {
+                fetch(process.env.REACT_APP_API_URL+"all_rooms", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export default class DashboardThirdService extends Component {
                 let formData = new FormData();
                 formData.append('hotel_id', parseInt(id));
                 //obtener reservaciones de hotel
-                fetch("http://localhost:4000/api/reservation_hotel", {
+                fetch(process.env.REACT_APP_API_URL+"reservation_hotel", {
                     method: 'POST',
                     body: formData
 
@@ -126,7 +126,7 @@ export default class DashboardThirdService extends Component {
 
             }
             if (tipo === 'arrendador') {
-                fetch("http://localhost:4000/api/all_cars", {
+                fetch(process.env.REACT_APP_API_URL+"all_cars", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ export default class DashboardThirdService extends Component {
                 let formData = new FormData();
                 formData.append('car_rental_id', parseInt(id));
                 //obtener reservaciones de hotel
-                fetch("http://localhost:4000/api/reservation_car_rental", {
+                fetch(process.env.REACT_APP_API_URL+"reservation_car_rental", {
                     method: 'POST',
                     body: formData
 
@@ -163,7 +163,7 @@ export default class DashboardThirdService extends Component {
                     })
             }
             if (tipo === 'aerolinea') {
-                fetch("http://localhost:4000/api/all_flights", {
+                fetch(process.env.REACT_APP_API_URL+"all_flights", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export default class DashboardThirdService extends Component {
                 let formData = new FormData();
                 formData.append('airline_id', parseInt(id));
                 //obtener reservaciones de aerolinea
-                fetch("http://localhost:4000/api/reservation_airline", {
+                fetch(process.env.REACT_APP_API_URL+"reservation_airline", {
                     method: 'POST',
                     body: formData
                 })
@@ -204,7 +204,7 @@ export default class DashboardThirdService extends Component {
             let formData = new FormData();
             // formData.append('email', usuario);
             formData.append('id', id);
-            fetch("http://localhost:4000/api/user_info", {
+            fetch(process.env.REACT_APP_API_URL+"user_info", {
                 method: 'POST',
                 body: formData,
             })

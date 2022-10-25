@@ -163,7 +163,7 @@ export default class RegistroReview extends Component {
         formData.append("id", this.state.id_usuario);
         formData.append("password", contrasena);
 
-        fetch('http://localhost:4000/api/info_password', {
+        fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: 'POST',
             body: formData,
         })
@@ -191,7 +191,7 @@ export default class RegistroReview extends Component {
                     formData.append('type_service_id', this.state.review.type_service_id);
                     formData.append('description', JSON.stringify(this.state.review.description));
 
-                    fetch('http://localhost:4000/api/create_review',{
+                    fetch(process.env.REACT_APP_API_URL+'create_review',{
                         method: 'POST',
                         body: formData,
 

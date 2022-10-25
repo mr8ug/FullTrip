@@ -71,8 +71,9 @@ export default class IniciarSesion extends Component {
         let formData = new FormData()
         formData.append('email', user_ingresado)
         formData.append('password', pass_ingresado)
+        
 
-        fetch('http://localhost:4000/api/login', {
+        fetch(process.env.REACT_APP_API_URL+'login', {
             method: 'POST',
             body: formData
         })

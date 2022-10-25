@@ -71,7 +71,7 @@ export default class Habitacion extends Component {
         //fetch data about room
         let formData = new FormData();
         formData.append("id", id);
-        fetch("http://localhost:4000/api/info_room", {
+        fetch(process.env.REACT_APP_API_URL+'info_room', {
             method: "POST",
             body: formData
         })
@@ -105,7 +105,7 @@ export default class Habitacion extends Component {
 
 
         //fetch reviews
-        fetch('http://localhost:4000/api/all_reviews', {
+        fetch(process.env.REACT_APP_API_URL+'all_reviews', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -225,7 +225,7 @@ export default class Habitacion extends Component {
         formData.append("password", contrasena);
 
         // console.log('formdata', this.state.id_usuario, contrasena)
-        fetch("http://localhost:4000/api/info_password", {
+        fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: "POST",
             body: formData
 
@@ -257,7 +257,7 @@ export default class Habitacion extends Component {
 
                         // console.log(this.state.data.room_id, this.state.reservation.user_id)
                         //enviar serevacion
-                        fetch("http://localhost:4000/api/add_hotel_reservation", {
+                        fetch(process.env.REACT_APP_API_URL+'add_hotel_reservation', {
                             method: "POST",
                             body: formData
                         })
