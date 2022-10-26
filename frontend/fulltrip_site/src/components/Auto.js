@@ -84,7 +84,7 @@ export default class Auto extends Component {
             .then(res => res.json())
             .then(data => {
                 if (data.car) {
-                    // console.log(data.car);
+                    // //console.log(data.car);
                     this.setState({
                         data: data.car
                     })
@@ -124,7 +124,7 @@ export default class Auto extends Component {
                         &&
                         review.type_service_id === 2
                     );
-                    // console.log(reviews_filtered);
+                    // //console.log(reviews_filtered);
                     this.setState({
                         reviews: reviews_filtered
                     })
@@ -213,7 +213,7 @@ export default class Auto extends Component {
         let formData = new FormData();
         formData.append("id", parseInt(this.state.id_usuario));
         formData.append("password", contrasena);
-        console.log('formdata', this.state.id_usuario, contrasena);
+        //console.log('formdata', this.state.id_usuario, contrasena);
 
         fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: 'POST',
@@ -223,9 +223,9 @@ export default class Auto extends Component {
 
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                //console.log(data)
                 if (data.password_state) {
-                    console.log('respuesta', data.password_state)
+                    //console.log('respuesta', data.password_state)
                     if (data.password_state === 1) {
                         Swal.fire({
                             title: 'Enviando reservacion...',

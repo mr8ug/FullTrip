@@ -19,7 +19,7 @@ export default class RegistroReview extends Component {
             name: "",
             tipo: "",
             id_usuario: "",
-            
+
 
             review: {
                 user_id: "",
@@ -49,7 +49,7 @@ export default class RegistroReview extends Component {
         window.sessionStorage.getItem('nombre') !== null ? nombre = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : nombre = "";
         window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
         window.sessionStorage.getItem('id') !== null ? id_usuario = window.sessionStorage.getItem('id') : id_usuario = "";
-        
+
 
         if (usuario === "") {
             Swal.fire({
@@ -73,7 +73,7 @@ export default class RegistroReview extends Component {
                 tipo: tipo,
                 id_usuario: id_usuario,
             })
-            // console.log(this.props.tipo_servicio)
+            // //console.log(this.props.tipo_servicio)
             if (this.state.tipo_servicio === "hotel") {
                 this.setState({
 
@@ -138,12 +138,12 @@ export default class RegistroReview extends Component {
                 service_review: opinion,
             },
 
-            
+
         })
-        
+
     }
 
-    
+
 
     onTrigger = (e) => {
         e.preventDefault();
@@ -153,7 +153,7 @@ export default class RegistroReview extends Component {
             review: {
                 ...this.state.review,
                 description: {
-                    
+
                     opinion: this.state.opinion,
                 }
             }
@@ -163,124 +163,119 @@ export default class RegistroReview extends Component {
         formData.append("id", this.state.id_usuario);
         formData.append("password", contrasena);
 
-        fetch(process.env.REACT_APP_API_URL+'info_password', {
+        fetch(process.env.REACT_APP_API_URL + 'info_password', {
             method: 'POST',
             body: formData,
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log('data', data);
-            if(data.password_state){
-                if(data.password_state === 1){
-                    Swal.fire({
-                        title:'Enviando calificacion',
-                        text: 'Por favor espere',
-                        icon: 'info',
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                        allowEnterKey: false,
-                        showConfirmButton: false,
-                    })
+            .then(res => res.json())
+            .then(data => {
+                console.log('data', data);
+                if (data.password_state) {
+                    if (data.password_state === 1) {
+                        Swal.fire({
+                            title: 'Enviando calificacion',
+                            text: 'Por favor espere',
+                            icon: 'info',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                            showConfirmButton: false,
+                        })
 
-                    Swal.showLoading();
+                        Swal.showLoading();
 
-                    //send comentario
+                        //send comentario
 
-                    let formData = new FormData();
-                    formData.append('user_id', this.state.review.user_id);
-                    formData.append('type_service_id', this.state.review.type_service_id);
-                    formData.append('description', JSON.stringify(this.state.review.description));
+                        let formData = new FormData();
+                        formData.append('user_id', this.state.review.user_id);
+                        formData.append('type_service_id', this.state.review.type_service_id);
+                        formData.append('description', JSON.stringify(this.state.review.description));
+                        console.log(this.state.review.user_id, this.state.review.type_service_id, this.state.review.description);
+                        fetch(process.env.REACT_APP_API_URL + 'create_review', {
+                            method: 'POST',
+                            body: formData,
 
-                    fetch(process.env.REACT_APP_API_URL+'create_review',{
-                        method: 'POST',
-                        body: formData,
-
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log('data', data);
-                        if(data.status === 'ok'){
-                            Swal.fire({
-                                title: 'Calificacion enviada',
-                                text: 'Gracias por tu opinion',
-                                icon: 'success',
-                                confirmButtonText: 'Ok',
-                            }).then(
-                                function(isConfirm){
-                                    if(isConfirm){
-                                        window.location.href = "/Perfil";
-                                    }
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log('data', data);
+                                if (data.status === 'ok') {
+                                    Swal.fire({
+                                        title: 'Calificacion enviada',
+                                        text: 'Gracias por tu opinion',
+                                        icon: 'success',
+                                        confirmButtonText: 'Ok',
+                                    }).then(
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                window.location.href = "/Perfil";
+                                            }
+                                        }
+                                    )
+                                } else {
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'No se pudo enviar la calificacion',
+                                        icon: 'error',
+                                        confirmButtonText: 'Ok',
+                                    })
                                 }
-                            )
-                        }else{
-                            Swal.fire({
-                                title: 'Error',
-                                text: 'No se pudo enviar la calificacion',
-                                icon: 'error',
-                                confirmButtonText: 'Ok',
                             })
-                        }
+                    }
+                } else if (!data.password_state || data.password_state === 0) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'La contraseña es incorrecta',
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
                     })
                 }
-            }else if(!data.password_state || data.password_state === 0){
-                Swal.fire({
-                    title: 'Error',
-                    text: 'La contraseña es incorrecta',
-                    icon: 'error',
-                    confirmButtonText: 'Ok',
-                })
-            }
 
-            
-        })
-            
+
+            })
+
     }
 
     render() {
         return (
             <div className={styles.container}>
-                <div className={styles.room_info}>
-                    
-                        
-                        
-                    
-
-                    
-                        <Card>
+                <div className={styles.review_info}>
+                    <Card>
                         <Card.Header>Calificacion</Card.Header>
-                            <Card.Img src={review} variant='bottom'/>
-                            
+                        <Card.Img src={review} variant='bottom'/>
 
-                            <Card.Body>
-                                <form onSubmit={this.onTrigger} className={styles.reserva}>
-                                    {/* <div className={styles.form_elements}> */}
-                                    <div className={styles.form_group}>
-                                        <label htmlFor='user'>Usuario</label>
-                                        <input className="form-control" type='text' name='user' id='user' value={this.state.email} disabled />
-                                    </div>
 
-                                    <div className={styles.form_group}>
-                                        <label htmlFor='name'>Nombre</label>
-                                        <input className="form-control" type='text' name='name' id='name' value={this.state.name} disabled />
-                                    </div>
+                        <Card.Body>
+                            <form onSubmit={this.onTrigger} className={styles.reserva}>
+                                {/* <div className={styles.form_elements}> */}
+                                <div className={styles.form_group}>
+                                    <label htmlFor='user'>Usuario</label>
+                                    <input className="form-control" type='text' name='user' id='user' value={this.state.email} disabled />
+                                </div>
 
-                                    <div className={styles.form_group}>
-                                        <label htmlFor='description'>Opinion</label>
-                                    </div>
-                                    <textarea className="form-control" id="description" name="description" rows="4" cols="50" onChange={this.onChangeDescription} required/>
+                                <div className={styles.form_group}>
+                                    <label htmlFor='name'>Nombre</label>
+                                    <input className="form-control" type='text' name='name' id='name' value={this.state.name} disabled />
+                                </div>
 
-                                    <div className={styles.form_group}>
-                                        <label htmlFor="contrasena">Contrasena</label>
-                                        <input className="form-control" id="contrasena" name="contrasena"required/>
+                                <div className={styles.form_group}>
+                                    <label htmlFor='description'>Opinion</label>
+                                </div>
+                                <textarea className="form-control" id="description" name="description" rows="4" cols="50" onChange={this.onChangeDescription} required />
 
-                                    </div>
+                                <div className={styles.form_group}>
+                                    <label htmlFor="contrasena">Contrasena</label>
+                                    <input className="form-control" id="contrasena" name="contrasena" required />
 
-                                    <Button variant="primary" type="submit" className={styles.btn}>Enviar Reseña </Button>
-                                    {/* </div> */}
-                                </form>
-                            </Card.Body>
-                        </Card>
-                    
+                                </div>
+
+                                <Button variant="primary" type="submit" className={styles.btn}>Enviar Reseña </Button>
+                                {/* </div> */}
+                            </form>
+                        </Card.Body>
+                        
+                    </Card>
+
                 </div>
             </div>
 

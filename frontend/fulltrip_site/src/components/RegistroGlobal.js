@@ -19,7 +19,7 @@ export default class RegistroGlobal extends Component{
     handlerCountryChange = (e) => {
         e.preventDefault();
         var ciudadSeleccionada = e.target.value;
-        // console.log("selected value",ciudadSeleccionada)
+        // //console.log("selected value",ciudadSeleccionada)
 
         const requestOptions = {
             method: 'POST',
@@ -44,7 +44,7 @@ export default class RegistroGlobal extends Component{
 
 
 
-        //console.log(this.state.cityList);
+        ////console.log(this.state.cityList);
 
     }
 
@@ -70,6 +70,11 @@ export default class RegistroGlobal extends Component{
             this.setState({countryList: []})
         }
         );
+
+
+        //deshabilitar boton de enviar
+        
+    
     }
 
     sendTrigger = (e) => {
@@ -89,7 +94,7 @@ export default class RegistroGlobal extends Component{
             userType = "7";
         }
 
-        // console.log(nombre,correo,pais,ciudad,contrasena,contrasena2,userType);
+        // //console.log(nombre,correo,pais,ciudad,contrasena,contrasena2,userType);
         
         //check if the passwords are the same
         if(contrasena !== contrasena2){
@@ -109,7 +114,7 @@ export default class RegistroGlobal extends Component{
             formdata.append("city",ciudad);
             formdata.append("password",contrasena);
             formdata.append("type_user",parseInt(userType));
-            formdata.append('date_birth','0000-00-00');
+            formdata.append('date_birth','2000-01-01');
             formdata.append('nickname',correo)
 
             fetch(process.env.REACT_APP_API_URL+'signup',{
@@ -137,6 +142,7 @@ export default class RegistroGlobal extends Component{
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     })
+                    //console.log(data);
                 }
             })
 
@@ -153,7 +159,7 @@ export default class RegistroGlobal extends Component{
                 <h2>Registrar {this.props.userType}</h2>
                 {/* divider */}
                 <div className={styles.divider}></div>
-                <form onSubmit={this.sendTrigger}>
+                <form onSubmit={this.sendTrigger} id="formulario">
                     <div className={styles.form_elements}>
                         <div className={styles.form_group}>
                             <label htmlFor="nombre">Nombre de {this.props.userType}</label>
@@ -209,7 +215,7 @@ export default class RegistroGlobal extends Component{
                     </div>
                     <div className={styles.buttons}>
                         {/* <button className={styles.btn_regresar}>Volver</button> */}
-                        <button type='submit' className={styles.btn_crear}>Registrar {this.props.userType}</button>
+                        <button id="botonSend" type='submit' className={styles.btn_crear}>Registrar {this.props.userType}</button>
                     </div>
                 </form>
             </div>

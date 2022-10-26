@@ -45,7 +45,7 @@ export default class RegistroAuto extends Component{
         let formData = new FormData();
         formData.append('password', password);
         formData.append('email', this.state.usuario);
-        console.log('Enviando', formData);
+        //console.log('Enviando', formData);
 
         fetch(process.env.REACT_APP_API_URL+'login',{
             method: 'POST',
@@ -53,7 +53,7 @@ export default class RegistroAuto extends Component{
         })
         .then (res => res.json())
         .then (data =>{
-            console.log(data);
+            //console.log(data);
             if(String(data.userid) === this.state.id){
                 Swal.fire({
                     title:'Registrando vehiculo',
@@ -89,7 +89,7 @@ export default class RegistroAuto extends Component{
                 })
                 .then (res => res.json())
                 .then (data =>{
-                    console.log(data);
+                    //console.log(data);
                     if(data.status === 'ok'){
                         Swal.fire({
                             title:'Vehiculo registrado',

@@ -31,7 +31,7 @@ export default class Autos extends Component {
             .then(response => response.json())
             .then(data => {
                 if(data.cars){
-                    // console.log(data);
+                    // //console.log(data);
                     this.setState({
                         autos: data.cars,
                         autosFiltrados: data.cars
@@ -122,7 +122,7 @@ export default class Autos extends Component {
                 autosFiltrados: autosFiltradosPorLinea,
                 actual_filter: "linea"
             })
-            // console.log("autos filtrados",this.state.autosFiltrados)
+            // //console.log("autos filtrados",this.state.autosFiltrados)
         }
     }
 
@@ -146,7 +146,7 @@ export default class Autos extends Component {
         getCiudadSelected.value = "todos";
 
         var modelo = e.target.value;
-        // console.log("modelo:" + modelo);
+        // //console.log("modelo:" + modelo);
 
         if (modelo === "todos") {
             this.setState({
@@ -180,20 +180,20 @@ export default class Autos extends Component {
 
         var getCiudadSelected = document.getElementById("ciudad");
         getCiudadSelected.value = "todos";
-        // console.log(precio)
+        // //console.log(precio)
         if (precio === "todos") {
             this.setState({
                 autosFiltrados: this.state.autos
             })
         } else if (precio === "asc") {
-            // console.log("filter asc")
+            // //console.log("filter asc")
             const autosFiltradosPorPrecio = this.state.autos.sort((a, b) => a.price - b.price);
             this.setState({
                 autosFiltrados: autosFiltradosPorPrecio,
                 actual_filter: "precio"
             })
         } else if (precio === "desc") {
-            // console.log("filter desc")
+            // //console.log("filter desc")
             const autosFiltradosPorPrecio = this.state.autos.sort((a, b) => b.price - a.price);
             this.setState({
                 autosFiltrados: autosFiltradosPorPrecio,

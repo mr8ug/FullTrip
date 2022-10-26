@@ -42,7 +42,7 @@ export default class RegistroVuelo extends Component {
                 this.setState({ countryOriginList: data.data })
             })
             .catch(error => {
-                console.log(error);
+                //console.log(error);
             }
             );
 
@@ -84,11 +84,11 @@ export default class RegistroVuelo extends Component {
     handlerOriginCountryChange = (e) => {
         e.preventDefault();
         var paisSeleccionado = e.target.value;
-        // console.log("selected value",ciudadSeleccionada)
+        // //console.log("selected value",ciudadSeleccionada)
 
         //fetch cities
 
-        // console.log("selected value",ciudadSeleccionada)
+        // //console.log("selected value",ciudadSeleccionada)
 
         const requestOptions = {
             method: 'POST',
@@ -113,7 +113,7 @@ export default class RegistroVuelo extends Component {
     handlerOriginCityChange = (e) => {
         e.preventDefault();
         var ciudadSeleccionada = e.target.value;
-        // console.log("selected value",ciudadSeleccionada)
+        // //console.log("selected value",ciudadSeleccionada)
         this.setState({
             ciudadOrigenSeleccionada: ciudadSeleccionada,
             // cityDestinationList: this.state.cityOriginList.filter((city) => city !== ciudadSeleccionada)
@@ -124,7 +124,7 @@ export default class RegistroVuelo extends Component {
         e.preventDefault();
         var paisSeleccionado = e.target.value;
 
-        // console.log("selected value",ciudadSeleccionada)
+        // //console.log("selected value",ciudadSeleccionada)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-type': 'application/json; charset=UTF-8' },
@@ -142,7 +142,7 @@ export default class RegistroVuelo extends Component {
 
     onTrigger = (e) => {
         e.preventDefault();
-        console.log("triggered");
+        //console.log("triggered");
 
         var password = document.getElementById("contrasena").value;
         let formData = new FormData();
@@ -158,7 +158,7 @@ export default class RegistroVuelo extends Component {
             .then(data => {
                 if (data.password_state) {
                     if (data.password_state === 1) {
-                        console.log('todo bien!')
+                        //console.log('todo bien!')
                         //recolect form
                         var flight_date = document.getElementById("fecha").value;
                         var destination_country = document.getElementById("pais_destino").value;
@@ -187,7 +187,7 @@ export default class RegistroVuelo extends Component {
                         })
                             .then(res => res.json())
                             .then(data => {
-                                console.log(data)
+                                //console.log(data)
                                 if (data.status === 'ok') {
                                     Swal.fire({
                                         title: 'Vuelo creado con exito!',

@@ -61,8 +61,8 @@ export default class DashboardThirdService extends Component {
         window.sessionStorage.getItem('nombre') !== null ? nombre = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : nombre = "";
         window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
         window.sessionStorage.getItem('id') !== null ? id = window.sessionStorage.getItem('id') : id = "";
-        // console.log(tipo)
-        // console.log(['hotel', 'auto', 'aerolinea'].includes(tipo))
+        // //console.log(tipo)
+        // //console.log(['hotel', 'auto', 'aerolinea'].includes(tipo))
 
         if (!['hotel', 'arrendador', 'aerolinea'].includes(tipo)) {
             Swal.fire({
@@ -113,7 +113,7 @@ export default class DashboardThirdService extends Component {
                     .then(response => response.json())
                     .then(data => {
                         if (data.reservations) {
-                            console.log(data.reservations)
+                            //console.log(data.reservations)
                             this.setState({
                                 reservaciones: data.reservations
                             })
@@ -151,7 +151,7 @@ export default class DashboardThirdService extends Component {
                     .then(response => response.json())
                     .then(data => {
                         if (data.reservations) {
-                            console.log(data.reservations)
+                            //console.log(data.reservations)
                             this.setState({
                                 reservaciones: data.reservations
                             })
@@ -187,7 +187,7 @@ export default class DashboardThirdService extends Component {
                     .then(response => response.json())
                     .then(data => {
                         if (data.reservations) {
-                            console.log(data.reservations)
+                            //console.log(data.reservations)
                             this.setState({
                                 reservaciones: data.reservations
                             })
@@ -210,7 +210,7 @@ export default class DashboardThirdService extends Component {
             })
                 .then(response => response.json())
                 .then(data => {
-                    // console.log(data)
+                    // //console.log(data)
                     this.setState({
                         user_info: data
                     })

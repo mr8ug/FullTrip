@@ -14,7 +14,7 @@ export default class Inicio extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            empresa: "",
+            empresa: "0",
             userType: ''
 
         };
@@ -23,8 +23,19 @@ export default class Inicio extends Component {
     }
 
     componentDidMount() {
-        // var jumbotron = document.getElementById("jumbotron");
-        // jumbotron.style.backgroundImage = "url(" + wave + ")";
+        var form = document.getElementById("unfocused");
+        try {
+            if (form.style) {
+                form.style.filter = "blur(5px)";
+                form.style.display = "block";
+            }
+        }
+        catch (e) {
+            console.log(e);
+        }
+
+
+
     }
 
     registro() {
@@ -36,9 +47,31 @@ export default class Inicio extends Component {
     }
 
     handleEmpresa = (e) => {
+        //scroll into document
 
         e.preventDefault();
         var empresa = e.target.value;
+        var form = document.getElementById("promo");
+        form.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+        try {
+            var form2 = document.getElementById("unfocused");
+            if (form2.style) {
+                form2.style.filter = "blur(0px)";
+                
+            }
+            if(form2.style && empresa === "0"){
+                form2.style.filter = "blur(5px)";
+                
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+
+
+        
         if (empresa === "5") {
             this.setState({
                 userType: "Hotel"
@@ -51,18 +84,21 @@ export default class Inicio extends Component {
             this.setState({
                 userType: "Aerolinea"
             })
+        }else{
+            this.setState({
+                userType: "0",
+                empresa: "0"
+            })
         }
 
         this.setState({
             empresa: empresa
         })
 
-        
 
 
-        //scroll into document
-        var form = document.getElementById("promo");
-        form.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+
+
 
     }
 
@@ -106,16 +142,22 @@ export default class Inicio extends Component {
 
 
                     <div className={styles.registro}>
-                        <select id="tipo_empresa" className={styles.select} onChange={this.handleEmpresa}>
+                        <select id="tipo_empresa" className={styles.select} onChange={this.handleEmpresa} >
                             <option value="0" >Selecciona tu tipo de empresa</option>
                             <option value="7">Aerolinea</option>
                             <option value="6">Arrendador</option>
                             <option value="5">Hotel</option>
                         </select>
+
+
                         {
                             this.state.empresa === "" ? null :
                                 <div>
-                                    {this.state.empresa !== ("" || "0") ? <RegistroGlobal userType={this.state.userType} /> : null}
+                                    {this.state.empresa !== "0" ? <RegistroGlobal userType={this.state.userType} /> : <div id="unfocused">
+                                        
+                                        <RegistroGlobal />
+                                        
+                                    </div>}
                                 </div>
                         }
                     </div>

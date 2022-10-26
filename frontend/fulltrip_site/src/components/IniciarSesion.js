@@ -22,7 +22,7 @@ export default class IniciarSesion extends Component {
 
     componentDidMount() {
         var usuario = ""
-        // console.log("componente montado", usuario)
+        // //console.log("componente montado", usuario)
         window.sessionStorage.getItem('nombre') !== null ? usuario = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : usuario = "";
         var tipo = ""
         window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
@@ -79,10 +79,10 @@ export default class IniciarSesion extends Component {
         })
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
+                // //console.log(data);
                 if (data.userid !== undefined) {
                     //el usuario existe procede el login
-                    // console.log("userid", data.userid)
+                    // //console.log("userid", data.userid)
                     window.sessionStorage.setItem("email", CryptoJS.AES.encrypt(data.email, 'fulltrip').toString());
                     window.sessionStorage.setItem("nombre", CryptoJS.AES.encrypt(data.fullname, 'fulltrip').toString());
                     window.sessionStorage.setItem("tipo", CryptoJS.AES.encrypt(data.type_user, 'fulltrip').toString());

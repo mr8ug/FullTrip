@@ -32,7 +32,7 @@ export default class RegistroUsuario extends Component {
             this.setState({countryList: data.data})
         })
         .catch(error => {
-            console.log(error);
+            //console.log(error);
         }
         );
 
@@ -42,7 +42,7 @@ export default class RegistroUsuario extends Component {
     handlerCountryChange = (e) => {
         e.preventDefault();
         var ciudadSeleccionada = e.target.value;
-        // console.log("selected value",ciudadSeleccionada)
+        // //console.log("selected value",ciudadSeleccionada)
 
         const requestOptions = {
             method: 'POST',
@@ -56,13 +56,13 @@ export default class RegistroUsuario extends Component {
                 this.setState({ cityList: data.data })
             })
             .catch(error => {
-                console.log(error);
+                //console.log(error);
             });
 
 
 
 
-        //console.log(this.state.cityList);
+        ////console.log(this.state.cityList);
 
     }
 
@@ -113,7 +113,7 @@ export default class RegistroUsuario extends Component {
                 body: formData
             }).then(response => response.json())
                 .then(data => {
-                    // console.log(data);
+                    // //console.log(data);
                     if (data.status === "ok") {
                         Swal.fire({
                             title: 'Bienvenido',

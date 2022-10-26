@@ -23,7 +23,7 @@ export default class DashboardAdmin extends Component {
         window.sessionStorage.getItem('nombre') !== null ? name = CryptoJS.AES.decrypt(window.sessionStorage.getItem('nombre'), 'fulltrip').toString(CryptoJS.enc.Utf8) : name = "";
         var tipo = ""
         window.sessionStorage.getItem('tipo') !== null ? tipo = CryptoJS.AES.decrypt(window.sessionStorage.getItem('tipo'), 'fulltrip').toString(CryptoJS.enc.Utf8) : tipo = "";
-        console.log("componente montado", email, name)
+        //console.log("componente montado", email, name)
         this.setState({
             email:email,
             name:name,

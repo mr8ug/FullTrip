@@ -27,7 +27,7 @@ export default class AutoCard extends Component {
 
 
     componentDidMount() {
-        // console.log('type of price' + typeof (this.state.price));
+        // //console.log('type of price' + typeof (this.state.price));
     }
 
     delete = () => {

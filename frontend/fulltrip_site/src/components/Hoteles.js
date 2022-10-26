@@ -59,7 +59,7 @@ export default class Hoteles extends Component {
     handleCity = (e) => {
         e.preventDefault();
         var city = e.target.value;
-        console.log(city)
+        //console.log(city)
 
         if (city === "todos") {
             this.setState({
@@ -67,7 +67,7 @@ export default class Hoteles extends Component {
             })
         } else {
             var habitacionesFiltradasPorCiudad = this.state.habitaciones.filter(habitacion => Boolean(habitacion.city.match(city)) === true);
-            console.log(habitacionesFiltradasPorCiudad);
+            //console.log(habitacionesFiltradasPorCiudad);
 
             this.setState({
                 habitacionesFiltradas: habitacionesFiltradasPorCiudad
@@ -253,7 +253,7 @@ export default class Hoteles extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                // console.log(data);
+                // //console.log(data);
                 if (data.rooms) {
                     this.setState({
                         habitaciones: data.rooms,

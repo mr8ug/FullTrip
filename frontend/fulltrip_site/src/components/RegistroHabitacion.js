@@ -46,7 +46,7 @@ export default class RegistroHabitacion extends Component{
         let formData = new FormData();
         formData.append('password', password);
         formData.append('email', this.state.usuario);
-        console.log('Enviando', password, this.state.usuario);
+        //console.log('Enviando', password, this.state.usuario);
 
 
         fetch(process.env.REACT_APP_API_URL+'login', {
@@ -55,7 +55,7 @@ export default class RegistroHabitacion extends Component{
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            //console.log(data)
             if(String(data.userid) === this.state.id){
                 Swal.fire({
                     title:'Registrando habitacion',
@@ -92,7 +92,7 @@ export default class RegistroHabitacion extends Component{
                 })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data)
+                    //console.log(data)
                     if(data.status === 'ok'){
                         Swal.fire({
                             title:'Habitacion registrada',

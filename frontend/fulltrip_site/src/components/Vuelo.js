@@ -84,7 +84,7 @@ export default class Vuelo extends Component {
             .then(res => res.json())
             .then(data => {
                 if (data.flight) {
-                    console.log(data.flight)
+                    //console.log(data.flight)
                     this.setState({
                         data: data.flight
 
@@ -126,7 +126,7 @@ export default class Vuelo extends Component {
                         &&
                         review.type_service_id === 3
                     );
-                    // console.log(reviews_filtered);
+                    // //console.log(reviews_filtered);
                     this.setState({
                         reviews: reviews_filtered
                     })
@@ -185,7 +185,7 @@ export default class Vuelo extends Component {
 
         const fecha = e.target.value;
         if (fecha !== this.state.data.flight_date || fecha !== "0000-00-00") {
-            // console.log("vuelo ida y vuelta", fecha, this.state.data.flight_date)
+            // //console.log("vuelo ida y vuelta", fecha, this.state.data.flight_date)
             this.setState({
                 reservation: {
                     ...this.state.reservation,
@@ -193,7 +193,7 @@ export default class Vuelo extends Component {
                 }
             })
         } else {
-            // console.log("vuelo solo ida")
+            // //console.log("vuelo solo ida")
             this.setState({
                 reservation: {
                     ...this.state.reservation,
@@ -232,7 +232,7 @@ export default class Vuelo extends Component {
             .then(response => response.json())
             .then(data => {
                 if (data.password_state) {
-                    console.log('respuesta de contrasena', data.password_state)
+                    //console.log('respuesta de contrasena', data.password_state)
                     if (data.password_state === 1) {
                         Swal.fire({
                             title: 'Enviando reservacion...',
@@ -254,7 +254,7 @@ export default class Vuelo extends Component {
                         formData.append('flight_id', this.state.data.flight_id);
 
 
-                        console.log(this.state.data.flight_id, this.state.reservation.user_id)
+                        //console.log(this.state.data.flight_id, this.state.reservation.user_id)
                         //enviar serevacion
                         fetch(process.env.REACT_APP_API_URL+'add_flight_reservation', {
                             method: "POST",
@@ -262,7 +262,7 @@ export default class Vuelo extends Component {
                         })
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data)
+                                //console.log(data)
                                 if (data.status ==='ok') {
                                     Swal.fire({
                                         title: 'Reservacion enviada!',
@@ -298,7 +298,7 @@ export default class Vuelo extends Component {
                                 }
 
                             }).catch(error => {
-                                console.log(error)
+                                //console.log(error)
                             })
 
                     
@@ -322,7 +322,7 @@ export default class Vuelo extends Component {
                 }
             })
 
-        console.log(this.state.reservation, contrasena)
+        //console.log(this.state.reservation, contrasena)
 
 
 

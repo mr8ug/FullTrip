@@ -78,7 +78,7 @@ export default class Habitacion extends Component {
             .then(response => response.json())
             .then(data => {
                 if (data.room) {
-                    // console.log(data.room)
+                    // //console.log(data.room)
                     this.setState({
                         data: data.room
                     });
@@ -123,7 +123,7 @@ export default class Habitacion extends Component {
                         &&
                         review.type_service_id === 1
                     );
-                    // console.log(reviews_filtered);
+                    // //console.log(reviews_filtered);
                     this.setState({
                         reviews: reviews_filtered
                     })
@@ -224,7 +224,7 @@ export default class Habitacion extends Component {
         formData.append("id", parseInt(this.state.id_usuario));
         formData.append("password", contrasena);
 
-        // console.log('formdata', this.state.id_usuario, contrasena)
+        // //console.log('formdata', this.state.id_usuario, contrasena)
         fetch(process.env.REACT_APP_API_URL+'info_password', {
             method: "POST",
             body: formData
@@ -233,7 +233,7 @@ export default class Habitacion extends Component {
             .then(response => response.json())
             .then(data => {
                 if (data.password_state) {
-                    // console.log('respuesta de contrasena', data.password_state)
+                    // //console.log('respuesta de contrasena', data.password_state)
                     if (data.password_state === 1) {
                         Swal.fire({
                             title: 'Enviando reservacion...',
@@ -255,7 +255,7 @@ export default class Habitacion extends Component {
                         formData.append("room_id", this.state.data.room_id);
                         formData.append("user_id", this.state.reservation.user_id);
 
-                        // console.log(this.state.data.room_id, this.state.reservation.user_id)
+                        // //console.log(this.state.data.room_id, this.state.reservation.user_id)
                         //enviar serevacion
                         fetch(process.env.REACT_APP_API_URL+'add_hotel_reservation', {
                             method: "POST",
@@ -263,7 +263,7 @@ export default class Habitacion extends Component {
                         })
                             .then(response => response.json())
                             .then(data => {
-                                // console.log(data)
+                                // //console.log(data)
                                 if (data.status === 'ok') {
                                     Swal.fire({
                                         title: 'Reservacion enviada!',
@@ -299,7 +299,7 @@ export default class Habitacion extends Component {
                                 }
 
                             }).catch(error => {
-                                console.log(error)
+                                //console.log(error)
                             })
 
 
@@ -323,7 +323,7 @@ export default class Habitacion extends Component {
                 }
             })
 
-        // console.log(this.state.reservation, contrasena)
+        // //console.log(this.state.reservation, contrasena)
     }
 
 
@@ -444,7 +444,7 @@ export default class Habitacion extends Component {
 
                                         </div>
 
-                                        <Button type="submit">Solicitar Boleto</Button>
+                                        <Button type="submit">Solicitar Reserva</Button>
 
                                     </form>
 

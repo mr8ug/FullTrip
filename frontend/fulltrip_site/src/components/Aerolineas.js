@@ -29,7 +29,7 @@ export default class Aerolineas extends Component {
             })
             .then(response => response.json())
             .then(data => {
-                // console.log(data)
+                // //console.log(data)
                 if(data.flights){
                     this.setState({
                         vuelos: data.flights,

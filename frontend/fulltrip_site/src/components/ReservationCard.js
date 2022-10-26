@@ -37,7 +37,7 @@ export default class ReservationCard extends Component {
             //fetch for looking for hotel email
 
         }
-        // console.log(this.state.email)
+        // //console.log(this.state.email)
     }
 
     render() {

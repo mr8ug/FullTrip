@@ -51,7 +51,7 @@ export default class DashboardUser extends Component {
     }
 
     componentDidMount() {
-        // console.log(this.state.user);
+        // //console.log(this.state.user);
 
         //obtener valor de local storage
         var usuario = "";
@@ -98,7 +98,7 @@ export default class DashboardUser extends Component {
             })
                 .then(response => response.json())
                 .then(data => {
-                    // console.log(data);
+                    // //console.log(data);
                     if (data.rooms) {
                         this.setState({
                             reservas: data.rooms,
@@ -119,7 +119,7 @@ export default class DashboardUser extends Component {
                 .then(response => response.json())
                 .then(data => {
                     if (data.flights) {
-                        // console.log(data);
+                        // //console.log(data);
                         this.setState({
                             vuelos: data.flights,
                         })
@@ -139,7 +139,7 @@ export default class DashboardUser extends Component {
                 .then(response => response.json())
                 .then(data => {
                     if (data.cars) {
-                        // console.log(data);
+                        // //console.log(data);
                         this.setState({
                             alquileres: data.cars,
                         })
@@ -160,7 +160,7 @@ export default class DashboardUser extends Component {
                 .then(response => response.json())
                 .then(data => {
                     if (data.reviews) {
-                        // console.log(data);
+                        // //console.log(data);
                         this.setState({
                             reviews: data.reviews,
                         })

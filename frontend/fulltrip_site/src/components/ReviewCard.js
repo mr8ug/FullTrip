@@ -108,7 +108,7 @@ export default class ReviewCard extends Component{
                     .then(res => res.json())
                     .then(data => {
                         if(data.flight){
-                            // console.log(data.flight)
+                            // //console.log(data.flight)
                             this.setState({
                                 datos_servicio:{
                                     tipo_producto:'Boleto',
