@@ -1,0 +1,307 @@
+{
+  "id": "5267b2a1-8920-4b54-a453-4af6c3f22b0d",
+  "version": "2.0",
+  "name": "AYD1 Test",
+  "url": "http://192.168.0.4:3000/Registrarse",
+  "tests": [{
+    "id": "a4410f86-1077-4ea8-a0c7-51b179dab898",
+    "name": "Untitled",
+    "commands": []
+  }, {
+    "id": "725e1983-fb31-4d32-81d3-f97e7c056e10",
+    "name": "RegistroUsuario",
+    "commands": [{
+      "id": "e0917946-223f-412b-85a8-290948901b79",
+      "comment": "",
+      "command": "open",
+      "target": "http://192.168.0.4:3000/Registrarse",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6f77060b-bd02-44a6-a314-2eb8b2accad0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1020",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2f6c7692-55a6-4bb6-b917-0cc12a89057f",
+      "comment": "",
+      "command": "click",
+      "target": "id=correo",
+      "targets": [
+        ["id=correo", "id"],
+        ["css=#correo", "css:finder"],
+        ["xpath=//input[@id='correo']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2ced663a-456a-4b3d-b641-64e588a97680",
+      "comment": "",
+      "command": "type",
+      "target": "id=correo",
+      "targets": [
+        ["id=correo", "id"],
+        ["css=#correo", "css:finder"],
+        ["xpath=//input[@id='correo']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "seleniumregtest@gmail.com"
+    }, {
+      "id": "cc28404b-3b09-4094-ba3b-50871fb5724a",
+      "comment": "",
+      "command": "type",
+      "target": "id=user",
+      "targets": [
+        ["id=user", "id"],
+        ["css=#user", "css:finder"],
+        ["xpath=//input[@id='user']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "seleniumtest"
+    }, {
+      "id": "260275ca-cbb4-406f-9079-ff7640684da3",
+      "comment": "",
+      "command": "type",
+      "target": "id=nombre",
+      "targets": [
+        ["id=nombre", "id"],
+        ["css=#nombre", "css:finder"],
+        ["xpath=//input[@id='nombre']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "Registro Selenium"
+    }, {
+      "id": "a4171c8b-65ba-463b-9d7c-c66c39b69465",
+      "comment": "",
+      "command": "type",
+      "target": "id=fecha",
+      "targets": [
+        ["id=fecha", "id"],
+        ["css=#fecha", "css:finder"],
+        ["xpath=//input[@id='fecha']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "0001-07-31"
+    }, {
+      "id": "b1f2398c-24c7-4ff6-8433-eeba8788871f",
+      "comment": "",
+      "command": "type",
+      "target": "id=fecha",
+      "targets": [
+        ["id=fecha", "id"],
+        ["css=#fecha", "css:finder"],
+        ["xpath=//input[@id='fecha']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "0019-07-31"
+    }, {
+      "id": "628995e1-1c64-47ff-a26e-3e0196edcbba",
+      "comment": "",
+      "command": "type",
+      "target": "id=fecha",
+      "targets": [
+        ["id=fecha", "id"],
+        ["css=#fecha", "css:finder"],
+        ["xpath=//input[@id='fecha']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "0199-07-31"
+    }, {
+      "id": "7062bc23-86b8-4d1c-b180-0d6bcbc99241",
+      "comment": "",
+      "command": "type",
+      "target": "id=fecha",
+      "targets": [
+        ["id=fecha", "id"],
+        ["css=#fecha", "css:finder"],
+        ["xpath=//input[@id='fecha']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "1998-07-31"
+    }, {
+      "id": "57eb9a3b-242e-474e-8f19-4c972411affe",
+      "comment": "",
+      "command": "type",
+      "target": "id=contrasena",
+      "targets": [
+        ["id=contrasena", "id"],
+        ["css=#contrasena", "css:finder"],
+        ["xpath=//input[@id='contrasena']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": "1234"
+    }, {
+      "id": "69dd49ba-8b33-482e-8b6b-67f54e6494fe",
+      "comment": "",
+      "command": "type",
+      "target": "id=contrasena2",
+      "targets": [
+        ["id=contrasena2", "id"],
+        ["css=#contrasena2", "css:finder"],
+        ["xpath=//input[@id='contrasena2']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "1234"
+    }, {
+      "id": "3015455f-cdc5-458e-be1a-639f698c2c84",
+      "comment": "",
+      "command": "select",
+      "target": "id=pais",
+      "targets": [],
+      "value": "label=Gabon"
+    }, {
+      "id": "1944a7be-99bb-4726-967f-ce93c953c9cb",
+      "comment": "",
+      "command": "select",
+      "target": "id=pais",
+      "targets": [],
+      "value": "label=Guadeloupe"
+    }, {
+      "id": "4500ef1a-b099-433e-8017-a7205efc1394",
+      "comment": "",
+      "command": "select",
+      "target": "id=pais",
+      "targets": [],
+      "value": "label=Guatemala"
+    }, {
+      "id": "aff5d6cf-8196-46ea-9d78-4e6162a5cd97",
+      "comment": "",
+      "command": "select",
+      "target": "id=ciudad",
+      "targets": [],
+      "value": "label=Cambote"
+    }, {
+      "id": "fe73ac65-e8e3-44e0-b658-e3777bdcc8e4",
+      "comment": "",
+      "command": "select",
+      "target": "id=ciudad",
+      "targets": [],
+      "value": "label=Ciudad Vieja"
+    }, {
+      "id": "0c8fd4b3-62c4-4c70-8d84-1227b8f4f0ed",
+      "comment": "",
+      "command": "select",
+      "target": "id=ciudad",
+      "targets": [],
+      "value": "label=Guatemala City"
+    }, {
+      "id": "6efa9cd6-6718-44e0-896a-81b9b2e0bffd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.RegistroUsuario_btn_crear__cLDrC",
+      "targets": [
+        ["css=.RegistroUsuario_btn_crear__cLDrC", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Crear Cuenta')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4c793cc1-a9e9-4d27-9063-53e164baf9a6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.swal2-confirm",
+      "targets": [
+        ["css=.swal2-confirm", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[6]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ok')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "00b8d750-98dd-4290-ac66-45ab18350cea",
+    "name": "IniciarSesion",
+    "commands": [{
+      "id": "5318c19d-222b-4d70-b617-5bafd27923d5",
+      "comment": "",
+      "command": "open",
+      "target": "http://192.168.0.4:3000/IniciarSesion",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2ebf9a54-acba-4faa-b5ac-011837a04012",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "945x1020",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a7733338-dffc-4723-a356-873f22ebc5fb",
+      "comment": "",
+      "command": "click",
+      "target": "id=nombre_usuario",
+      "targets": [
+        ["id=nombre_usuario", "id"],
+        ["name=nombre_usuario", "name"],
+        ["css=#nombre_usuario", "css:finder"],
+        ["xpath=//input[@id='nombre_usuario']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b5a1aaf-45c3-4218-86d5-47bb9fff2535",
+      "comment": "",
+      "command": "type",
+      "target": "id=nombre_usuario",
+      "targets": [
+        ["id=nombre_usuario", "id"],
+        ["name=nombre_usuario", "name"],
+        ["css=#nombre_usuario", "css:finder"],
+        ["xpath=//input[@id='nombre_usuario']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "mrcarloscampos@gmail.com"
+    }, {
+      "id": "cdd9af4e-8ed1-4372-833f-531c00e060cb",
+      "comment": "",
+      "command": "type",
+      "target": "id=contrasena",
+      "targets": [
+        ["id=contrasena", "id"],
+        ["css=#contrasena", "css:finder"],
+        ["xpath=//input[@id='contrasena']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "1234"
+    }, {
+      "id": "6e6e23b1-fca8-4b00-8dfb-0219ef5e7e73",
+      "comment": "",
+      "command": "click",
+      "target": "xpath=//div[2]/button",
+      "targets": [
+        ["css=.IniciarSesion_btn_iniciar__lT9uU", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/div/form/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Iniciar Sesion')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "345a514a-18f9-4e5a-b4c7-3ba59b1ee74b",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["a4410f86-1077-4ea8-a0c7-51b179dab898"]
+  }],
+  "urls": ["http://localhost:3000/", "http://192.168.0.4:3000/IniciarSesion"],
+  "plugins": []
+}
