@@ -14,8 +14,8 @@ export default class Inicio extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            empresa: "0",
-            userType: ''
+            empresa: "7",
+            userType: 'Aerolinea'
 
         };
 
@@ -27,7 +27,9 @@ export default class Inicio extends Component {
         try {
             if (form.style) {
                 form.style.filter = "blur(5px)";
-                form.style.display = "block";
+                form.style.pointerEvents = "none";
+
+
             }
         }
         catch (e) {
@@ -56,13 +58,15 @@ export default class Inicio extends Component {
 
         try {
             var form2 = document.getElementById("unfocused");
-            if (form2.style) {
+            if (form2.style && empresa !== "0") {
                 form2.style.filter = "blur(0px)";
-                
+                form2.style.pointerEvents = "auto";
+
             }
-            if(form2.style && empresa === "0"){
+            else {
                 form2.style.filter = "blur(5px)";
-                
+                form2.style.pointerEvents = "none";
+
             }
 
         } catch (e) {
@@ -71,7 +75,7 @@ export default class Inicio extends Component {
 
 
 
-        
+
         if (empresa === "5") {
             this.setState({
                 userType: "Hotel"
@@ -84,7 +88,7 @@ export default class Inicio extends Component {
             this.setState({
                 userType: "Aerolinea"
             })
-        }else{
+        } else {
             this.setState({
                 userType: "0",
                 empresa: "0"
@@ -149,17 +153,11 @@ export default class Inicio extends Component {
                             <option value="5">Hotel</option>
                         </select>
 
+                        <div id="unfocused">
+                            <RegistroGlobal userType={this.state.userType} />
+                        </div>
 
-                        {
-                            this.state.empresa === "" ? null :
-                                <div>
-                                    {this.state.empresa !== "0" ? <RegistroGlobal userType={this.state.userType} /> : <div id="unfocused">
-                                        
-                                        <RegistroGlobal />
-                                        
-                                    </div>}
-                                </div>
-                        }
+
                     </div>
 
 
