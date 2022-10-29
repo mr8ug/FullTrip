@@ -86,11 +86,11 @@ export default class RegistroGlobal extends Component{
         var contrasena = document.getElementById("contrasena").value;
         var contrasena2 = document.getElementById("contrasena2").value;
         var userType = '';
-        if(this.state.userType === "Hotel"){
+        if(this.props.userType === "Hotel"){
             userType = "5";
-        }else if(this.state.userType === "Arrendador"){
+        }else if(this.props.userType === "Arrendador"){
             userType = "6";
-        }else if(this.state.userType === "Aerolinea"){
+        }else if(this.props.userType === "Aerolinea"){
             userType = "7";
         }
 
@@ -138,7 +138,7 @@ export default class RegistroGlobal extends Component{
                 }else{
                     Swal.fire({
                         title: 'Error',
-                        text: 'Hubo un error al registrar el '+this.state.userType,
+                        text: 'Hubo un error al registrar el '+this.props.userType,
                         icon: 'error',
                         confirmButtonText: 'Ok'
                     })
