@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "mocha 'test/*.js' --reporter spec "
+        "test": "mocha 'test/*.js' --reporter spec ",
+        "actual": "mocha 'test/reservaServicios.spec.js' --reporter spec "
     },
     "keywords": [],
     "author": "",
