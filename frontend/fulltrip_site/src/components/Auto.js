@@ -295,8 +295,7 @@ export default class Auto extends Component {
                         title: 'Hmmm...',
                         text: 'Contraseña incorrecta',
                         icon: 'error',
-                        timer: 2000,
-                        timerProgressBar: true,
+                        
 
                     })
                 }

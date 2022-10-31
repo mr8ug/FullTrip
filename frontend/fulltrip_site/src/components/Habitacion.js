@@ -316,8 +316,7 @@ export default class Habitacion extends Component {
                         title: 'Hmmm...',
                         text: 'Contraseña incorrecta',
                         icon: 'error',
-                        timer: 2000,
-                        timerProgressBar: true,
+                        
 
                     })
                 }
