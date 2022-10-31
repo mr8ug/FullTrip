@@ -53,7 +53,7 @@ export default class RegistroAuto extends Component{
         })
         .then (res => res.json())
         .then (data =>{
-            //console.log(data);
+            // console.log(data);
             if(String(data.userid) === this.state.id){
                 Swal.fire({
                     title:'Registrando vehiculo',
@@ -89,7 +89,7 @@ export default class RegistroAuto extends Component{
                 })
                 .then (res => res.json())
                 .then (data =>{
-                    //console.log(data);
+                    // console.log('envio',data);
                     if(data.status === 'ok'){
                         Swal.fire({
                             title:'Vehiculo registrado',
@@ -154,7 +154,7 @@ export default class RegistroAuto extends Component{
                         </div>
                         <div className={styles.form_group}>
                             <label htmlFor="modelo">Modelo</label>
-                            <input type="text" className="form-control" name="modelo" id="modelo" placeholder="Modelo" />
+                            <input type="number" className="form-control" name="modelo" id="modelo" placeholder="Modelo" mix={2000} />
                         </div>
 
                         <div className={styles.form_group}>
