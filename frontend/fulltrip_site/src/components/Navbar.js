@@ -94,7 +94,7 @@ class NavbarBootrap extends Component {
 
                                 </Nav>
 
-                                <Form className='d-flex'>
+                                {/* <Form className='d-flex'>
                                     <Form.Control
                                         type="search"
                                         placeholder="Que estas buscando?"
@@ -102,7 +102,7 @@ class NavbarBootrap extends Component {
                                         aria-label="Search"
                                     />
                                     <Button variant="outline-success">Buscar</Button>
-                                </Form>
+                                </Form> */}
 
                                 
 
