@@ -8,6 +8,7 @@ import Accordion from 'react-bootstrap/Accordion'
 
 
 
+
 export default class Aerolineas extends Component {
 
     constructor(props) {
@@ -235,7 +236,10 @@ export default class Aerolineas extends Component {
         })
     }
 
+    
+
     render() {
+        
         return (
             <div>
                 {/* <Navbar pagina="aerolineas" /> */}
@@ -264,7 +268,7 @@ export default class Aerolineas extends Component {
 
                                 <div className="form-group">
                                     <label htmlFor="destino" className={styles.label}>Destino</label>
-                                    <select name="destino" id="destino" className="form-control" onChange={this.handleDestinoChange}>
+                                    <select name="destino" id="destino" className="form-control" onChange={this.handleDestinationChange}>
                                         <option value="todos">Todos</option>
                                         {
                                             this.state.vuelos
@@ -305,6 +309,7 @@ export default class Aerolineas extends Component {
                                 </div>
 
                                 <Button variant="warning" onClick={this.handleFilter}>Limpiar</Button>
+                                
                             </div>
                         </Accordion.Body>
                     </Accordion.Item>
@@ -329,7 +334,7 @@ export default class Aerolineas extends Component {
                                         mode="search"
                                     />
                                 )
-
+                                
                     }
 
                 </div>
