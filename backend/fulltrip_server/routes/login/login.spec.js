@@ -44,7 +44,7 @@ describe("POST /api/login", () => {
                email:process.env.TEST_EMAIL,
                password:"123456"
             })
-            expect(response.status).toEqual(500)  
+            expect(response.status).toEqual(404)  
     }) 
 
 });
