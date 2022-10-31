@@ -11,9 +11,18 @@ describe("POST /api/flight_reservation", () => {
             .post('/api/flight_reservation')
             .set('Content-Type',  'application/json')
             .send({
-                user_id:34
+                user_id:3
             })
             expect(response.status).toEqual(200)  
     }) 
+    it('verify not response flight reservation', async () => {
+        const response = await request
+            .post('/api/flight_reservation')
+            .set('Content-Type',  'application/json')
+            .send({
+                user_id:4
+            })
+            expect(response.status).toEqual(404)  
+    })
 
 });
