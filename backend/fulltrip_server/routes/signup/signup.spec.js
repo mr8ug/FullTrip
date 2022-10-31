@@ -25,7 +25,7 @@ describe("POST /api/signup", () => {
                 email:"test_" + uuid.v4() + "@gmail.com",
                 password:"1234",
                 full_name:"Turista test",
-                type_user:"4",
+                type_user:4,
                 country:"Guatemala",
                 city:"Peten"
             })
@@ -41,7 +41,7 @@ describe("POST /api/signup", () => {
                 email:"test_" + uuid.v4() + "@gmail.com",
                 password:"1234",
                 full_name:"Arrendador test",
-                type_user:"6",
+                type_user:6,
                 country:"Guatemala",
                 city:"Peten"
             })
@@ -57,7 +57,7 @@ describe("POST /api/signup", () => {
                 email:"test_" + uuid.v4() + "@gmail.com",
                 password:"1234",
                 full_name:"Hotel test",
-                type_user:"5",
+                type_user:5,
                 country:"Guatemala",
                 city:"Peten"
             })
@@ -73,7 +73,7 @@ describe("POST /api/signup", () => {
                 email:"test_" + uuid.v4() + "@gmail.com",
                 password:"1234",
                 full_name:"Aerolinea test",
-                type_user:"7",
+                type_user:7,
                 country:"Guatemala",
                 city:"Peten"
             })

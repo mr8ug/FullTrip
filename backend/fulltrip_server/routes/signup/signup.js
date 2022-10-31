@@ -10,7 +10,7 @@ module.exports = (express,app) => {
             return res.status(200).json({response_text:"active endpoint"})
         }
         const conn = await mysql.createConnection(app.config.db.credentials);
-        const {full_name, date_birth = '', email, nickname = '', password, type_user, country = '', city = ''} = req.body
+        const {full_name, date_birth = '2000-01-01', email, nickname = '', password, type_user, country = '', city = ''} = req.body
         
         if (full_name == undefined || email == undefined || password == undefined || type_user == undefined){
             return res.status(406).json({response_text:"Is not present value"})

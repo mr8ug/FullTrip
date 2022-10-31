@@ -11,8 +11,18 @@ describe("POST /api/user_reviews", () => {
             .post('/api/user_reviews')
             .set('Content-Type',  'application/json')
             .send({
-                user_id:34
+                user_id:4
             })
             expect(response.status).toEqual(200)  
     }) 
+
+    it('verify all see, reviews by user not valid', async () => {
+        const response = await request
+            .post('/api/user_reviews')
+            .set('Content-Type',  'application/json')
+            .send({
+                user_id:34
+            })
+            expect(response.status).toEqual(404)  
+    })
 });

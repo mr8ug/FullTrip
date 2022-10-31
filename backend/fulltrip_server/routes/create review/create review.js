@@ -20,7 +20,6 @@ module.exports = (express,app) => {
         await conn.connect(function(err) {
             if (err){
                 conn.end()
-                drop_bucket(key)
                 return res.status(500).json({response_text:"Err of connect"})
             }
             
