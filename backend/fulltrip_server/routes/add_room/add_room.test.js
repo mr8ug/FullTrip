@@ -8,7 +8,21 @@ const path = require('path')
 
 
 describe("POST /api/add_room", () => {
-    it('verify add car', async () => {
+    it('verify add room', async () => {
+        const response = await request
+            .post('/api/add_room')
+            .set('Content-Type',  'application/json')
+            .field('room_name','test')
+            .field('amount_people','4')
+            .field('price','2578.75')
+            .field('start_date','2022-10-10')
+            .field('ending_date','2022-10-15')
+            .field('user_id',293)
+            .attach('avatar', path.resolve(process.cwd() + '/img_prueba.jpg'))
+            //expect(response.body.message).toEqual('hoa');
+            expect(response.status).toEqual(201)  
+    }) 
+    it('verify add room failure', async () => {
         const response = await request
             .post('/api/add_room')
             .set('Content-Type',  'application/json')
@@ -20,6 +34,6 @@ describe("POST /api/add_room", () => {
             .field('user_id','44')
             .attach('avatar', path.resolve(process.cwd() + '/img_prueba.jpg'))
             //expect(response.body.message).toEqual('hoa');
-            expect(response.status).toEqual(201)  
+            expect(response.status).toEqual(500)  
     }) 
 });
