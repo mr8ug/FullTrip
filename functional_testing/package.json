@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "mocha 'test/*.js' --reporter spec ",
-        "actual": "mocha 'test/registroHabitacion.spec.js' --reporter spec "
+        "actual": "mocha 'test/registroUsuario.spec.js' --reporter spec "
     },
     "keywords": [],
     "author": "",
