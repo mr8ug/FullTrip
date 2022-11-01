@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  backend:
+    build: ./
+    container_name: fulltrip_server
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - NODE_ENV=$NODE_ENV
+      - DB_HOST=$DB_HOST
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_NAME
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_S3_BUCKET_NAME=$AWS_S3_BUCKET_NAME
+      - NODE_TEST=$NODE_TEST
+      - TEST_EMAIL=$TEST_EMAIL
+      - TEST_PASSWORD=$TEST_PASSWORD
+    ports:
+      - 4000:4000
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
