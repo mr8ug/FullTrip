@@ -24,12 +24,15 @@ services:
       - app-network
 
   frontend:
+    depends_on:
+      - serviceName: backend
+        condition: service_healthy
     build: ./frontend/fulltrip_site
     container_name: fulltrip_frontend
     restart: unless-stopped
     env_file: .env
     environment:
-      - REACT_APP_API_URL=$REACT_APP_API_URL
+      - REACT_APP_API_URL=backend:4000
     ports:
       - 80:3000
     networks:
