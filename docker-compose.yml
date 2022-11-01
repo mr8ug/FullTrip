@@ -25,8 +25,7 @@ services:
 
   frontend:
     depends_on:
-      - serviceName: backend
-        condition: service_healthy
+      - backend
     build: ./frontend/fulltrip_site
     container_name: fulltrip_frontend
     restart: unless-stopped
