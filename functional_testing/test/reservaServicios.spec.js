@@ -43,7 +43,7 @@ describe('ReservaServicios', function () {
         await driver.findElement(By.linkText("Reservar")).click()
         await driver.sleep(2000)
 
-        await driver.findElement(By.name("start_date")).sendKeys("01-11-2022")
+        await driver.findElement(By.name("start_date")).sendKeys("08-11-2022")
 
         await driver.findElement(By.name("end_date")).sendKeys("30-11-2022")
         await driver.findElement(By.id("observations")).click()
@@ -72,7 +72,7 @@ describe('ReservaServicios', function () {
         await driver.findElement(By.linkText("Reservar")).click()
         await driver.sleep(2000)
 
-        await driver.findElement(By.name("start_date")).sendKeys("01-11-2022")
+        await driver.findElement(By.name("start_date")).sendKeys("08-11-2022")
 
         await driver.findElement(By.name("end_date")).sendKeys("30-11-2022")
         await driver.findElement(By.id("observations")).click()
